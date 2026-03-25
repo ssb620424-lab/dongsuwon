@@ -1,0 +1,1267 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>관리자 페이지 — 동수원노인전문요양원</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nanum+Myeongjo:wght@400;700;800&family=Noto+Sans+KR:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-storage-compat.js"></script>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --forest: #1C3020;
+      --gold: #B8935A;
+      --cream: #F5F0E8;
+      --white: #fff;
+      --border: #e0dbd4;
+      --red: #e53e3e;
+      --green: #2e7d32;
+      --blue: #1976d2;
+      --text: #1a1a1a;
+      --text-mid: #555;
+      --text-light: #888;
+      --radius: 8px;
+      --shadow: 0 2px 12px rgba(0,0,0,0.08);
+    }
+    body { font-family: 'Noto Sans KR', sans-serif; background: #f0ede8; color: var(--text); min-height: 100vh; }
+
+    /* ── LOGIN ── */
+    #loginScreen {
+      min-height: 100vh;
+      display: flex; align-items: center; justify-content: center;
+      background: linear-gradient(135deg, var(--forest) 0%, #2A4A30 100%);
+    }
+    .login-box {
+      background: var(--white);
+      border-radius: 16px;
+      padding: 48px 40px;
+      width: 380px;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      text-align: center;
+    }
+    .login-emblem {
+      width: 64px; height: 64px;
+      background: var(--forest); color: var(--gold);
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.8rem; font-weight: 700;
+      margin: 0 auto 20px;
+    }
+    .login-box h1 { font-size: 1.1rem; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+    .login-box p { font-size: 0.82rem; color: var(--text-light); margin-bottom: 32px; }
+    .login-box input {
+      width: 100%; padding: 13px 16px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-size: 0.92rem; font-family: inherit;
+      margin-bottom: 12px; outline: none; transition: border-color 0.2s;
+    }
+    .login-box input:focus { border-color: var(--forest); }
+    .btn-login {
+      width: 100%; padding: 14px;
+      background: var(--forest); color: var(--white);
+      border: none; border-radius: var(--radius);
+      font-size: 0.95rem; font-weight: 600; cursor: pointer;
+      font-family: inherit; transition: background 0.2s;
+    }
+    .btn-login:hover { background: #2A4A30; }
+    .login-error { color: var(--red); font-size: 0.82rem; margin-top: 12px; display: none; }
+
+    /* ── ADMIN LAYOUT ── */
+    #adminScreen { display: none; min-height: 100vh; }
+    .admin-header {
+      background: var(--forest);
+      padding: 0 32px;
+      height: 60px;
+      display: flex; align-items: center; justify-content: space-between;
+      position: sticky; top: 0; z-index: 100;
+      box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    }
+    .admin-header-left { display: flex; align-items: center; gap: 16px; }
+    .admin-logo {
+      display: flex; align-items: center; gap: 10px; color: var(--white);
+    }
+    .admin-logo-emblem {
+      width: 32px; height: 32px;
+      background: var(--gold); color: var(--forest);
+      border-radius: 6px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 0.9rem; font-weight: 700;
+    }
+    .admin-logo-text { font-size: 0.9rem; font-weight: 600; }
+    .admin-badge {
+      background: rgba(255,255,255,0.15);
+      color: rgba(255,255,255,0.8);
+      font-size: 0.72rem; padding: 3px 10px; border-radius: 40px;
+    }
+    .btn-logout {
+      background: rgba(255,255,255,0.12);
+      color: rgba(255,255,255,0.8);
+      border: 1px solid rgba(255,255,255,0.2);
+      padding: 6px 16px; border-radius: 6px;
+      font-size: 0.82rem; cursor: pointer; font-family: inherit;
+      transition: all 0.2s;
+    }
+    .btn-logout:hover { background: rgba(255,255,255,0.2); color: var(--white); }
+
+    .admin-body { display: flex; min-height: calc(100vh - 60px); }
+
+    /* ── SIDEBAR ── */
+    .admin-sidebar {
+      width: 220px;
+      background: var(--white);
+      border-right: 1px solid var(--border);
+      padding: 24px 0;
+      flex-shrink: 0;
+      position: sticky;
+      top: 60px;
+      height: calc(100vh - 60px);
+      overflow-y: auto;
+    }
+    .sidebar-section-label {
+      font-size: 0.68rem; letter-spacing: 0.1em; text-transform: uppercase;
+      color: var(--text-light); padding: 0 20px; margin-bottom: 6px; margin-top: 20px;
+    }
+    .sidebar-section-label:first-child { margin-top: 0; }
+    .sidebar-link {
+      display: flex; align-items: center; gap: 10px;
+      padding: 10px 20px;
+      font-size: 0.87rem; color: var(--text-mid);
+      cursor: pointer; transition: all 0.15s;
+      border-left: 3px solid transparent;
+    }
+    .sidebar-link:hover { background: var(--cream); color: var(--forest); }
+    .sidebar-link.active { background: #e8f0e9; color: var(--forest); font-weight: 600; border-left-color: var(--forest); }
+    .sidebar-link svg { flex-shrink: 0; opacity: 0.7; }
+    .sidebar-link.active svg { opacity: 1; }
+
+    /* ── MAIN ── */
+    .admin-main { flex: 1; padding: 32px; overflow-y: auto; }
+
+    .panel { display: none; }
+    .panel.active { display: block; }
+
+    .panel-header { margin-bottom: 28px; }
+    .panel-header h2 { font-size: 1.4rem; font-weight: 700; color: var(--forest); margin-bottom: 4px; }
+    .panel-header p { font-size: 0.87rem; color: var(--text-light); }
+
+    /* ── STAT CARDS ── */
+    .stat-cards { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-bottom: 32px; }
+    .stat-card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 22px 24px; box-shadow: var(--shadow);
+    }
+    .stat-card-label { font-size: 0.78rem; color: var(--text-light); margin-bottom: 8px; }
+    .stat-card-num { font-size: 2rem; font-weight: 700; color: var(--forest); line-height: 1; }
+    .stat-card-unit { font-size: 0.85rem; color: var(--gold); margin-left: 2px; }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--white); border-radius: var(--radius);
+      padding: 28px; box-shadow: var(--shadow); margin-bottom: 24px;
+    }
+    .card-title {
+      font-size: 1rem; font-weight: 700; color: var(--forest);
+      margin-bottom: 20px; padding-bottom: 14px;
+      border-bottom: 1px solid var(--border);
+      display: flex; align-items: center; justify-content: space-between;
+    }
+
+    /* ── FORM ── */
+    .form-group { margin-bottom: 18px; }
+    .form-group label { display: block; font-size: 0.83rem; font-weight: 600; color: var(--text-mid); margin-bottom: 6px; }
+    .form-group input, .form-group select, .form-group textarea {
+      width: 100%; padding: 11px 14px;
+      border: 1.5px solid var(--border); border-radius: var(--radius);
+      font-size: 0.9rem; font-family: inherit; outline: none;
+      transition: border-color 0.2s; background: var(--white);
+    }
+    .form-group input:focus, .form-group select:focus, .form-group textarea:focus { border-color: var(--forest); }
+    .form-group textarea { resize: vertical; min-height: 140px; line-height: 1.7; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+
+    /* ── BUTTONS ── */
+    .btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border-radius: var(--radius); font-size: 0.87rem; font-weight: 600; cursor: pointer; font-family: inherit; border: none; transition: all 0.2s; }
+    .btn-primary { background: var(--forest); color: var(--white); }
+    .btn-primary:hover { background: #2A4A30; }
+    .btn-gold { background: var(--gold); color: var(--white); }
+    .btn-gold:hover { background: #c9a468; }
+    .btn-outline { background: none; border: 1.5px solid var(--border); color: var(--text-mid); }
+    .btn-outline:hover { border-color: var(--forest); color: var(--forest); }
+    .btn-danger { background: none; border: 1.5px solid #fca5a5; color: var(--red); font-size: 0.78rem; padding: 6px 12px; }
+    .btn-danger:hover { background: var(--red); color: var(--white); border-color: var(--red); }
+    .btn-sm { padding: 6px 14px; font-size: 0.8rem; }
+
+    /* ── POST LIST ── */
+    .post-list { display: flex; flex-direction: column; gap: 0; }
+    .post-item {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 0; border-bottom: 1px solid var(--border);
+      gap: 16px;
+    }
+    .post-item:last-child { border-bottom: none; }
+    .post-item-info { flex: 1; min-width: 0; }
+    .post-item-title { font-size: 0.92rem; font-weight: 600; color: var(--text); margin-bottom: 3px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .post-item-meta { font-size: 0.75rem; color: var(--text-light); display: flex; gap: 10px; }
+    .post-item-actions { display: flex; gap: 8px; flex-shrink: 0; }
+    .tag { display: inline-block; font-size: 0.7rem; padding: 2px 8px; border-radius: 40px; font-weight: 600; }
+    .tag-notice { background: #1c30201a; color: var(--forest); }
+    .tag-news { background: #b8935a1a; color: var(--gold); }
+    .tag-consult { background: #1976d21a; color: var(--blue); }
+    .empty-state { text-align: center; padding: 48px; color: var(--text-light); font-size: 0.9rem; }
+
+    /* ── CONSULT ITEMS ── */
+    .consult-item {
+      background: var(--cream); border-radius: var(--radius);
+      padding: 20px 22px; margin-bottom: 12px;
+      border: 1px solid var(--border);
+    }
+    .consult-item-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 12px; }
+    .consult-item-name { font-weight: 700; font-size: 0.95rem; color: var(--forest); }
+    .consult-item-date { font-size: 0.75rem; color: var(--text-light); }
+    .consult-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 12px; }
+    .consult-field label { font-size: 0.72rem; color: var(--text-light); margin-bottom: 2px; display: block; }
+    .consult-field span { font-size: 0.87rem; font-weight: 600; color: var(--text); }
+    .consult-message { font-size: 0.87rem; color: var(--text-mid); line-height: 1.7; padding: 10px 14px; background: var(--white); border-radius: 6px; border: 1px solid var(--border); }
+    .status-badge { display: inline-block; font-size: 0.72rem; padding: 3px 10px; border-radius: 40px; font-weight: 600; }
+    .status-pending  { background: #fff3e0; color: #e65100; }
+    .status-done     { background: #e8f5e9; color: var(--green); }
+
+    /* ── IMAGE UPLOAD ── */
+    .upload-zone {
+      border: 2px dashed var(--border); border-radius: var(--radius);
+      padding: 32px; text-align: center; cursor: pointer;
+      transition: all 0.2s; background: var(--cream);
+    }
+    .upload-zone:hover, .upload-zone.dragover { border-color: var(--forest); background: #e8f0e9; }
+    .upload-zone p { font-size: 0.88rem; color: var(--text-light); margin-top: 8px; }
+    .upload-zone input[type="file"] { display: none; }
+    .upload-preview { display: grid; grid-template-columns: repeat(4, 1fr); gap: 12px; margin-top: 16px; }
+    .preview-item { position: relative; aspect-ratio: 4/3; border-radius: 6px; overflow: hidden; }
+    .preview-item img { width: 100%; height: 100%; object-fit: cover; }
+    .preview-remove {
+      position: absolute; top: 4px; right: 4px;
+      background: rgba(0,0,0,0.6); color: var(--white);
+      width: 22px; height: 22px; border-radius: 50%;
+      display: flex; align-items: center; justify-content: center;
+      cursor: pointer; font-size: 0.75rem; border: none;
+    }
+
+    /* ── TOAST ── */
+    .toast {
+      position: fixed; bottom: 28px; right: 28px;
+      background: var(--forest); color: var(--white);
+      padding: 14px 22px; border-radius: var(--radius);
+      font-size: 0.87rem; font-weight: 500;
+      box-shadow: 0 8px 24px rgba(0,0,0,0.2);
+      z-index: 9999; opacity: 0; transform: translateY(10px);
+      transition: all 0.3s ease; pointer-events: none;
+    }
+    .toast.show { opacity: 1; transform: translateY(0); }
+    .toast.error { background: var(--red); }
+
+    /* ── MODAL ── */
+    .modal-overlay {
+      position: fixed; inset: 0; background: rgba(0,0,0,0.5);
+      z-index: 500; display: none; align-items: center; justify-content: center;
+    }
+    .modal-overlay.open { display: flex; }
+    .modal {
+      background: var(--white); border-radius: 12px;
+      padding: 32px; width: min(560px, 95vw);
+      box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+    }
+    .modal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 24px; }
+    .modal-header h3 { font-size: 1.05rem; font-weight: 700; color: var(--forest); }
+    .modal-close { background: none; border: none; font-size: 1.3rem; cursor: pointer; color: var(--text-light); }
+    .modal-actions { display: flex; gap: 10px; justify-content: flex-end; margin-top: 24px; }
+
+    /* ── LOADING ── */
+    .loading { text-align: center; padding: 32px; color: var(--text-light); }
+    .spinner { display: inline-block; width: 24px; height: 24px; border: 2px solid var(--border); border-top-color: var(--forest); border-radius: 50%; animation: spin 0.8s linear infinite; margin-right: 8px; vertical-align: middle; }
+    @keyframes spin { to { transform: rotate(360deg); } }
+
+    /* ── SITE LINK ── */
+    .site-link { display: inline-flex; align-items: center; gap: 6px; font-size: 0.82rem; color: var(--text-light); text-decoration: none; transition: color 0.2s; }
+    .site-link:hover { color: var(--gold); }
+
+    @media (max-width: 768px) {
+      .admin-sidebar { display: none; }
+      .admin-main { padding: 20px 16px; }
+      .stat-cards { grid-template-columns: repeat(2, 1fr); }
+      .form-row { grid-template-columns: 1fr; }
+      .consult-grid { grid-template-columns: repeat(2, 1fr); }
+      .upload-preview { grid-template-columns: repeat(2, 1fr); }
+    }
+  </style>
+</head>
+<body>
+
+<!-- ===== LOGIN ===== -->
+<div id="loginScreen">
+  <div class="login-box">
+    <div class="login-emblem">동</div>
+    <h1>동수원노인전문요양원</h1>
+    <p>관리자 로그인</p>
+    <input type="email" id="loginEmail" placeholder="이메일" autocomplete="username">
+    <input type="password" id="loginPassword" placeholder="비밀번호" autocomplete="current-password">
+    <button class="btn-login" id="loginBtn">로그인</button>
+    <p class="login-error" id="loginError">이메일 또는 비밀번호가 올바르지 않습니다</p>
+  </div>
+</div>
+
+<!-- ===== ADMIN ===== -->
+<div id="adminScreen">
+  <header class="admin-header">
+    <div class="admin-header-left">
+      <div class="admin-logo">
+        <div class="admin-logo-emblem">동</div>
+        <span class="admin-logo-text">동수원노인전문요양원</span>
+      </div>
+      <span class="admin-badge">관리자</span>
+    </div>
+    <div style="display:flex;align-items:center;gap:16px;">
+      <a href="index.html" target="_blank" class="site-link">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
+        홈페이지 보기
+      </a>
+      <button class="btn-logout" id="logoutBtn">로그아웃</button>
+    </div>
+  </header>
+
+  <div class="admin-body">
+    <!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+      <p class="sidebar-section-label">대시보드</p>
+      <div class="sidebar-link active" data-panel="dashboard">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg>
+        대시보드
+      </div>
+
+      <p class="sidebar-section-label">게시판 관리</p>
+      <div class="sidebar-link" data-panel="notices">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+        공지사항
+      </div>
+      <div class="sidebar-link" data-panel="news">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        시설 소식
+      </div>
+
+      <p class="sidebar-section-label">상담 관리</p>
+      <div class="sidebar-link" data-panel="consults">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+        상담 신청 목록
+        <span id="consultBadge" style="margin-left:auto;background:var(--red);color:white;font-size:0.7rem;padding:2px 7px;border-radius:40px;display:none;"></span>
+      </div>
+
+      <p class="sidebar-section-label">페이지 관리</p>
+      <div class="sidebar-link" data-panel="page-intro">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+        인사말
+      </div>
+      <div class="sidebar-link" data-panel="page-vision">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        비전 및 핵심가치
+      </div>
+      <div class="sidebar-link" data-panel="page-services">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+        제공 서비스
+      </div>
+      <div class="sidebar-link" data-panel="page-programs">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+        프로그램 안내
+      </div>
+      <div class="sidebar-link" data-panel="page-admission">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/></svg>
+        입소절차·준비서류
+      </div>
+
+      <p class="sidebar-section-label">사이트 관리</p>
+      <div class="sidebar-link" data-panel="gallery-manage">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+        갤러리 관리
+      </div>
+      <div class="sidebar-link" data-panel="menu-manage">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg>
+        식단표 관리
+      </div>
+    </aside>
+
+    <!-- MAIN CONTENT -->
+    <main class="admin-main">
+
+      <!-- ── 대시보드 ── -->
+      <div class="panel active" id="panel-dashboard">
+        <div class="panel-header">
+          <h2>대시보드</h2>
+          <p>동수원노인전문요양원 관리자 페이지에 오신 것을 환영합니다</p>
+        </div>
+        <div class="stat-cards">
+          <div class="stat-card">
+            <div class="stat-card-label">공지사항</div>
+            <div><span class="stat-card-num" id="statNotices">-</span><span class="stat-card-unit">건</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">시설 소식</div>
+            <div><span class="stat-card-num" id="statNews">-</span><span class="stat-card-unit">건</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">상담 신청</div>
+            <div><span class="stat-card-num" id="statConsults">-</span><span class="stat-card-unit">건</span></div>
+          </div>
+          <div class="stat-card">
+            <div class="stat-card-label">미처리 상담</div>
+            <div><span class="stat-card-num" id="statPending" style="color:var(--red)">-</span><span class="stat-card-unit">건</span></div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">최근 상담 신청</div>
+          <div id="recentConsults"><div class="loading"><span class="spinner"></span>불러오는 중...</div></div>
+        </div>
+      </div>
+
+      <!-- ── 공지사항 ── -->
+      <div class="panel" id="panel-notices">
+        <div class="panel-header">
+          <h2>공지사항 관리</h2>
+          <p>홈페이지에 표시될 공지사항을 작성하고 관리합니다</p>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            새 공지사항 작성
+          </div>
+          <div class="form-group">
+            <label>제목 *</label>
+            <input type="text" id="noticeTitle" placeholder="공지사항 제목을 입력하세요">
+          </div>
+          <div class="form-group">
+            <label>내용 *</label>
+            <textarea id="noticeContent" placeholder="공지사항 내용을 입력하세요"></textarea>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-primary" id="saveNoticeBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              저장하기
+            </button>
+            <button class="btn btn-outline" onclick="document.getElementById('noticeTitle').value='';document.getElementById('noticeContent').value=''">초기화</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">공지사항 목록 <span id="noticesCountBadge" style="font-size:0.78rem;color:var(--text-light);font-weight:400;"></span></div>
+          <div class="post-list" id="noticesList">
+            <div class="loading"><span class="spinner"></span>불러오는 중...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 시설 소식 ── -->
+      <div class="panel" id="panel-news">
+        <div class="panel-header">
+          <h2>시설 소식 관리</h2>
+          <p>행사, 프로그램, 시설 소식을 작성하고 관리합니다</p>
+        </div>
+        <div class="card">
+          <div class="card-title">새 소식 작성</div>
+          <div class="form-group">
+            <label>제목 *</label>
+            <input type="text" id="newsTitle" placeholder="소식 제목을 입력하세요">
+          </div>
+          <div class="form-group">
+            <label>내용 *</label>
+            <textarea id="newsContent" placeholder="소식 내용을 입력하세요"></textarea>
+          </div>
+          <div class="form-group">
+            <label>대표 이미지 (선택)</label>
+            <div class="upload-zone" id="newsImgZone">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>클릭하거나 이미지를 드래그하세요</p>
+              <input type="file" id="newsImgInput" accept="image/*">
+            </div>
+            <div id="newsImgPreview"></div>
+          </div>
+          <div style="display:flex;gap:10px;">
+            <button class="btn btn-primary" id="saveNewsBtn">
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M19 21H5a2 2 0 01-2-2V5a2 2 0 012-2h11l5 5v11a2 2 0 01-2 2z"/><polyline points="17 21 17 13 7 13 7 21"/><polyline points="7 3 7 8 15 8"/></svg>
+              저장하기
+            </button>
+            <button class="btn btn-outline" onclick="document.getElementById('newsTitle').value='';document.getElementById('newsContent').value='';document.getElementById('newsImgPreview').innerHTML=''">초기화</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-title">소식 목록 <span id="newsCountBadge" style="font-size:0.78rem;color:var(--text-light);font-weight:400;"></span></div>
+          <div class="post-list" id="newsList">
+            <div class="loading"><span class="spinner"></span>불러오는 중...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 상담 목록 ── -->
+      <div class="panel" id="panel-consults">
+        <div class="panel-header">
+          <h2>상담 신청 목록</h2>
+          <p>홈페이지를 통해 접수된 상담 신청을 확인합니다</p>
+        </div>
+        <div class="card">
+          <div class="card-title">
+            상담 신청 <span id="consultsTotalBadge" style="font-size:0.78rem;color:var(--text-light);font-weight:400;"></span>
+            <div style="display:flex;gap:8px;">
+              <button class="btn btn-outline btn-sm" onclick="filterConsults('all')">전체</button>
+              <button class="btn btn-outline btn-sm" onclick="filterConsults('pending')">미처리</button>
+              <button class="btn btn-outline btn-sm" onclick="filterConsults('done')">처리완료</button>
+            </div>
+          </div>
+          <div id="consultsList">
+            <div class="loading"><span class="spinner"></span>불러오는 중...</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 갤러리 관리 ── -->
+      <div class="panel" id="panel-gallery-manage">
+        <div class="panel-header">
+          <h2>갤러리 관리</h2>
+          <p>시설 사진을 업로드하고 관리합니다</p>
+        </div>
+        <div class="card">
+          <div class="card-title">사진 업로드</div>
+          <div class="form-group">
+            <label>카테고리</label>
+            <select id="galleryCategory">
+              <option value="lounge">라운지</option>
+              <option value="hall">강당·홀</option>
+              <option value="corridor">복도·공용</option>
+              <option value="consult">상담 공간</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>사진 선택 (여러 장 가능)</label>
+            <div class="upload-zone" id="galleryUploadZone">
+              <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#aaa" stroke-width="1.5"><rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><polyline points="21 15 16 10 5 21"/></svg>
+              <p>클릭하거나 사진을 드래그하세요 (여러 장 가능)</p>
+              <input type="file" id="galleryImgInput" accept="image/*" multiple>
+            </div>
+            <div class="upload-preview" id="galleryPreview"></div>
+          </div>
+          <button class="btn btn-primary" id="uploadGalleryBtn">
+            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="16 16 12 12 8 16"/><line x1="12" y1="12" x2="12" y2="21"/><path d="M20.39 18.39A5 5 0 0018 9h-1.26A8 8 0 103 16.3"/></svg>
+            업로드
+          </button>
+        </div>
+        <div class="card">
+          <div class="card-title">등록된 갤러리 사진</div>
+          <div id="galleryManageList"><div class="loading"><span class="spinner"></span>불러오는 중...</div></div>
+        </div>
+      </div>
+
+      <!-- ── 인사말 편집 ── -->
+      <div class="panel" id="panel-page-intro">
+        <div class="panel-header"><h2>인사말 편집</h2><p>홈페이지 인사말 페이지 내용을 수정합니다</p></div>
+        <div class="card">
+          <div class="card-title">인사말 내용</div>
+          <div class="form-group">
+            <label>내용 (HTML 태그 사용 가능: &lt;strong&gt;, &lt;br&gt;, &lt;a&gt; 등)</label>
+            <textarea id="intro-body-edit" rows="12" placeholder="인사말 내용을 입력하세요. &lt;p&gt;태그로 문단을 구분할 수 있습니다."></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="savePageContent('intro')">저장하기</button>
+        </div>
+      </div>
+
+      <!-- ── 비전 편집 ── -->
+      <div class="panel" id="panel-page-vision">
+        <div class="panel-header"><h2>비전 및 핵심가치 편집</h2><p>비전 문구와 4가지 핵심가치를 수정합니다</p></div>
+        <div class="card">
+          <div class="card-title">비전 문구</div>
+          <div class="form-group">
+            <label>비전 슬로건</label>
+            <input type="text" id="vision-statement-edit" placeholder="예: &quot;어르신이 행복한 세상, 가족이 안심하는 요양원&quot;">
+          </div>
+          <button class="btn btn-primary" onclick="saveVision()">저장하기</button>
+        </div>
+        <div class="card">
+          <div class="card-title">핵심가치 4가지</div>
+          <div id="values-edit-area">
+            <div class="form-row"><div class="form-group"><label>가치 1 제목</label><input type="text" id="v1-title" placeholder="존중 (Respect)"></div><div class="form-group"><label>가치 1 내용</label><input type="text" id="v1-content" placeholder="내용 입력"></div></div>
+            <div class="form-row"><div class="form-group"><label>가치 2 제목</label><input type="text" id="v2-title" placeholder="전문성 (Expertise)"></div><div class="form-group"><label>가치 2 내용</label><input type="text" id="v2-content" placeholder="내용 입력"></div></div>
+            <div class="form-row"><div class="form-group"><label>가치 3 제목</label><input type="text" id="v3-title" placeholder="따뜻함 (Warmth)"></div><div class="form-group"><label>가치 3 내용</label><input type="text" id="v3-content" placeholder="내용 입력"></div></div>
+            <div class="form-row"><div class="form-group"><label>가치 4 제목</label><input type="text" id="v4-title" placeholder="신뢰 (Trust)"></div><div class="form-group"><label>가치 4 내용</label><input type="text" id="v4-content" placeholder="내용 입력"></div></div>
+          </div>
+          <button class="btn btn-primary" onclick="saveValues()">저장하기</button>
+        </div>
+      </div>
+
+      <!-- ── 제공 서비스 편집 ── -->
+      <div class="panel" id="panel-page-services">
+        <div class="panel-header"><h2>제공 서비스 편집</h2><p>서비스 항목의 제목과 세부 내용을 수정합니다</p></div>
+        <div class="card">
+          <div class="card-title">서비스 항목 (6개)</div>
+          <div id="services-edit-area"></div>
+          <button class="btn btn-primary" onclick="saveServices()">저장하기</button>
+        </div>
+      </div>
+
+      <!-- ── 프로그램 안내 편집 ── -->
+      <div class="panel" id="panel-page-programs">
+        <div class="panel-header"><h2>프로그램 안내 편집</h2><p>요일별 프로그램 일정을 수정합니다</p></div>
+        <div class="card">
+          <div class="card-title">주간 프로그램 (요일별)</div>
+          <div id="programs-edit-area"></div>
+          <button class="btn btn-primary" onclick="savePrograms()">저장하기</button>
+        </div>
+      </div>
+
+      <!-- ── 입소절차·준비서류 편집 ── -->
+      <div class="panel" id="panel-page-admission">
+        <div class="panel-header"><h2>입소절차 · 준비서류 편집</h2><p>입소 절차와 준비 서류 내용을 수정합니다</p></div>
+        <div class="card">
+          <div class="card-title">입소 절차 (5단계)</div>
+          <div id="admission-steps-edit">
+            <div class="form-row"><div class="form-group"><label>단계 1 제목</label><input type="text" id="step1-title" value="상담 신청"></div><div class="form-group"><label>단계 1 내용</label><input type="text" id="step1-content" value="전화 또는 온라인을 통해 입소 상담을 신청하세요."></div></div>
+            <div class="form-row"><div class="form-group"><label>단계 2 제목</label><input type="text" id="step2-title" value="방문 상담 및 시설 견학"></div><div class="form-group"><label>단계 2 내용</label><input type="text" id="step2-content" value="직접 방문하셔서 시설을 둘러보시고 상담하세요."></div></div>
+            <div class="form-row"><div class="form-group"><label>단계 3 제목</label><input type="text" id="step3-title" value="장기요양인정등급 확인"></div><div class="form-group"><label>단계 3 내용</label><input type="text" id="step3-content" value="국민건강보험공단 장기요양등급이 필요합니다."></div></div>
+            <div class="form-row"><div class="form-group"><label>단계 4 제목</label><input type="text" id="step4-title" value="서류 제출 및 계약"></div><div class="form-group"><label>단계 4 내용</label><input type="text" id="step4-content" value="필요 서류를 준비하시고 입소 계약을 진행합니다."></div></div>
+            <div class="form-row"><div class="form-group"><label>단계 5 제목</label><input type="text" id="step5-title" value="입소 및 적응 지원"></div><div class="form-group"><label>단계 5 내용</label><input type="text" id="step5-content" value="입소 후 적응 기간 동안 전담 매니저가 도와드립니다."></div></div>
+          </div>
+          <button class="btn btn-primary" style="margin-bottom:24px;" onclick="saveAdmissionSteps()">입소 절차 저장</button>
+        </div>
+        <div class="card">
+          <div class="card-title">준비 서류</div>
+          <div class="form-group">
+            <label>필수 서류 (한 줄에 하나씩: 서류명|설명)</label>
+            <textarea id="required-docs-edit" rows="6" placeholder="장기요양인정서|국민건강보험공단 발급&#10;신분증 사본|어르신 및 보호자 신분증"></textarea>
+          </div>
+          <div class="form-group">
+            <label>추가 서류 (해당자, 한 줄에 하나씩: 서류명|설명)</label>
+            <textarea id="additional-docs-edit" rows="4" placeholder="의료급여증|의료급여 대상자에 한함"></textarea>
+          </div>
+          <button class="btn btn-primary" onclick="saveAdmissionDocs()">준비 서류 저장</button>
+        </div>
+      </div>
+
+      <!-- ── 식단표 관리 ── -->
+      <div class="panel" id="panel-menu-manage">
+        <div class="panel-header">
+          <h2>식단표 관리</h2>
+          <p>주간 식단표를 등록하고 수정합니다</p>
+        </div>
+        <div class="card">
+          <div class="card-title">식단 등록</div>
+          <div class="form-row">
+            <div class="form-group">
+              <label>날짜</label>
+              <input type="date" id="menuDate">
+            </div>
+            <div class="form-group">
+              <label>식사 구분</label>
+              <select id="mealType">
+                <option value="아침">아침</option>
+                <option value="점심">점심</option>
+                <option value="저녁">저녁</option>
+              </select>
+            </div>
+          </div>
+          <div class="form-group">
+            <label>메뉴 (줄바꿈으로 구분)</label>
+            <textarea id="menuItems" rows="4" placeholder="쌀밥&#10;된장찌개&#10;계란말이&#10;배추김치"></textarea>
+          </div>
+          <button class="btn btn-primary" id="saveMenuBtn">저장하기</button>
+        </div>
+        <div class="card">
+          <div class="card-title">등록된 식단</div>
+          <div id="menuList"><div class="loading"><span class="spinner"></span>불러오는 중...</div></div>
+        </div>
+      </div>
+
+    </main>
+  </div>
+</div>
+
+<!-- ── EDIT MODAL ── -->
+<div class="modal-overlay" id="editModal">
+  <div class="modal">
+    <div class="modal-header">
+      <h3 id="editModalTitle">수정하기</h3>
+      <button class="modal-close" id="editModalClose">✕</button>
+    </div>
+    <div class="form-group">
+      <label>제목</label>
+      <input type="text" id="editTitle">
+    </div>
+    <div class="form-group">
+      <label>내용</label>
+      <textarea id="editContent" rows="6"></textarea>
+    </div>
+    <input type="hidden" id="editDocId">
+    <input type="hidden" id="editCollection">
+    <div class="modal-actions">
+      <button class="btn btn-outline" id="editModalCancel">취소</button>
+      <button class="btn btn-primary" id="editModalSave">저장</button>
+    </div>
+  </div>
+</div>
+
+<!-- ── TOAST ── -->
+<div class="toast" id="toast"></div>
+
+<script>
+  try {
+    firebase.initializeApp({
+      apiKey: "AIzaSyCbDAkuc88WrNVeHPq-Wv32sFYh5cUnCCU",
+      authDomain: "dongsuwon-care.firebaseapp.com",
+      projectId: "dongsuwon-care",
+      storageBucket: "dongsuwon-care.appspot.com",
+    });
+    window.db   = firebase.firestore();
+    window.auth = firebase.auth();
+  } catch(e) { console.warn('Firebase:', e.message); }
+</script>
+<script>
+/* ── UTILS ── */
+function showToast(msg, isError = false) {
+  const t = document.getElementById('toast');
+  t.textContent = msg;
+  t.className = 'toast' + (isError ? ' error' : '');
+  t.classList.add('show');
+  setTimeout(() => t.classList.remove('show'), 3000);
+}
+function fmtDate(ts) {
+  if (!ts) return '';
+  const d = ts.toDate ? ts.toDate() : new Date(ts);
+  return d.toLocaleDateString('ko-KR', { year: 'numeric', month: '2-digit', day: '2-digit' });
+}
+
+/* ── AUTH ── */
+document.getElementById('loginPassword').addEventListener('keydown', e => { if (e.key === 'Enter') doLogin(); });
+document.getElementById('loginBtn').addEventListener('click', doLogin);
+
+function doLogin() {
+  const email = document.getElementById('loginEmail').value.trim();
+  const pw    = document.getElementById('loginPassword').value;
+  const errEl = document.getElementById('loginError');
+  errEl.style.display = 'none';
+
+  firebase.auth().signInWithEmailAndPassword(email, pw)
+    .catch(() => { errEl.style.display = 'block'; });
+}
+
+document.getElementById('logoutBtn').addEventListener('click', () => {
+  firebase.auth().signOut();
+});
+
+firebase.auth().onAuthStateChanged(user => {
+  document.getElementById('loginScreen').style.display  = user ? 'none'  : 'flex';
+  document.getElementById('adminScreen').style.display  = user ? 'block' : 'none';
+  if (user) initAdmin();
+});
+
+/* ── SIDEBAR NAV ── */
+document.querySelectorAll('.sidebar-link[data-panel]').forEach(link => {
+  link.addEventListener('click', () => {
+    document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    link.classList.add('active');
+    document.getElementById('panel-' + link.dataset.panel).classList.add('active');
+    // lazy load
+    const panel = link.dataset.panel;
+    if (panel === 'notices')        loadNotices();
+    if (panel === 'news')           loadNews();
+    if (panel === 'consults')       loadConsults();
+    if (panel === 'gallery-manage') loadGalleryManage();
+    if (panel === 'menu-manage')    loadMenuList();
+    if (panel === 'page-intro' || panel === 'page-vision' || panel === 'page-services' || panel === 'page-programs' || panel === 'page-admission') initPagePanels();
+  });
+});
+
+/* ── INIT ── */
+function initAdmin() {
+  loadDashboard();
+  initUploadZones();
+}
+
+/* ── DASHBOARD ── */
+async function loadDashboard() {
+  if (!window.db) return;
+  const [nSnap, newsSnap, cSnap] = await Promise.all([
+    db.collection('notices').get(),
+    db.collection('news').get(),
+    db.collection('consultations').get(),
+  ]);
+  document.getElementById('statNotices').textContent  = nSnap.size;
+  document.getElementById('statNews').textContent     = newsSnap.size;
+  document.getElementById('statConsults').textContent = cSnap.size;
+  const pending = cSnap.docs.filter(d => d.data().status === 'pending').length;
+  document.getElementById('statPending').textContent  = pending;
+  if (pending > 0) {
+    const badge = document.getElementById('consultBadge');
+    badge.textContent = pending; badge.style.display = 'inline';
+  }
+
+  // recent consults
+  const recent = cSnap.docs.sort((a, b) => {
+    const ta = a.data().createdAt; const tb = b.data().createdAt;
+    return (tb > ta ? 1 : -1);
+  }).slice(0, 5);
+  const el = document.getElementById('recentConsults');
+  if (!recent.length) { el.innerHTML = '<div class="empty-state">접수된 상담이 없습니다</div>'; return; }
+  el.innerHTML = recent.map(doc => {
+    const d = doc.data();
+    return `<div class="post-item">
+      <div class="post-item-info">
+        <div class="post-item-title">${d.guardianName} 보호자 (어르신: ${d.patientName})</div>
+        <div class="post-item-meta">
+          <span>${d.phone}</span>
+          <span>요양등급: ${d.careGrade || '미입력'}</span>
+          <span>${d.createdAt ? new Date(d.createdAt).toLocaleDateString('ko-KR') : ''}</span>
+        </div>
+      </div>
+      <span class="status-badge ${d.status === 'done' ? 'status-done' : 'status-pending'}">${d.status === 'done' ? '처리완료' : '미처리'}</span>
+    </div>`;
+  }).join('');
+}
+
+/* ── NOTICES ── */
+async function loadNotices() {
+  const el = document.getElementById('noticesList');
+  el.innerHTML = '<div class="loading"><span class="spinner"></span>불러오는 중...</div>';
+  if (!window.db) { el.innerHTML = '<div class="empty-state">Firebase 연결 필요</div>'; return; }
+  const snap = await db.collection('notices').orderBy('createdAt', 'desc').get();
+  document.getElementById('noticesCountBadge').textContent = `(총 ${snap.size}건)`;
+  if (!snap.size) { el.innerHTML = '<div class="empty-state">등록된 공지사항이 없습니다</div>'; return; }
+  el.innerHTML = snap.docs.map(doc => {
+    const d = doc.data();
+    return `<div class="post-item">
+      <div class="post-item-info">
+        <div class="post-item-title">${d.title}</div>
+        <div class="post-item-meta"><span class="tag tag-notice">공지</span><span>${fmtDate(d.createdAt)}</span></div>
+      </div>
+      <div class="post-item-actions">
+        <button class="btn btn-outline btn-sm" onclick="openEdit('notices','${doc.id}','${encodeURIComponent(d.title)}','${encodeURIComponent(d.content || '')}')">수정</button>
+        <button class="btn btn-danger" onclick="deletePost('notices','${doc.id}')">삭제</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('saveNoticeBtn').addEventListener('click', async () => {
+  const title   = document.getElementById('noticeTitle').value.trim();
+  const content = document.getElementById('noticeContent').value.trim();
+  if (!title || !content) { showToast('제목과 내용을 입력해주세요', true); return; }
+  if (!window.db) { showToast('Firebase 연결 필요', true); return; }
+  try {
+    await db.collection('notices').add({ title, content, createdAt: firebase.firestore.FieldValue.serverTimestamp(), type: 'notice' });
+    document.getElementById('noticeTitle').value = '';
+    document.getElementById('noticeContent').value = '';
+    showToast('공지사항이 저장되었습니다 ✓');
+    loadNotices(); loadDashboard();
+  } catch(e) { showToast('저장 실패: ' + e.message, true); }
+});
+
+/* ── NEWS ── */
+async function loadNews() {
+  const el = document.getElementById('newsList');
+  el.innerHTML = '<div class="loading"><span class="spinner"></span>불러오는 중...</div>';
+  if (!window.db) { el.innerHTML = '<div class="empty-state">Firebase 연결 필요</div>'; return; }
+  const snap = await db.collection('news').orderBy('createdAt', 'desc').get();
+  document.getElementById('newsCountBadge').textContent = `(총 ${snap.size}건)`;
+  if (!snap.size) { el.innerHTML = '<div class="empty-state">등록된 소식이 없습니다</div>'; return; }
+  el.innerHTML = snap.docs.map(doc => {
+    const d = doc.data();
+    return `<div class="post-item">
+      <div class="post-item-info">
+        <div class="post-item-title">${d.title}</div>
+        <div class="post-item-meta"><span class="tag tag-news">소식</span><span>${fmtDate(d.createdAt)}</span></div>
+      </div>
+      <div class="post-item-actions">
+        <button class="btn btn-outline btn-sm" onclick="openEdit('news','${doc.id}','${encodeURIComponent(d.title)}','${encodeURIComponent(d.content || '')}')">수정</button>
+        <button class="btn btn-danger" onclick="deletePost('news','${doc.id}')">삭제</button>
+      </div>
+    </div>`;
+  }).join('');
+}
+
+document.getElementById('saveNewsBtn').addEventListener('click', async () => {
+  const title   = document.getElementById('newsTitle').value.trim();
+  const content = document.getElementById('newsContent').value.trim();
+  if (!title || !content) { showToast('제목과 내용을 입력해주세요', true); return; }
+  if (!window.db) { showToast('Firebase 연결 필요', true); return; }
+  try {
+    await db.collection('news').add({ title, content, createdAt: firebase.firestore.FieldValue.serverTimestamp(), type: 'news' });
+    document.getElementById('newsTitle').value = '';
+    document.getElementById('newsContent').value = '';
+    document.getElementById('newsImgPreview').innerHTML = '';
+    showToast('소식이 저장되었습니다 ✓');
+    loadNews(); loadDashboard();
+  } catch(e) { showToast('저장 실패: ' + e.message, true); }
+});
+
+/* ── CONSULTS ── */
+let allConsults = [];
+async function loadConsults() {
+  const el = document.getElementById('consultsList');
+  el.innerHTML = '<div class="loading"><span class="spinner"></span>불러오는 중...</div>';
+  if (!window.db) { el.innerHTML = '<div class="empty-state">Firebase 연결 필요</div>'; return; }
+  const snap = await db.collection('consultations').orderBy('createdAt', 'desc').get();
+  allConsults = snap.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+  document.getElementById('consultsTotalBadge').textContent = `(총 ${allConsults.length}건)`;
+  renderConsults(allConsults);
+}
+
+function renderConsults(list) {
+  const el = document.getElementById('consultsList');
+  if (!list.length) { el.innerHTML = '<div class="empty-state">접수된 상담이 없습니다</div>'; return; }
+  el.innerHTML = list.map(d => `
+    <div class="consult-item" id="consult-${d.id}">
+      <div class="consult-item-header">
+        <div>
+          <span class="consult-item-name">${d.guardianName} 보호자</span>
+          <span class="status-badge ${d.status === 'done' ? 'status-done' : 'status-pending'}" style="margin-left:10px;">${d.status === 'done' ? '처리완료' : '미처리'}</span>
+        </div>
+        <div style="display:flex;align-items:center;gap:10px;">
+          <span class="consult-item-date">${d.createdAt ? new Date(d.createdAt).toLocaleString('ko-KR') : ''}</span>
+          <button class="btn btn-outline btn-sm" onclick="toggleConsultStatus('${d.id}','${d.status}')">${d.status === 'done' ? '미처리로' : '처리완료'}</button>
+          <button class="btn btn-danger" onclick="deletePost('consultations','${d.id}')">삭제</button>
+        </div>
+      </div>
+      <div class="consult-grid">
+        <div class="consult-field"><label>어르신 성함</label><span>${d.patientName}</span></div>
+        <div class="consult-field"><label>연락처</label><span><a href="tel:${d.phone}" style="color:var(--forest);font-weight:700;">${d.phone}</a></span></div>
+        <div class="consult-field"><label>요양등급</label><span>${d.careGrade || '미입력'}</span></div>
+        <div class="consult-field"><label>희망입소시기</label><span>${d.admissionDate || '미입력'}</span></div>
+        <div class="consult-field"><label>연령</label><span>${d.patientAge ? d.patientAge + '세' : '미입력'}</span></div>
+      </div>
+      ${d.message ? `<div class="consult-message">${d.message}</div>` : ''}
+    </div>
+  `).join('');
+}
+
+window.filterConsults = function(status) {
+  if (status === 'all') renderConsults(allConsults);
+  else renderConsults(allConsults.filter(d => d.status === status));
+};
+
+window.toggleConsultStatus = async function(id, currentStatus) {
+  if (!window.db) return;
+  const newStatus = currentStatus === 'done' ? 'pending' : 'done';
+  await db.collection('consultations').doc(id).update({ status: newStatus });
+  showToast(newStatus === 'done' ? '처리완료로 변경됐습니다 ✓' : '미처리로 변경됐습니다');
+  loadConsults(); loadDashboard();
+};
+
+/* ── GALLERY MANAGE ── */
+async function loadGalleryManage() {
+  const el = document.getElementById('galleryManageList');
+  el.innerHTML = '<div class="loading"><span class="spinner"></span>불러오는 중...</div>';
+  if (!window.db) { el.innerHTML = '<div class="empty-state">Firebase 연결 필요</div>'; return; }
+  const snap = await db.collection('gallery').orderBy('createdAt', 'desc').get();
+  if (!snap.size) { el.innerHTML = '<div class="empty-state">등록된 사진이 없습니다</div>'; return; }
+  const grid = document.createElement('div');
+  grid.style.cssText = 'display:grid;grid-template-columns:repeat(4,1fr);gap:12px;';
+  snap.docs.forEach(doc => {
+    const d = doc.data();
+    const item = document.createElement('div');
+    item.style.cssText = 'position:relative;border-radius:8px;overflow:hidden;aspect-ratio:4/3;background:#eee;';
+    item.innerHTML = `
+      <img src="${d.url}" alt="${d.caption||''}" style="width:100%;height:100%;object-fit:cover;">
+      <div style="position:absolute;bottom:0;left:0;right:0;background:linear-gradient(transparent,rgba(0,0,0,0.7));padding:8px;color:white;font-size:0.72rem;">${d.category||''}</div>
+      <button onclick="deletePost('gallery','${doc.id}')" style="position:absolute;top:6px;right:6px;background:rgba(0,0,0,0.6);color:white;border:none;width:24px;height:24px;border-radius:50%;cursor:pointer;font-size:0.8rem;">✕</button>
+    `;
+    grid.appendChild(item);
+  });
+  el.innerHTML = '';
+  el.appendChild(grid);
+}
+
+document.getElementById('uploadGalleryBtn').addEventListener('click', async () => {
+  const input = document.getElementById('galleryImgInput');
+  const category = document.getElementById('galleryCategory').value;
+  if (!input.files.length) { showToast('사진을 선택해주세요', true); return; }
+  if (!window.db) { showToast('Firebase 연결 필요', true); return; }
+
+  showToast('업로드 중...');
+  for (const file of input.files) {
+    try {
+      let url = '';
+      if (firebase.storage) {
+        const ref = firebase.storage().ref(`gallery/${Date.now()}_${file.name}`);
+        await ref.put(file);
+        url = await ref.getDownloadURL();
+      } else {
+        // fallback: base64 (소용량 이미지만)
+        url = await toBase64(file);
+      }
+      await db.collection('gallery').add({
+        url, category,
+        caption: file.name.replace(/\.[^.]+$/, ''),
+        createdAt: firebase.firestore.FieldValue.serverTimestamp(),
+      });
+    } catch(e) { showToast('업로드 실패: ' + e.message, true); return; }
+  }
+  showToast(`${input.files.length}장 업로드 완료 ✓`);
+  input.value = '';
+  document.getElementById('galleryPreview').innerHTML = '';
+  loadGalleryManage();
+});
+
+function toBase64(file) {
+  return new Promise((res, rej) => {
+    const r = new FileReader();
+    r.onload = () => res(r.result);
+    r.onerror = rej;
+    r.readAsDataURL(file);
+  });
+}
+
+/* ── MENU MANAGE ── */
+document.getElementById('saveMenuBtn').addEventListener('click', async () => {
+  const date  = document.getElementById('menuDate').value;
+  const type  = document.getElementById('mealType').value;
+  const items = document.getElementById('menuItems').value.trim();
+  if (!date || !items) { showToast('날짜와 메뉴를 입력해주세요', true); return; }
+  if (!window.db) { showToast('Firebase 연결 필요', true); return; }
+  await db.collection('menus').add({ date, mealType: type, items, createdAt: firebase.firestore.FieldValue.serverTimestamp() });
+  showToast('식단이 저장되었습니다 ✓');
+  document.getElementById('menuItems').value = '';
+  loadMenuList();
+});
+
+async function loadMenuList() {
+  const el = document.getElementById('menuList');
+  if (!window.db) { el.innerHTML = '<div class="empty-state">Firebase 연결 필요</div>'; return; }
+  const snap = await db.collection('menus').orderBy('date', 'desc').limit(30).get();
+  if (!snap.size) { el.innerHTML = '<div class="empty-state">등록된 식단이 없습니다</div>'; return; }
+  el.innerHTML = snap.docs.map(doc => {
+    const d = doc.data();
+    return `<div class="post-item">
+      <div class="post-item-info">
+        <div class="post-item-title">${d.date} ${d.mealType}</div>
+        <div class="post-item-meta"><span>${d.items.replace(/\n/g, ' · ')}</span></div>
+      </div>
+      <button class="btn btn-danger" onclick="deletePost('menus','${doc.id}')">삭제</button>
+    </div>`;
+  }).join('');
+}
+
+/* ── DELETE ── */
+window.deletePost = async function(collection, id) {
+  if (!confirm('정말 삭제하시겠습니까?')) return;
+  if (!window.db) return;
+  await db.collection(collection).doc(id).delete();
+  showToast('삭제됐습니다');
+  if (collection === 'notices')       loadNotices();
+  if (collection === 'news')          loadNews();
+  if (collection === 'consultations') { loadConsults(); loadDashboard(); }
+  if (collection === 'gallery')       loadGalleryManage();
+  if (collection === 'menus')         loadMenuList();
+};
+
+/* ── EDIT MODAL ── */
+window.openEdit = function(collection, id, title, content) {
+  document.getElementById('editDocId').value     = id;
+  document.getElementById('editCollection').value= collection;
+  document.getElementById('editTitle').value     = decodeURIComponent(title);
+  document.getElementById('editContent').value   = decodeURIComponent(content);
+  document.getElementById('editModalTitle').textContent = collection === 'notices' ? '공지사항 수정' : '소식 수정';
+  document.getElementById('editModal').classList.add('open');
+};
+document.getElementById('editModalClose').addEventListener('click',  () => document.getElementById('editModal').classList.remove('open'));
+document.getElementById('editModalCancel').addEventListener('click', () => document.getElementById('editModal').classList.remove('open'));
+document.getElementById('editModalSave').addEventListener('click', async () => {
+  const id   = document.getElementById('editDocId').value;
+  const col  = document.getElementById('editCollection').value;
+  const title  = document.getElementById('editTitle').value.trim();
+  const content= document.getElementById('editContent').value.trim();
+  if (!title || !content) { showToast('제목과 내용을 입력해주세요', true); return; }
+  await db.collection(col).doc(id).update({ title, content });
+  showToast('수정됐습니다 ✓');
+  document.getElementById('editModal').classList.remove('open');
+  if (col === 'notices') loadNotices();
+  if (col === 'news')    loadNews();
+});
+
+/* ── UPLOAD ZONES ── */
+function initUploadZones() {
+  // News image
+  const newsZone  = document.getElementById('newsImgZone');
+  const newsInput = document.getElementById('newsImgInput');
+  newsZone.addEventListener('click', () => newsInput.click());
+  newsZone.addEventListener('dragover', e => { e.preventDefault(); newsZone.classList.add('dragover'); });
+  newsZone.addEventListener('dragleave', () => newsZone.classList.remove('dragover'));
+  newsZone.addEventListener('drop', e => { e.preventDefault(); newsZone.classList.remove('dragover'); previewImages(e.dataTransfer.files, 'newsImgPreview', false); });
+  newsInput.addEventListener('change', () => previewImages(newsInput.files, 'newsImgPreview', false));
+
+  // Gallery
+  const galZone  = document.getElementById('galleryUploadZone');
+  const galInput = document.getElementById('galleryImgInput');
+  galZone.addEventListener('click', () => galInput.click());
+  galZone.addEventListener('dragover', e => { e.preventDefault(); galZone.classList.add('dragover'); });
+  galZone.addEventListener('dragleave', () => galZone.classList.remove('dragover'));
+  galZone.addEventListener('drop', e => {
+    e.preventDefault(); galZone.classList.remove('dragover');
+    galInput.files = e.dataTransfer.files;
+    previewImages(e.dataTransfer.files, 'galleryPreview', true);
+  });
+  galInput.addEventListener('change', () => previewImages(galInput.files, 'galleryPreview', true));
+}
+
+function previewImages(files, previewId, multi) {
+  const container = document.getElementById(previewId);
+  if (!multi) container.innerHTML = '';
+  [...files].forEach(file => {
+    const reader = new FileReader();
+    reader.onload = e => {
+      const wrap = document.createElement('div');
+      wrap.className = 'preview-item';
+      wrap.innerHTML = `<img src="${e.target.result}" alt=""><button class="preview-remove" onclick="this.parentElement.remove()">✕</button>`;
+      container.appendChild(wrap);
+    };
+    reader.readAsDataURL(file);
+  });
+  if (multi) container.className = 'upload-preview';
+}
+
+/* ── 페이지 관리 초기화 ── */
+function initPagePanels() {
+  // 서비스 편집 영역 생성
+  const serviceDefaults = [
+    { title: '의료·건강 관리', items: ['협력 의료기관 연계 정기 건강 검진', '투약 관리 및 처치 서비스', '응급 상황 대처 및 이송 체계', '인지 기능 검사 및 치매 관리'] },
+    { title: '일상생활 지원', items: ['식사 보조 및 영양 관리', '개인위생 관리 (목욕, 구강, 세면)', '이동 보조 및 체위 변경', '의복 관리 및 세탁 서비스'] },
+    { title: '심리·정서 케어', items: ['전문 사회복지사 개별 심리 상담', '회상 치료 및 인지 훈련', '가족 상담 및 소통 지원', '정서적 지지 및 우울 예방'] },
+    { title: '재활·운동 치료', items: ['물리치료사의 개인별 재활 운동', '보행 훈련 및 근력 강화 운동', '일상생활 동작 훈련', '낙상 예방 프로그램'] },
+    { title: '영양·식사 관리', items: ['영양사 계획 균형 식단 하루 3식', '질환별 치료식 제공', '연하 곤란 어르신 특별 식사', '간식 및 음수 관리'] },
+    { title: '문화·여가 프로그램', items: ['음악 치료, 미술 치료', '원예 활동, 공예 프로그램', '계절 행사 및 생신 잔치', '외부 봉사단 문화 공연'] },
+  ];
+  const sEl = document.getElementById('services-edit-area');
+  if (sEl) sEl.innerHTML = serviceDefaults.map((s, i) => `
+    <div style="background:var(--cream);border-radius:8px;padding:20px;margin-bottom:16px;">
+      <div class="form-group"><label>서비스 ${i+1} 제목</label><input type="text" id="svc${i}-title" value="${s.title}"></div>
+      <div class="form-group"><label>서비스 항목 (줄바꿈으로 구분)</label><textarea id="svc${i}-items" rows="4">${s.items.join('\n')}</textarea></div>
+    </div>`).join('');
+
+  // 프로그램 편집 영역
+  const progDefaults = [
+    { name: '월요일', items: [{time:'10:00', name:'인지 훈련'}, {time:'14:00', name:'근력 강화 체조'}] },
+    { name: '화요일', items: [{time:'10:00', name:'미술 치료'}, {time:'14:00', name:'음악 치료'}] },
+    { name: '수요일', items: [{time:'10:00', name:'보행 훈련'}, {time:'14:00', name:'회상 치료'}] },
+    { name: '목요일', items: [{time:'10:00', name:'원예 활동'}, {time:'14:00', name:'공예 프로그램'}] },
+    { name: '금요일', items: [{time:'10:00', name:'스트레칭·체조'}, {time:'14:00', name:'여가 활동'}] },
+  ];
+  const pEl = document.getElementById('programs-edit-area');
+  if (pEl) pEl.innerHTML = progDefaults.map((d, di) => `
+    <div style="background:var(--cream);border-radius:8px;padding:20px;margin-bottom:12px;">
+      <strong style="color:var(--forest);">${d.name}</strong>
+      ${d.items.map((item, ii) => `
+        <div class="form-row" style="margin-top:10px;">
+          <div class="form-group"><label>시간</label><input type="text" id="prog${di}-time${ii}" value="${item.time}" placeholder="10:00"></div>
+          <div class="form-group"><label>프로그램명</label><input type="text" id="prog${di}-name${ii}" value="${item.name}" placeholder="프로그램명"></div>
+        </div>`).join('')}
+    </div>`).join('');
+
+  // Firebase에서 기존 데이터 로드해서 폼에 채우기
+  if (window.db) {
+    window.db.collection('pages').doc('intro').get().then(doc => {
+      if (doc.exists && doc.data().body) document.getElementById('intro-body-edit').value = doc.data().body;
+    }).catch(() => {});
+    window.db.collection('pages').doc('vision').get().then(doc => {
+      if (!doc.exists) return;
+      const d = doc.data();
+      if (d.statement) document.getElementById('vision-statement-edit').value = d.statement;
+      if (d.values) d.values.forEach((v, i) => {
+        const ti = document.getElementById(`v${i+1}-title`);
+        const ci = document.getElementById(`v${i+1}-content`);
+        if (ti) ti.value = v.title;
+        if (ci) ci.value = v.content;
+      });
+    }).catch(() => {});
+    window.db.collection('pages').doc('admission-docs').get().then(doc => {
+      if (!doc.exists) return;
+      const d = doc.data();
+      if (d.required) document.getElementById('required-docs-edit').value = d.required.map(r => `${r.name}|${r.desc}`).join('\n');
+      if (d.additional) document.getElementById('additional-docs-edit').value = d.additional.map(r => `${r.name}|${r.desc}`).join('\n');
+    }).catch(() => {});
+  }
+}
+
+/* ── 페이지 저장 함수들 ── */
+window.savePageContent = async function(pageId) {
+  if (!window.db) { showToast('Firebase 연결 필요', true); return; }
+  let data = {};
+  if (pageId === 'intro') {
+    data.body = document.getElementById('intro-body-edit').value;
+  }
+  await window.db.collection('pages').doc(pageId).set(data, { merge: true });
+  showToast('저장됐습니다 ✓');
+};
+
+window.saveVision = async function() {
+  if (!window.db) return;
+  const statement = document.getElementById('vision-statement-edit').value;
+  await window.db.collection('pages').doc('vision').set({ statement }, { merge: true });
+  showToast('비전 문구 저장됐습니다 ✓');
+};
+
+window.saveValues = async function() {
+  if (!window.db) return;
+  const values = [1,2,3,4].map(i => ({
+    title:   document.getElementById(`v${i}-title`).value,
+    content: document.getElementById(`v${i}-content`).value,
+  }));
+  await window.db.collection('pages').doc('vision').set({ values }, { merge: true });
+  showToast('핵심가치 저장됐습니다 ✓');
+};
+
+window.saveServices = async function() {
+  if (!window.db) return;
+  const services = [0,1,2,3,4,5].map(i => ({
+    title: document.getElementById(`svc${i}-title`).value,
+    items: document.getElementById(`svc${i}-items`).value.split('\n').filter(Boolean),
+  }));
+  await window.db.collection('pages').doc('services').set({ services });
+  showToast('서비스 저장됐습니다 ✓');
+};
+
+window.savePrograms = async function() {
+  if (!window.db) return;
+  const days = ['월요일','화요일','수요일','목요일','금요일'].map((name, di) => ({
+    name,
+    items: [0,1].map(ii => ({
+      time: document.getElementById(`prog${di}-time${ii}`)?.value || '',
+      name: document.getElementById(`prog${di}-name${ii}`)?.value || '',
+    })).filter(i => i.name),
+  }));
+  await window.db.collection('pages').doc('programs').set({ days });
+  showToast('프로그램 저장됐습니다 ✓');
+};
+
+window.saveAdmissionSteps = async function() {
+  if (!window.db) return;
+  const steps = [1,2,3,4,5].map(i => ({
+    title:   document.getElementById(`step${i}-title`).value,
+    content: document.getElementById(`step${i}-content`).value,
+  }));
+  await window.db.collection('pages').doc('admission-process').set({ steps });
+  showToast('입소 절차 저장됐습니다 ✓');
+};
+
+window.saveAdmissionDocs = async function() {
+  if (!window.db) return;
+  const parseLines = (text) => text.split('\n').filter(Boolean).map(line => {
+    const [name, desc] = line.split('|');
+    return { name: name?.trim() || '', desc: desc?.trim() || '' };
+  });
+  const required   = parseLines(document.getElementById('required-docs-edit').value);
+  const additional = parseLines(document.getElementById('additional-docs-edit').value);
+  await window.db.collection('pages').doc('admission-docs').set({ required, additional });
+  showToast('준비 서류 저장됐습니다 ✓');
+};
+
+// today's date default
+document.getElementById('menuDate').valueAsDate = new Date();
+</script>
+</body>
+</html>
