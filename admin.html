@@ -296,6 +296,26 @@
       .consult-grid { grid-template-columns: repeat(2, 1fr); }
       .upload-preview { grid-template-columns: repeat(2, 1fr); }
     }
+    /* ── 프로그램 에디터 ── */
+    .prog-editor-toolbar { display:flex; gap:6px; margin-bottom:8px; flex-wrap:wrap; }
+    .prog-editor-toolbar button { padding:5px 12px; border:1px solid var(--border); border-radius:6px; background:var(--white); cursor:pointer; font-size:0.85rem; transition:background 0.2s; }
+    .prog-editor-toolbar button:hover { background:var(--cream); }
+    .prog-editor { min-height:200px; border:1.5px solid var(--border); border-radius:8px; padding:16px; font-size:0.95rem; line-height:1.8; outline:none; }
+    .prog-editor:focus { border-color:var(--forest); }
+    .prog-editor:empty::before { content:'내용을 입력하세요...'; color:var(--text-light); }
+    .prog-img-upload-area { background:var(--cream); border:2px dashed var(--border); border-radius:10px; padding:24px; text-align:center; margin-bottom:12px; }
+    .prog-img-preview { display:flex; gap:10px; flex-wrap:wrap; margin-top:8px; }
+    .prog-preview-item { position:relative; width:100px; height:100px; border-radius:8px; overflow:hidden; }
+    .prog-preview-item img { width:100%; height:100%; object-fit:cover; }
+    .prog-preview-item button { position:absolute; top:4px; right:4px; background:rgba(0,0,0,0.6); color:#fff; border:none; border-radius:50%; width:20px; height:20px; cursor:pointer; font-size:0.7rem; display:flex; align-items:center; justify-content:center; }
+    .admin-table { width:100%; border-collapse:collapse; font-size:0.88rem; }
+    .admin-table th { background:var(--forest); color:var(--white); padding:10px 14px; text-align:left; font-weight:600; }
+    .admin-table td { padding:10px 14px; border-bottom:1px solid var(--cream-dark); vertical-align:middle; }
+    .admin-table tr:hover td { background:var(--cream); }
+    .btn-sm-action { padding:5px 12px; border-radius:6px; font-size:0.78rem; font-weight:600; cursor:pointer; border:1.5px solid var(--forest); color:var(--forest); background:var(--white); transition:all 0.2s; margin-right:4px; }
+    .btn-sm-action:hover { background:var(--forest); color:var(--white); }
+    .btn-sm-action.btn-danger { border-color:#e74c3c; color:#e74c3c; }
+    .btn-sm-action.btn-danger:hover { background:#e74c3c; color:var(--white); }
   </style>
 </head>
 <body>
@@ -356,6 +376,16 @@
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
         상담 신청 목록
         <span id="consultBadge" style="margin-left:auto;background:var(--red);color:white;font-size:0.7rem;padding:2px 7px;border-radius:40px;display:none;"></span>
+      </div>
+
+      <p class="sidebar-section-label">프로그램 관리</p>
+      <div class="sidebar-link" data-panel="prog-write">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M11 4H4a2 2 0 00-2 2v14a2 2 0 002 2h14a2 2 0 002-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 013 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+        프로그램 글쓰기
+      </div>
+      <div class="sidebar-link" data-panel="prog-list">
+        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><line x1="8" y1="6" x2="21" y2="6"/><line x1="8" y1="12" x2="21" y2="12"/><line x1="8" y1="18" x2="21" y2="18"/><line x1="3" y1="6" x2="3.01" y2="6"/><line x1="3" y1="12" x2="3.01" y2="12"/><line x1="3" y1="18" x2="3.01" y2="18"/></svg>
+        프로그램 목록
       </div>
 
       <p class="sidebar-section-label">페이지 관리</p>
@@ -557,6 +587,52 @@
         <div class="card">
           <div class="card-title">등록된 갤러리 사진</div>
           <div id="galleryManageList"><div class="loading"><span class="spinner"></span>불러오는 중...</div></div>
+        </div>
+      </div>
+
+      <!-- ── 프로그램 글쓰기 ── -->
+      <div class="panel" id="panel-prog-write">
+        <div class="panel-header">
+          <h2 id="prog-write-title">프로그램 글쓰기</h2>
+          <p>프로그램 활동 소식을 작성합니다</p>
+        </div>
+        <div class="card">
+          <input type="hidden" id="prog-edit-id">
+          <div class="form-group">
+            <label>제목 <span style="color:red">*</span></label>
+            <input type="text" id="prog-title-input" placeholder="예) 3월 여가프로그램 – 웃음가득 여가한마당">
+          </div>
+          <div class="form-group">
+            <label>내용</label>
+            <div class="prog-editor-toolbar">
+              <button type="button" onclick="execCmd('bold')"><b>B</b></button>
+              <button type="button" onclick="execCmd('italic')"><i>I</i></button>
+              <button type="button" onclick="execCmd('underline')"><u>U</u></button>
+              <button type="button" onclick="insertHr()">─ 구분선</button>
+            </div>
+            <div id="prog-content-editor" class="prog-editor" contenteditable="true" placeholder="내용을 입력하세요..."></div>
+          </div>
+          <div class="form-group">
+            <label>사진 첨부</label>
+            <div class="prog-img-upload-area" id="prog-img-drop-zone">
+              <input type="file" id="prog-img-input" multiple accept="image/*" style="display:none">
+              <button type="button" onclick="document.getElementById('prog-img-input').click()" class="btn btn-outline">📷 사진 선택</button>
+              <p style="font-size:0.82rem;color:var(--text-light);margin-top:8px;">여러 장 선택 가능</p>
+            </div>
+            <div id="prog-img-preview" class="prog-img-preview"></div>
+          </div>
+          <div style="display:flex;gap:12px;">
+            <button class="btn btn-primary" onclick="saveProgPost()">저장하기</button>
+            <button class="btn btn-outline" onclick="resetProgForm()">초기화</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- ── 프로그램 목록 ── -->
+      <div class="panel" id="panel-prog-list">
+        <div class="panel-header"><h2>프로그램 목록</h2><p>작성된 프로그램 게시물을 관리합니다</p></div>
+        <div class="card">
+          <div id="prog-list-area"><p style="color:var(--text-light);">불러오는 중...</p></div>
         </div>
       </div>
 
@@ -1259,6 +1335,129 @@ window.saveAdmissionDocs = async function() {
   await window.db.collection('pages').doc('admission-docs').set({ required, additional });
   showToast('준비 서류 저장됐습니다 ✓');
 };
+
+/* ── 프로그램 글쓰기 ── */
+let progImages = []; // base64 배열
+
+window.execCmd = function(cmd) { document.execCommand(cmd, false, null); document.getElementById('prog-content-editor').focus(); };
+window.insertHr = function() { document.execCommand('insertHTML', false, '<hr style="border:1px solid #ddd;margin:16px 0">'); };
+
+document.getElementById('prog-img-input').addEventListener('change', function(e) {
+  Array.from(e.target.files).forEach(file => {
+    const reader = new FileReader();
+    reader.onload = function(ev) {
+      progImages.push(ev.target.result);
+      renderProgImgPreview();
+    };
+    reader.readAsDataURL(file);
+  });
+  e.target.value = '';
+});
+
+function renderProgImgPreview() {
+  const wrap = document.getElementById('prog-img-preview');
+  wrap.innerHTML = progImages.map((src, i) => `
+    <div class="prog-preview-item">
+      <img src="${src}" alt="미리보기">
+      <button onclick="removeProgImg(${i})">✕</button>
+    </div>`).join('');
+}
+window.removeProgImg = function(i) { progImages.splice(i, 1); renderProgImgPreview(); };
+
+window.saveProgPost = async function() {
+  if (!window.db || !window.auth?.currentUser) { showToast('로그인 필요', true); return; }
+  const title = document.getElementById('prog-title-input').value.trim();
+  if (!title) { showToast('제목을 입력하세요', true); return; }
+  const content = document.getElementById('prog-content-editor').innerHTML;
+  const editId = document.getElementById('prog-edit-id').value;
+
+  const data = {
+    title,
+    content,
+    images: progImages,
+    updatedAt: firebase.firestore.FieldValue.serverTimestamp(),
+  };
+  if (!editId) data.createdAt = firebase.firestore.FieldValue.serverTimestamp();
+
+  try {
+    if (editId) {
+      await window.db.collection('program-posts').doc(editId).update(data);
+      showToast('수정됐습니다 ✓');
+    } else {
+      await window.db.collection('program-posts').add(data);
+      showToast('저장됐습니다 ✓');
+    }
+    resetProgForm();
+    loadProgList();
+  } catch(e) { showToast('저장 실패: ' + e.message, true); }
+};
+
+window.resetProgForm = function() {
+  document.getElementById('prog-edit-id').value = '';
+  document.getElementById('prog-title-input').value = '';
+  document.getElementById('prog-content-editor').innerHTML = '';
+  document.getElementById('prog-write-title').textContent = '프로그램 글쓰기';
+  progImages = [];
+  renderProgImgPreview();
+};
+
+async function loadProgList() {
+  if (!window.db) return;
+  const area = document.getElementById('prog-list-area');
+  if (!area) return;
+  try {
+    const snap = await window.db.collection('program-posts').orderBy('createdAt', 'desc').get();
+    if (snap.empty) { area.innerHTML = '<p style="color:var(--text-light);">게시물이 없습니다.</p>'; return; }
+    area.innerHTML = `<table class="admin-table">
+      <thead><tr><th>제목</th><th>날짜</th><th>사진</th><th>관리</th></tr></thead>
+      <tbody>${snap.docs.map(doc => {
+        const d = doc.data();
+        const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleDateString('ko-KR') : '-';
+        return `<tr>
+          <td>${d.title}</td>
+          <td>${date}</td>
+          <td>${d.images ? d.images.length : 0}장</td>
+          <td>
+            <button class="btn-sm-action" onclick="editProgPost('${doc.id}')">수정</button>
+            <button class="btn-sm-action btn-danger" onclick="deleteProgPost('${doc.id}')">삭제</button>
+          </td>
+        </tr>`;
+      }).join('')}</tbody>
+    </table>`;
+  } catch(e) { area.innerHTML = '<p>불러오기 실패</p>'; }
+}
+
+window.editProgPost = async function(id) {
+  if (!window.db) return;
+  const doc = await window.db.collection('program-posts').doc(id).get();
+  if (!doc.exists) return;
+  const d = doc.data();
+  document.getElementById('prog-edit-id').value = id;
+  document.getElementById('prog-title-input').value = d.title || '';
+  document.getElementById('prog-content-editor').innerHTML = d.content || '';
+  document.getElementById('prog-write-title').textContent = '프로그램 수정';
+  progImages = d.images || [];
+  renderProgImgPreview();
+  // 글쓰기 패널로 이동
+  document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+  document.getElementById('panel-prog-write').classList.add('active');
+  document.querySelectorAll('.sidebar-link').forEach(l => l.classList.remove('active'));
+  window.scrollTo(0, 0);
+};
+
+window.deleteProgPost = async function(id) {
+  if (!confirm('삭제하시겠습니까?')) return;
+  await window.db.collection('program-posts').doc(id).delete();
+  showToast('삭제됐습니다');
+  loadProgList();
+};
+
+// sidebar 클릭 시 prog-list 로드
+document.querySelectorAll('.sidebar-link').forEach(link => {
+  if (link.dataset.panel === 'prog-list') {
+    link.addEventListener('click', () => setTimeout(loadProgList, 100));
+  }
+});
 
 // today's date default
 document.getElementById('menuDate').valueAsDate = new Date();

@@ -179,7 +179,8 @@ document.addEventListener('DOMContentLoaded', () => {
     if (pageId === 'intro')   loadPageContent('intro');
     if (pageId === 'vision')  loadPageContent('vision');
     if (pageId === 'services') loadPageContent('services');
-    if (pageId === 'programs') loadPageContent('programs');
+    if (pageId === 'programs') loadPrograms();
+    if (pageId === 'program-detail') { /* 상세보기는 loadPrograms에서 처리 */ }
     if (pageId === 'admission-process') loadPageContent('admission-process');
     if (pageId === 'admission-docs')    loadPageContent('admission-docs');
   }
@@ -338,6 +339,65 @@ document.addEventListener('DOMContentLoaded', () => {
       renderHomeNews(btn.dataset.cat);
     });
   });
+
+  /* ── 프로그램 게시판 ── */
+  async function loadPrograms() {
+    if (!window.db) return;
+    const grid = document.getElementById('prog-posts-grid');
+    const empty = document.getElementById('prog-empty');
+    if (!grid) return;
+    grid.innerHTML = '<div class="prog-loading">불러오는 중...</div>';
+    try {
+      const snap = await window.db.collection('program-posts').orderBy('createdAt', 'desc').get();
+      if (snap.empty) {
+        grid.style.display = 'none';
+        if (empty) empty.style.display = 'block';
+        return;
+      }
+      grid.style.display = 'grid';
+      if (empty) empty.style.display = 'none';
+      grid.innerHTML = snap.docs.map(doc => {
+        const d = doc.data();
+        const thumb = d.images && d.images.length > 0 ? d.images[0] : 'img-hall.jpg';
+        const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+        return `<div class="prog-blog-item" onclick="openProgramDetail('${doc.id}')">
+          <div class="prog-blog-thumb"><img src="${thumb}" alt="${d.title}" loading="lazy"></div>
+          <div class="prog-blog-info">
+            <p class="prog-blog-title">${d.title}</p>
+            <span class="prog-blog-date">${date}</span>
+          </div>
+        </div>`;
+      }).join('');
+    } catch(e) { grid.innerHTML = '<div class="prog-loading">불러오기 실패</div>'; }
+  }
+
+  window.openProgramDetail = async function(postId) {
+    if (!window.db) return;
+    try {
+      const doc = await window.db.collection('program-posts').doc(postId).get();
+      if (!doc.exists) return;
+      const d = doc.data();
+      const date = d.createdAt ? new Date(d.createdAt.seconds * 1000).toLocaleDateString('ko-KR', { year: 'numeric', month: 'long', day: 'numeric' }) : '';
+
+      document.getElementById('prog-detail-title').textContent = d.title;
+      document.getElementById('prog-detail-hero-title').textContent = d.title;
+      document.getElementById('prog-detail-breadcrumb').textContent = d.title;
+      document.getElementById('prog-detail-date').textContent = date;
+      document.getElementById('prog-detail-content').innerHTML = d.content ? d.content.replace(/\n/g, '<br>') : '';
+
+      // 사진 그리드
+      const imgWrap = document.getElementById('prog-detail-images');
+      if (d.images && d.images.length > 0) {
+        imgWrap.innerHTML = `<div class="prog-detail-img-grid">${d.images.map(src => `<div class="prog-detail-img-item"><img src="${src}" alt="프로그램 사진"></div>`).join('')}</div>`;
+      } else { imgWrap.innerHTML = ''; }
+
+      // 상세 페이지 표시
+      document.querySelectorAll('.page').forEach(p => p.style.display = 'none');
+      const detailPage = document.getElementById('page-program-detail');
+      detailPage.style.display = 'block';
+      window.scrollTo(0, 0);
+    } catch(e) { console.error(e); }
+  };
 
   /* ── 페이지 콘텐츠 로더 (Firebase) ── */
   async function loadPageContent(pageId) {
