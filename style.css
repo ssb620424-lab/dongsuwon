@@ -2202,3 +2202,172 @@ input, select, textarea { font-family: inherit; }
 @media (max-width: 768px) {
   .prog-detail-img-grid { grid-template-columns: repeat(2, 1fr); }
 }
+
+/* ══════════════════════════════════════
+   NEW POST + 입소문의 섹션
+   ══════════════════════════════════════ */
+.home-newpost { padding: 80px 0; background: var(--white); }
+.newpost-header { text-align: center; margin-bottom: 48px; }
+.newpost-title {
+  font-size: 2.2rem; font-weight: 800;
+  font-family: 'Playfair Display', var(--font-serif);
+  color: var(--text-dark); margin-bottom: 10px;
+}
+.newpost-title span { color: var(--gold); }
+.newpost-header p { font-size: 0.92rem; color: var(--text-light); font-family: var(--font-body); }
+
+.newpost-layout {
+  display: grid;
+  grid-template-columns: 1fr 380px;
+  gap: 32px;
+  align-items: start;
+}
+.newpost-list { display: flex; flex-direction: column; gap: 0; }
+.newpost-item {
+  display: flex; align-items: center; gap: 14px;
+  padding: 18px 20px;
+  border-bottom: 1px solid var(--cream-dark);
+  transition: background 0.2s;
+}
+.newpost-item:first-child { border-top: 2px solid var(--forest); }
+.newpost-item:hover { background: var(--cream); }
+.newpost-tag {
+  font-size: 0.72rem; font-weight: 700;
+  color: var(--forest); background: var(--cream);
+  border: 1px solid var(--forest);
+  padding: 3px 10px; border-radius: 40px;
+  white-space: nowrap; font-family: var(--font-body);
+}
+.newpost-item a {
+  flex: 1; font-size: 0.92rem; color: var(--text-dark);
+  font-family: var(--font-body); font-weight: 500;
+  transition: color 0.2s; white-space: nowrap;
+  overflow: hidden; text-overflow: ellipsis;
+}
+.newpost-item a:hover { color: var(--forest); }
+.newpost-date { font-size: 0.78rem; color: var(--text-light); white-space: nowrap; font-family: var(--font-body); }
+
+/* 입소문의 박스 */
+.newpost-consult-box {
+  background: linear-gradient(135deg, var(--forest) 0%, #2a5030 100%);
+  border-radius: 20px;
+  overflow: hidden;
+}
+.consult-box-inner { padding: 36px 32px; }
+.consult-box-inner h3 {
+  font-size: 1.6rem; font-weight: 700;
+  color: var(--gold-light);
+  font-family: var(--font-serif);
+  margin-bottom: 14px;
+}
+.consult-box-inner > p {
+  font-size: 0.88rem; color: rgba(255,255,255,0.8);
+  line-height: 1.8; margin-bottom: 24px;
+  font-family: var(--font-body);
+}
+.consult-box-info { margin-bottom: 28px; display: flex; flex-direction: column; gap: 8px; }
+.consult-box-info p { font-size: 0.88rem; color: rgba(255,255,255,0.85); font-family: var(--font-body); }
+.consult-box-info strong { font-size: 1rem; color: var(--white); }
+.consult-box-btn {
+  display: inline-block;
+  background: var(--gold);
+  color: var(--white);
+  padding: 13px 28px;
+  border-radius: 50px;
+  font-size: 0.9rem; font-weight: 700;
+  font-family: var(--font-body);
+  transition: all 0.2s;
+}
+.consult-box-btn:hover { background: var(--gold-light); color: var(--white); transform: translateY(-2px); }
+
+/* ══════════════════════════════════════
+   WELCOME 섹션
+   ══════════════════════════════════════ */
+.home-welcome {
+  padding: 80px 0;
+  background: #f0f2f8;
+  border-radius: 0;
+}
+.welcome-header { text-align: center; margin-bottom: 48px; }
+.welcome-title {
+  font-size: 2.2rem; font-weight: 800;
+  font-family: 'Playfair Display', var(--font-serif);
+  color: var(--text-dark); margin-bottom: 10px;
+}
+.welcome-title span { color: var(--forest); }
+.welcome-header p { font-size: 0.92rem; color: var(--text-light); font-family: var(--font-body); }
+
+.welcome-grid {
+  display: grid;
+  grid-template-columns: 1.4fr 1fr 1.4fr 1fr;
+  gap: 16px;
+  align-items: end;
+}
+.welcome-card {
+  display: block;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  text-decoration: none;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.welcome-card:hover { transform: translateY(-6px); box-shadow: 0 12px 32px rgba(0,0,0,0.15); }
+.welcome-card-img {
+  height: 260px;
+  background-size: cover;
+  background-position: center;
+  transition: transform 0.5s ease;
+}
+.welcome-card-sm .welcome-card-img { height: 200px; }
+.welcome-card:hover .welcome-card-img { transform: scale(1.05); }
+.welcome-card-label {
+  position: absolute;
+  bottom: 0; left: 0; right: 0;
+  padding: 40px 20px 18px;
+  background: linear-gradient(to top, rgba(0,0,0,0.7) 0%, transparent 100%);
+  color: var(--white);
+  font-size: 1rem; font-weight: 700;
+  font-family: var(--font-serif);
+  letter-spacing: 0.02em;
+}
+
+/* ══════════════════════════════════════
+   NEW PHOTO 섹션
+   ══════════════════════════════════════ */
+.home-newphoto { padding: 80px 0; background: var(--white); }
+.newphoto-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.newphoto-item { cursor: pointer; }
+.newphoto-item:hover .newphoto-thumb { transform: scale(1.03); }
+.newphoto-thumb {
+  width: 100%; aspect-ratio: 1/1;
+  border-radius: 14px;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  margin-bottom: 12px;
+  transition: transform 0.4s ease;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.08);
+}
+.newphoto-title {
+  font-size: 0.9rem; font-weight: 600;
+  color: var(--text-dark); margin-bottom: 4px;
+  font-family: var(--font-body);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.newphoto-date { font-size: 0.78rem; color: var(--text-light); font-family: var(--font-body); }
+
+@media (max-width: 1024px) {
+  .newpost-layout { grid-template-columns: 1fr; }
+  .welcome-grid { grid-template-columns: repeat(2, 1fr); }
+  .welcome-card-img, .welcome-card-sm .welcome-card-img { height: 200px; }
+  .newphoto-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 768px) {
+  .welcome-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .newphoto-grid { grid-template-columns: repeat(2, 1fr); }
+}
