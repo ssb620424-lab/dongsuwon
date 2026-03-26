@@ -1812,3 +1812,124 @@ input, select, textarea { font-family: inherit; }
 
   .footer-tel { font-size: 1.2rem; }
 }
+
+/* ══════════════════════════════════════
+   전면 개선 — 추가 스타일
+   ══════════════════════════════════════ */
+
+/* ── 상단 공지 배너 ── */
+.notice-banner {
+  background: linear-gradient(90deg, var(--gold) 0%, #c9a468 100%);
+  padding: 10px 0;
+  position: relative;
+  z-index: 210;
+}
+.notice-banner-inner {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 0 48px 0 32px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+.notice-banner-icon { font-size: 0.95rem; }
+.notice-banner-text { font-size: 0.88rem; color: var(--white); font-weight: 400; font-family: var(--font-body); letter-spacing: 0.02em; }
+.notice-banner-text strong { font-weight: 700; }
+.notice-banner-tel {
+  background: rgba(255,255,255,0.25); color: var(--white);
+  font-size: 0.88rem; font-weight: 700;
+  padding: 4px 14px; border-radius: 40px;
+  border: 1.5px solid rgba(255,255,255,0.5);
+  transition: background 0.2s; white-space: nowrap;
+}
+.notice-banner-tel:hover { background: rgba(255,255,255,0.4); color: var(--white); }
+.notice-banner-close {
+  position: absolute; right: 16px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; color: rgba(255,255,255,0.7);
+  font-size: 1rem; cursor: pointer;
+  width: 28px; height: 28px;
+  display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; transition: background 0.2s;
+}
+.notice-banner-close:hover { background: rgba(255,255,255,0.2); color: var(--white); }
+
+/* ── 플로팅 버튼 전면 개선 ── */
+.float-phone {
+  background: var(--forest) !important;
+  color: var(--white) !important;
+  animation: float-pulse 2.5s ease-in-out infinite;
+}
+.float-phone:hover { background: var(--forest-mid) !important; }
+@keyframes float-pulse {
+  0%, 100% { box-shadow: 0 4px 20px rgba(28,48,32,0.35); }
+  50% { box-shadow: 0 4px 28px rgba(28,48,32,0.55), 0 0 0 8px rgba(28,48,32,0.08); }
+}
+.float-kakao { background: #FEE500 !important; color: #3C1E1E !important; }
+.float-kakao:hover { background: #f0d800 !important; color: #3C1E1E !important; }
+.float-consult { background: var(--gold) !important; color: var(--white) !important; }
+.float-consult:hover { background: var(--gold-light) !important; color: var(--white) !important; }
+.float-btn {
+  font-size: 0.88rem !important;
+  font-weight: 700 !important;
+  padding: 13px 20px !important;
+  border-radius: 50px !important;
+  box-shadow: 0 4px 20px rgba(0,0,0,0.18) !important;
+}
+.float-btn:hover { transform: translateY(-3px) scale(1.03) !important; }
+
+/* ── 서비스 카드 강화 ── */
+.service-card {
+  border-radius: var(--radius-lg) !important;
+  position: relative; overflow: hidden;
+}
+.service-card::before {
+  content: '';
+  position: absolute; bottom: 0; left: 0; right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--forest), var(--gold));
+  transform: scaleX(0); transition: transform 0.35s ease;
+  transform-origin: left;
+}
+.service-card:hover::before { transform: scaleX(1); }
+.service-card:hover { transform: translateY(-6px) !important; box-shadow: 0 12px 40px rgba(28,48,32,0.12) !important; }
+.service-icon {
+  width: 64px !important; height: 64px !important;
+  background: linear-gradient(135deg, var(--forest), var(--forest-mid)) !important;
+  box-shadow: 0 4px 12px rgba(28,48,32,0.2);
+}
+
+/* ── CTA 버튼 강화 ── */
+.cta-btn-phone {
+  border-radius: 50px !important;
+  box-shadow: 0 4px 20px rgba(184,147,90,0.4) !important;
+  font-size: 1.1rem !important; font-weight: 700 !important;
+  padding: 18px 40px !important;
+}
+.cta-btn-phone:hover { box-shadow: 0 8px 28px rgba(184,147,90,0.5) !important; }
+.cta-btn-online { border-radius: 50px !important; padding: 18px 40px !important; border-width: 2px !important; }
+
+/* ── 히어로 텍스트 가독성 ── */
+.slide-title { text-shadow: 0 2px 20px rgba(0,0,0,0.4); }
+.slide-desc { text-shadow: 0 1px 8px rgba(0,0,0,0.5); }
+.slide-eyebrow {
+  background: rgba(0,0,0,0.3) !important;
+  padding: 5px 14px !important;
+  border-radius: 40px !important;
+  backdrop-filter: blur(4px);
+  display: inline-block !important;
+}
+
+/* ── 모바일 퀵링크 개선 ── */
+@media (max-width: 768px) {
+  .quick-item span { display: block !important; font-size: 0.75rem !important; }
+  .quick-icon-wrap { width: 48px !important; height: 48px !important; }
+  .quick-item { padding: 18px 8px !important; }
+  .float-btn { padding: 13px !important; border-radius: 50% !important; width: 50px !important; height: 50px !important; justify-content: center !important; }
+  .float-btn span { display: none; }
+  .notice-banner-inner { justify-content: flex-start; padding-right: 44px; }
+}
+@media (max-width: 480px) {
+  .quick-item span { font-size: 0.68rem !important; }
+}

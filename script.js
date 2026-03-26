@@ -4,6 +4,22 @@
 
 document.addEventListener('DOMContentLoaded', () => {
 
+  /* ── 공지 배너 닫기 ── */
+  const noticeBannerClose = document.getElementById('noticeBannerClose');
+  const noticeBanner = document.getElementById('noticeBanner');
+  if (noticeBannerClose && noticeBanner) {
+    noticeBannerClose.addEventListener('click', () => {
+      noticeBanner.style.maxHeight = noticeBanner.offsetHeight + 'px';
+      requestAnimationFrame(() => {
+        noticeBanner.style.transition = 'max-height 0.3s ease, opacity 0.3s ease';
+        noticeBanner.style.maxHeight = '0';
+        noticeBanner.style.opacity = '0';
+        noticeBanner.style.overflow = 'hidden';
+      });
+      setTimeout(() => noticeBanner.style.display = 'none', 350);
+    });
+  }
+
   /* ── HERO SLIDER ── */
   const slidesTrack  = document.getElementById('slidesTrack');
   const slides       = document.querySelectorAll('.slide');
