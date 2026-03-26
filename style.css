@@ -1933,3 +1933,98 @@ input, select, textarea { font-family: inherit; }
 @media (max-width: 480px) {
   .quick-item span { font-size: 0.68rem !important; }
 }
+
+/* ── 프로그램 활동 사진 ── */
+.programs-photos-section { margin-top: 56px; }
+.programs-photos-title {
+  font-size: 1.3rem; font-weight: 700;
+  color: var(--forest); font-family: var(--font-serif);
+  margin-bottom: 24px; padding-bottom: 12px;
+  border-bottom: 2px solid var(--gold-pale);
+}
+.programs-photo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+}
+.prog-photo-item {
+  border-radius: var(--radius-md);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: var(--shadow-sm);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+.prog-photo-item:hover {
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
+}
+.prog-photo-item img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.4s ease;
+}
+.prog-photo-item:hover img { transform: scale(1.05); }
+
+@media (max-width: 768px) {
+  .programs-photo-grid { grid-template-columns: repeat(2, 1fr); }
+}
+@media (max-width: 480px) {
+  .programs-photo-grid { grid-template-columns: 1fr; }
+}
+
+/* ── 프로그램 매거진 사진 레이아웃 ── */
+.prog-magazine-grid {
+  margin-top: 56px;
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-template-rows: auto;
+  gap: 12px;
+}
+.prog-mag-large {
+  grid-column: span 2;
+  grid-row: span 2;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 1/1;
+}
+.prog-mag-wide {
+  grid-column: span 2;
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  aspect-ratio: 2/1;
+}
+.prog-mag-stack {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+.prog-mag-small {
+  border-radius: var(--radius-lg);
+  overflow: hidden;
+  flex: 1;
+  min-height: 140px;
+}
+.prog-mag-large img,
+.prog-mag-wide img,
+.prog-mag-small img {
+  width: 100%; height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.5s ease;
+}
+.prog-mag-large:hover img,
+.prog-mag-wide:hover img,
+.prog-mag-small:hover img { transform: scale(1.05); }
+
+@media (max-width: 768px) {
+  .prog-magazine-grid { grid-template-columns: repeat(2, 1fr); }
+  .prog-mag-large { grid-column: span 2; aspect-ratio: 3/2; }
+  .prog-mag-wide { grid-column: span 2; }
+  .prog-mag-stack { flex-direction: row; }
+}
+@media (max-width: 480px) {
+  .prog-magazine-grid { grid-template-columns: 1fr; }
+  .prog-mag-large, .prog-mag-wide { grid-column: span 1; }
+  .prog-mag-stack { flex-direction: column; }
+}
