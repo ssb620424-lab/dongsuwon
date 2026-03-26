@@ -1,0 +1,1416 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="동수원노인전문요양원 – 경기도 용인시 기흥구 전문 노인요양시설. 365일 24시간 입소 상담 031-212-2929">
+  <meta property="og:title" content="동수원노인전문요양원">
+  <meta property="og:description" content="품격 있는 노후, 따뜻한 돌봄. 용인시 기흥구 전문 요양시설">
+  <meta property="og:url" content="https://dongsuwon.co.kr">
+  <title>동수원노인전문요양원 | 품격 있는 노후, 따뜻한 돌봄</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Gowun+Batang:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600;700&family=Playfair+Display:ital,wght@0,400;0,600;0,700;1,400&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <!-- Firebase SDKs -->
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+</head>
+<body>
+
+  <!-- ===== 상단 공지 배너 ===== -->
+  <div class="notice-banner" id="noticeBanner">
+    <div class="notice-banner-inner">
+      <span class="notice-banner-icon">📢</span>
+      <span class="notice-banner-text">365일 24시간 상담 환영 · 방문 상담 시 사전 예약 권장</span>
+      <a href="tel:031-212-2929" class="notice-banner-tel">📞 031-212-2929</a>
+      <button class="notice-banner-close" id="noticeBannerClose" aria-label="닫기">✕</button>
+    </div>
+  </div>
+
+  <!-- ===== TOP BAR ===== -->
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <span class="top-bar-addr">경기도 용인시 기흥구 흥덕2로87번길 17 (세림프라자 601·701호)</span>
+      <div class="top-bar-right">
+        <a href="https://blog.naver.com/dsw23" target="_blank" class="top-bar-link">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+          블로그
+        </a>
+        <a href="tel:031-212-2929" class="top-bar-tel">📞 031-212-2929</a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ===== HEADER ===== -->
+  <header class="site-header" id="siteHeader">
+    <div class="header-inner">
+      <a href="#" class="logo" data-page="home">
+        <div class="logo-emblem">동</div>
+        <div class="logo-text">
+          <span class="logo-main">동수원</span>
+          <span class="logo-sub">노인전문요양원</span>
+        </div>
+      </a>
+
+      <nav class="main-nav" id="mainNav">
+        <ul class="nav-list">
+          <li class="nav-item has-sub">
+            <a href="#" class="nav-link" data-page="intro">동수원 소개</a>
+            <ul class="sub-menu">
+              <li><a href="#" data-page="intro">인사말</a></li>
+              <li><a href="#" data-page="vision">비전 및 핵심가치</a></li>
+              <li><a href="#" data-page="directions">오시는 길</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub">
+            <a href="#" class="nav-link" data-page="facilities">시설 안내</a>
+            <ul class="sub-menu">
+              <li><a href="#" data-page="facilities">층별 시설 안내</a></li>
+              <li><a href="#" data-page="gallery">시설 갤러리</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub">
+            <a href="#" class="nav-link" data-page="services">서비스 안내</a>
+            <ul class="sub-menu">
+              <li><a href="#" data-page="services">제공 서비스</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub">
+            <a href="#" class="nav-link" data-page="admission-process">입소 안내</a>
+            <ul class="sub-menu">
+              <li><a href="#" data-page="admission-process">입소 절차</a></li>
+              <li><a href="#" data-page="admission-docs">준비 서류</a></li>
+              <li><a href="#" data-page="consult">상담 신청</a></li>
+            </ul>
+          </li>
+          <li class="nav-item has-sub">
+            <a href="#" class="nav-link" data-page="notices">커뮤니티</a>
+            <ul class="sub-menu">
+              <li><a href="#" data-page="notices">공지사항</a></li>
+              <li><a href="#" data-page="news">시설 소식</a></li>
+              <li><a href="#" data-page="menu-table">식단표</a></li>
+            </ul>
+          </li>
+        </ul>
+      </nav>
+
+      <div class="header-actions">
+        <button class="hamburger" id="hamburger" aria-label="메뉴 열기" aria-expanded="false">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MOBILE MENU ===== -->
+  <div class="mobile-menu" id="mobileMenu" role="navigation" aria-label="모바일 메뉴">
+    <div class="mobile-menu-header">
+      <span class="mobile-logo">동수원노인전문요양원</span>
+      <button class="mobile-close" id="mobileClose" aria-label="메뉴 닫기">✕</button>
+    </div>
+    <div class="mobile-menu-tel">
+      <a href="tel:031-212-2929">📞 031-212-2929</a>
+      <span>365일 24시간 상담</span>
+    </div>
+    <ul class="mobile-nav-list">
+      <li class="mobile-nav-item">
+        <button class="mobile-nav-parent" data-mobile-parent="intro">동수원 소개 <span>+</span></button>
+        <ul class="mobile-sub" id="mobile-sub-intro">
+          <li><a href="#" data-page="intro">인사말</a></li>
+          <li><a href="#" data-page="vision">비전 및 핵심가치</a></li>
+          <li><a href="#" data-page="directions">오시는 길</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <button class="mobile-nav-parent" data-mobile-parent="facilities">시설 안내 <span>+</span></button>
+        <ul class="mobile-sub" id="mobile-sub-facilities">
+          <li><a href="#" data-page="facilities">층별 시설 안내</a></li>
+          <li><a href="#" data-page="gallery">시설 갤러리</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <button class="mobile-nav-parent" data-mobile-parent="services">서비스 안내 <span>+</span></button>
+        <ul class="mobile-sub" id="mobile-sub-services">
+          <li><a href="#" data-page="services">제공 서비스</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <button class="mobile-nav-parent" data-mobile-parent="admission">입소 안내 <span>+</span></button>
+        <ul class="mobile-sub" id="mobile-sub-admission">
+          <li><a href="#" data-page="admission-process">입소 절차</a></li>
+          <li><a href="#" data-page="admission-docs">준비 서류</a></li>
+          <li><a href="#" data-page="consult">상담 신청</a></li>
+        </ul>
+      </li>
+      <li class="mobile-nav-item">
+        <button class="mobile-nav-parent" data-mobile-parent="community">커뮤니티 <span>+</span></button>
+        <ul class="mobile-sub" id="mobile-sub-community">
+          <li><a href="#" data-page="notices">공지사항</a></li>
+          <li><a href="#" data-page="news">시설 소식</a></li>
+          <li><a href="#" data-page="menu-table">식단표</a></li>
+        </ul>
+      </li>
+    </ul>
+  </div>
+  <div class="mobile-overlay" id="mobileOverlay"></div>
+
+  <!-- ===== MAIN CONTENT ===== -->
+  <main id="mainContent">
+
+    <!-- ########################################## -->
+    <!-- PAGE: HOME                                 -->
+    <!-- ########################################## -->
+    <div class="page active" id="page-home">
+
+      <!-- HERO SLIDER -->
+      <section class="hero-slider" id="heroSlider" aria-label="메인 슬라이더">
+        <div class="slides-track" id="slidesTrack">
+
+          <div class="slide active" style="background-image: linear-gradient(to right, rgba(10,20,12,0.75) 0%, rgba(10,20,12,0.4) 60%, rgba(10,20,12,0.1) 100%), url('img-lounge.jpg')">
+            <div class="slide-content">
+              <p class="slide-eyebrow">동수원노인전문요양원</p>
+              <h1 class="slide-title">품격 있는 노후<br><em>따뜻한 돌봄</em></h1>
+              <p class="slide-desc">어르신의 존엄과 편안함을 최우선으로<br>전문 인력이 24시간 함께합니다</p>
+              <div class="slide-btns">
+                <a href="#" class="btn-hero-primary" data-page="consult">입소 상담 신청</a>
+                <a href="#" class="btn-hero-outline" data-page="intro">시설 알아보기</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide" style="background-image: linear-gradient(to right, rgba(10,20,12,0.75) 0%, rgba(10,20,12,0.4) 60%, rgba(10,20,12,0.1) 100%), url('img-hall.jpg')">
+            <div class="slide-content">
+              <p class="slide-eyebrow">쾌적한 생활 공간</p>
+              <h1 class="slide-title">편안함을 담은<br><em>품격 있는 공간</em></h1>
+              <p class="slide-desc">넓고 밝은 공용 공간과 정원으로<br>활기찬 일상을 선물합니다</p>
+              <div class="slide-btns">
+                <a href="#" class="btn-hero-primary" data-page="facilities">시설 둘러보기</a>
+                <a href="#" class="btn-hero-outline" data-page="gallery">갤러리 보기</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="slide" style="background-image: linear-gradient(to right, rgba(10,20,12,0.75) 0%, rgba(10,20,12,0.4) 60%, rgba(10,20,12,0.1) 100%), url('img-corridor.jpg')">
+            <div class="slide-content">
+              <p class="slide-eyebrow">전문 의료·복지 서비스</p>
+              <h1 class="slide-title">세심하고 안전한<br><em>전문 케어</em></h1>
+              <p class="slide-desc">경험 풍부한 전문 인력의 체계적 관리로<br>건강하고 행복한 노후를 지켜드립니다</p>
+              <div class="slide-btns">
+                <a href="#" class="btn-hero-primary" data-page="services">서비스 안내</a>
+                <a href="#" class="btn-hero-outline" data-page="admission-process">입소 안내</a>
+              </div>
+            </div>
+          </div>
+
+        </div>
+
+        <!-- Slider Controls -->
+        <button class="slider-arrow slider-prev" id="sliderPrev" aria-label="이전 슬라이드">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="15 18 9 12 15 6"/></svg>
+        </button>
+        <button class="slider-arrow slider-next" id="sliderNext" aria-label="다음 슬라이드">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polyline points="9 18 15 12 9 6"/></svg>
+        </button>
+        <div class="slider-dots-wrap" role="tablist" aria-label="슬라이드 선택">
+          <button class="slider-dot active" data-slide="0" role="tab" aria-selected="true" aria-label="슬라이드 1"></button>
+          <button class="slider-dot" data-slide="1" role="tab" aria-selected="false" aria-label="슬라이드 2"></button>
+          <button class="slider-dot" data-slide="2" role="tab" aria-selected="false" aria-label="슬라이드 3"></button>
+        </div>
+        <div class="slider-progress"><div class="slider-progress-bar" id="sliderProgress"></div></div>
+      </section>
+
+      <!-- QUICK LINKS -->
+      <section class="quick-links">
+        <div class="container">
+          <div class="quick-grid">
+            <a href="#" class="quick-item" data-page="intro">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M3 9l9-7 9 7v11a2 2 0 01-2 2H5a2 2 0 01-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+              </div>
+              <span>동수원 소개</span>
+            </a>
+            <a href="#" class="quick-item" data-page="facilities">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="2" y="7" width="20" height="14" rx="2"/><path d="M16 7V5a2 2 0 00-2-2h-4a2 2 0 00-2 2v2"/><line x1="12" y1="12" x2="12" y2="16"/><line x1="10" y1="14" x2="14" y2="14"/></svg>
+              </div>
+              <span>시설 안내</span>
+            </a>
+            <a href="#" class="quick-item" data-page="services">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <span>서비스 안내</span>
+            </a>
+            <a href="#" class="quick-item" data-page="admission-process">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/><polyline points="10 9 9 9 8 9"/></svg>
+              </div>
+              <span>입소 안내</span>
+            </a>
+            <a href="#" class="quick-item" data-page="consult">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+              </div>
+              <span>상담 신청</span>
+            </a>
+            <a href="#" class="quick-item" data-page="notices">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8A6 6 0 006 8c0 7-3 9-3 9h18s-3-2-3-9"/><path d="M13.73 21a2 2 0 01-3.46 0"/></svg>
+              </div>
+              <span>공지사항</span>
+            </a>
+            <a href="#" class="quick-item" data-page="menu-table">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              </div>
+              <span>식단표</span>
+            </a>
+            <a href="#" class="quick-item" data-page="directions">
+              <div class="quick-icon-wrap">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+              </div>
+              <span>오시는 길</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- ABOUT + STATS -->
+      <section class="home-about reveal-section">
+        <div class="container">
+          <div class="about-layout">
+            <div class="about-img-wrap">
+              <img src="img-consult.jpg" alt="동수원노인전문요양원 상담 공간" class="about-img" loading="lazy">
+              <div class="about-img-badge">
+                <span class="badge-year">2023</span>
+                <span class="badge-label">년 설립</span>
+              </div>
+            </div>
+            <div class="about-content">
+              <p class="section-eyebrow">동수원노인전문요양원 소개</p>
+              <h2 class="section-title">어르신의 존엄과 행복을<br>최우선으로 생각합니다</h2>
+              <p class="about-desc">저희 동수원노인전문요양원은 2023년 10월 경기도 용인시 기흥구에 설립된 중형 전문 요양시설입니다. 어르신 한 분 한 분의 개별 특성을 파악하여 맞춤형 케어를 제공하며, 가족 같은 따뜻한 환경에서 품격 있는 노후를 보내실 수 있도록 최선을 다하고 있습니다.</p>
+
+              <a href="#" class="btn-primary" data-page="intro">자세히 알아보기</a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- FACILITY SPACE GALLERY (TABS) -->
+      <section class="home-spaces reveal-section">
+        <div class="container">
+          <div class="section-header-center">
+            <p class="section-eyebrow">시설 안내</p>
+            <h2 class="section-title">품격 있는 생활 공간</h2>
+            <p class="section-desc">어르신의 쾌적하고 안전한 생활을 위해 정성껏 마련된 공간을 소개합니다</p>
+          </div>
+          <div class="space-tabs" role="tablist">
+            <button class="space-tab active" data-space="lounge" role="tab">라운지</button>
+            <button class="space-tab" data-space="hall" role="tab">강당·홀</button>
+            <button class="space-tab" data-space="corridor" role="tab">복도·공용</button>
+            <button class="space-tab" data-space="consult" role="tab">상담 공간</button>
+          </div>
+          <div class="space-panels">
+            <div class="space-panel active" id="space-lounge">
+              <div class="space-panel-img" style="background-image: url('img-lounge.jpg')"></div>
+              <div class="space-panel-info">
+                <span class="space-floor-badge">라운지</span>
+                <h3>편안한 휴식 공간</h3>
+                <p>자연 채광이 풍부하고 안락한 라운지에서 어르신들이 편안하게 휴식하시고 가족과 담소를 나누실 수 있습니다. 계절 꽃으로 늘 아름답게 꾸며져 있습니다.</p>
+                <a href="#" class="btn-text" data-page="gallery">전체 갤러리 보기 →</a>
+              </div>
+            </div>
+            <div class="space-panel" id="space-hall">
+              <div class="space-panel-img" style="background-image: url('img-hall.jpg')"></div>
+              <div class="space-panel-info">
+                <span class="space-floor-badge">강당·홀</span>
+                <h3>활동적인 프로그램 공간</h3>
+                <p>넓고 쾌적한 강당에서 다양한 문화·여가 프로그램, 생신 잔치, 계절 행사 등이 진행됩니다. 어르신들의 활기찬 일상을 위한 중심 공간입니다.</p>
+                <a href="#" class="btn-text" data-page="services">서비스 안내 →</a>
+              </div>
+            </div>
+            <div class="space-panel" id="space-corridor">
+              <div class="space-panel-img" style="background-image: url('img-corridor.jpg')"></div>
+              <div class="space-panel-info">
+                <span class="space-floor-badge">복도·공용</span>
+                <h3>안전하고 넓은 이동 공간</h3>
+                <p>안전 손잡이와 미끄럼 방지 바닥재가 적용된 넓은 복도로 휠체어와 보행기 이용 어르신도 편안하게 이동하실 수 있습니다.</p>
+                <a href="#" class="btn-text" data-page="facilities">층별 안내 보기 →</a>
+              </div>
+            </div>
+            <div class="space-panel" id="space-consult">
+              <div class="space-panel-img" style="background-image: url('img-consult.jpg')"></div>
+              <div class="space-panel-info">
+                <span class="space-floor-badge">상담 공간</span>
+                <h3>편안한 가족 상담 공간</h3>
+                <p>입소 상담부터 케어 현황 공유까지 가족분들이 편안하게 이야기 나눌 수 있는 프라이빗한 상담 공간을 운영합니다. 사전 예약 시 더욱 세심한 상담이 가능합니다.</p>
+                <a href="#" class="btn-text" data-page="consult">상담 신청하기 →</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SERVICES OVERVIEW -->
+      <section class="home-services reveal-section">
+        <div class="container">
+          <div class="section-header-center">
+            <p class="section-eyebrow">제공 서비스</p>
+            <h2 class="section-title">체계적이고 전문적인 돌봄</h2>
+            <p class="section-desc">전문 인력이 어르신의 건강과 삶의 질 향상을 위해 다양한 서비스를 제공합니다</p>
+          </div>
+          <div class="services-grid">
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+              </div>
+              <h3>의료·건강 관리</h3>
+              <p>협력 의료기관과의 연계로 정기적인 건강 검진 및 투약 관리, 응급 상황 대처 체계를 운영합니다</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M23 21v-2a4 4 0 00-3-3.87"/><path d="M16 3.13a4 4 0 010 7.75"/></svg>
+              </div>
+              <h3>일상생활 지원</h3>
+              <p>식사, 목욕, 이동 보조 등 일상생활 전반의 전문적인 지원 서비스를 24시간 제공합니다</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/><line x1="9" y1="9" x2="9.01" y2="9"/><line x1="15" y1="9" x2="15.01" y2="9"/></svg>
+              </div>
+              <h3>심리·정서 케어</h3>
+              <p>전문 사회복지사의 개별 상담과 그룹 활동으로 어르신의 심리적 안정과 정서적 웰빙을 지원합니다</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 00-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0020 4.77 5.07 5.07 0 0019.91 1S18.73.65 16 2.48a13.38 13.38 0 00-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 005 4.77a5.44 5.44 0 00-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 009 18.13V22"/></svg>
+              </div>
+              <h3>재활·운동 치료</h3>
+              <p>물리치료사와 작업치료사가 개인별 맞춤 재활 프로그램으로 기능 회복과 유지를 도와드립니다</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/><line x1="6" y1="1" x2="6" y2="4"/><line x1="10" y1="1" x2="10" y2="4"/><line x1="14" y1="1" x2="14" y2="4"/></svg>
+              </div>
+              <h3>영양·식사 관리</h3>
+              <p>영양사가 계획한 균형 잡힌 식단으로 어르신의 건강 상태에 맞는 맞춤 식사를 하루 3끼 제공합니다</p>
+            </div>
+            <div class="service-card">
+              <div class="service-icon">
+                <svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+              </div>
+              <h3>문화·여가 프로그램</h3>
+              <p>음악 치료, 공예, 원예, 계절 행사 등 다양한 프로그램으로 풍요로운 일상과 즐거움을 드립니다</p>
+            </div>
+          </div>
+          <div class="services-cta">
+            <a href="#" class="btn-primary" data-page="services">서비스 전체 보기</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEWS FEED -->
+      <section class="home-news reveal-section">
+        <div class="container">
+          <div class="news-layout">
+            <div class="news-header">
+              <p class="section-eyebrow">커뮤니티</p>
+              <h2 class="section-title">동수원 소식</h2>
+              <p>어르신들의 행복한 일상과<br>시설 최신 소식을 전합니다</p>
+              <div class="news-category-btns">
+                <button class="news-cat-btn active" data-cat="all">전체</button>
+                <button class="news-cat-btn" data-cat="notice">공지</button>
+                <button class="news-cat-btn" data-cat="news">소식</button>
+              </div>
+            </div>
+            <div class="news-list" id="homeNewsList">
+              <!-- Populated by Firebase / fallback -->
+              <div class="news-card">
+                <div class="news-card-meta">
+                  <span class="news-tag news-tag-notice">공지</span>
+                  <span class="news-date">2024.01.15</span>
+                </div>
+                <h4><a href="#" data-page="notices">입소 상담 및 방문 예약 안내</a></h4>
+                <p>입소를 원하시는 어르신과 보호자분들을 위해 365일 24시간 상담을 운영합니다. 방문 전 전화 예약을 권장합니다.</p>
+              </div>
+              <div class="news-card">
+                <div class="news-card-meta">
+                  <span class="news-tag news-tag-event">소식</span>
+                  <span class="news-date">2024.01.10</span>
+                </div>
+                <h4><a href="#" data-page="news">2024년 1월 생신 잔치를 개최하였습니다</a></h4>
+                <p>새해 첫 달을 맞아 생신을 맞으신 어르신들을 위한 따뜻한 잔치가 열렸습니다. 가족분들과 함께 행복한 시간을 보냈습니다.</p>
+              </div>
+              <div class="news-card">
+                <div class="news-card-meta">
+                  <span class="news-tag news-tag-event">소식</span>
+                  <span class="news-date">2023.12.25</span>
+                </div>
+                <h4><a href="#" data-page="news">크리스마스 특별 공연 행사 진행</a></h4>
+                <p>성탄절을 맞아 봉사단체의 특별 공연이 열렸습니다. 어르신들께서 노래와 춤을 즐기시며 즐거운 시간을 보내셨습니다.</p>
+              </div>
+            </div>
+          </div>
+          <div class="news-more-wrap">
+            <a href="#" class="btn-outline-dark" data-page="news">소식 더보기</a>
+          </div>
+        </div>
+      </section>
+
+      <!-- CTA SECTION -->
+      <section class="home-cta reveal-section">
+        <div class="cta-bg">
+          <div class="container">
+            <div class="cta-inner">
+              <div class="cta-badge-wrap">
+                <span class="cta-badge">365일 · 24시간</span>
+              </div>
+              <h2>언제든지 상담해 드립니다</h2>
+              <p>평일, 주말, 공휴일 관계없이 언제든 입소 상담을 받아드립니다<br>어르신과 가족분들의 소중한 결정을 정성껏 도와드리겠습니다</p>
+              <div class="cta-actions">
+                <a href="tel:031-212-2929" class="cta-btn-phone">
+                  <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+                  031-212-2929
+                </a>
+                <a href="#" class="cta-btn-online" data-page="consult">온라인 상담 신청</a>
+              </div>
+              <p class="cta-sub">※ 방문 상담 시 사전 예약을 권장합니다</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- MAP SECTION -->
+      <section class="home-map reveal-section" id="directions-section">
+        <div class="container">
+          <div class="section-header-center">
+            <p class="section-eyebrow">오시는 길</p>
+            <h2 class="section-title">찾아오시는 방법</h2>
+          </div>
+          <div class="map-layout">
+            <div class="map-embed-wrap">
+              <iframe
+                src="https://maps.google.com/maps?q=경기도+용인시+기흥구+흥덕2로87번길+17&output=embed&hl=ko&z=16"
+                width="100%"
+                height="420"
+                style="border:0;border-radius:8px;"
+                allowfullscreen=""
+                loading="lazy"
+                title="동수원노인전문요양원 위치"
+              ></iframe>
+            </div>
+            <div class="map-info-panel">
+              <div class="map-info-item">
+                <div class="map-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+                </div>
+                <div>
+                  <strong>주소</strong>
+                  <p>경기도 용인시 기흥구<br>흥덕2로87번길 17<br>(영덕동, 세림프라자 601·701호)</p>
+                </div>
+              </div>
+              <div class="map-info-item">
+                <div class="map-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+                </div>
+                <div>
+                  <strong>전화</strong>
+                  <p><a href="tel:031-212-2929" class="map-tel-link">031-212-2929</a></p>
+                </div>
+              </div>
+              <div class="map-info-item">
+                <div class="map-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+                </div>
+                <div>
+                  <strong>교통 안내</strong>
+                  <p>흥덕지구 내 버스 이용<br>수원역·기흥역 환승 가능</p>
+                </div>
+              </div>
+              <div class="map-info-item">
+                <div class="map-info-icon">
+                  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 9h6M9 12h6M9 15h4"/></svg>
+                </div>
+                <div>
+                  <strong>상담 운영</strong>
+                  <p>365일 24시간 상담 가능<br>주말·공휴일 포함</p>
+                </div>
+              </div>
+              <a href="https://map.kakao.com/link/search/동수원노인전문요양원" target="_blank" class="btn-kakao-map">
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.92 2 11.76c0 3.09 1.75 5.81 4.4 7.41L5.3 22.3c-.1.3.2.57.47.43l4.17-2.77c.67.1 1.36.14 2.06.14 5.52 0 10-3.92 10-8.76S17.52 3 12 3z"/></svg>
+                카카오맵으로 보기
+              </a>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW POST + 입소문의 섹션 -->
+      <section class="home-newpost reveal-section">
+        <div class="container">
+          <div class="newpost-header">
+            <h2 class="newpost-title"><span>New</span> Post</h2>
+            <p>동수원노인전문요양원의 새로운 소식입니다</p>
+          </div>
+          <div class="newpost-layout">
+            <div class="newpost-list" id="homePostList">
+              <div class="newpost-item"><span class="newpost-tag">공지사항</span><a href="#" data-page="notices">입소 상담 및 방문 예약 안내</a><span class="newpost-date">2024.01.15</span></div>
+              <div class="newpost-item"><span class="newpost-tag">시설소식</span><a href="#" data-page="news">1월 생신 잔치를 개최하였습니다</a><span class="newpost-date">2024.01.10</span></div>
+              <div class="newpost-item"><span class="newpost-tag">시설소식</span><a href="#" data-page="news">크리스마스 특별 공연 행사 진행</a><span class="newpost-date">2023.12.25</span></div>
+              <div class="newpost-item"><span class="newpost-tag">공지사항</span><a href="#" data-page="notices">2024년 식단 안내</a><span class="newpost-date">2023.12.20</span></div>
+            </div>
+            <div class="newpost-consult-box">
+              <div class="consult-box-inner">
+                <h3>입소문의</h3>
+                <p>입소 및 노인장기요양보험 등급판정 등<br>궁금한 내용은 언제든지 연락주시면<br>친절히 안내해 드리겠습니다.</p>
+                <div class="consult-box-info">
+                  <p>📞 <strong>031-212-2929</strong></p>
+                  <p>📠 팩스: 031-212-2929</p>
+                  <p>🕐 365일 · 24시간 상담 가능</p>
+                </div>
+                <a href="#" data-page="consult" class="consult-box-btn">온라인 상담 신청</a>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- WELCOME 섹션 -->
+      <section class="home-welcome reveal-section">
+        <div class="container">
+          <div class="welcome-header">
+            <h2 class="welcome-title">Welcome to <span>동수원</span></h2>
+            <p>동수원노인전문요양원이 처음이신가요?</p>
+          </div>
+          <div class="welcome-grid">
+            <a href="#" data-page="intro" class="welcome-card">
+              <div class="welcome-card-img" style="background-image:url('img-lounge.jpg')"></div>
+              <div class="welcome-card-label">동수원 소개</div>
+            </a>
+            <a href="#" data-page="admission-process" class="welcome-card welcome-card-sm">
+              <div class="welcome-card-img" style="background-image:url('img-consult.jpg')"></div>
+              <div class="welcome-card-label">입소안내</div>
+            </a>
+            <a href="#" data-page="services" class="welcome-card">
+              <div class="welcome-card-img" style="background-image:url('img-hall.jpg')"></div>
+              <div class="welcome-card-label">서비스안내</div>
+            </a>
+            <a href="#" data-page="consult" class="welcome-card welcome-card-sm">
+              <div class="welcome-card-img" style="background-image:url('img-corridor.jpg')"></div>
+              <div class="welcome-card-label">상담신청</div>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      <!-- NEW PHOTO 섹션 -->
+      <section class="home-newphoto reveal-section">
+        <div class="container">
+          <div class="newpost-header">
+            <h2 class="newpost-title"><span>New</span> Photo</h2>
+            <p>생생한 사진들로 체험하는 동수원노인전문요양원</p>
+          </div>
+          <div class="newphoto-grid" id="homePhotoGrid">
+            <div class="newphoto-item">
+              <div class="newphoto-thumb" style="background-image:url('img-lounge.jpg')"></div>
+              <p class="newphoto-title">편안한 라운지 공간</p>
+              <span class="newphoto-date">2024. 1.</span>
+            </div>
+            <div class="newphoto-item">
+              <div class="newphoto-thumb" style="background-image:url('img-hall.jpg')"></div>
+              <p class="newphoto-title">다목적 강당 · 행사</p>
+              <span class="newphoto-date">2024. 1.</span>
+            </div>
+            <div class="newphoto-item">
+              <div class="newphoto-thumb" style="background-image:url('img-corridor.jpg')"></div>
+              <p class="newphoto-title">안전한 복도 시설</p>
+              <span class="newphoto-date">2023. 12.</span>
+            </div>
+            <div class="newphoto-item">
+              <div class="newphoto-thumb" style="background-image:url('img-consult.jpg')"></div>
+              <p class="newphoto-title">가족 상담 공간</p>
+              <span class="newphoto-date">2023. 12.</span>
+            </div>
+          </div>
+          <div style="text-align:center;margin-top:40px;">
+            <a href="#" data-page="gallery" class="btn-outline-dark">갤러리 전체보기</a>
+          </div>
+        </div>
+      </section>
+
+    </div><!-- /page-home -->
+
+
+    <!-- ########################################## -->
+    <!-- PAGE: 인사말                               -->
+    <!-- ########################################## -->
+    <div class="page" id="page-intro">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-lounge.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 동수원 소개 <span>/</span> 인사말</nav>
+          <h1>인사말</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div id="page-intro-content">
+            <div class="greeting-layout">
+              <div class="greeting-text">
+                <p class="greeting-open">안녕하십니까,</p>
+                <h2>동수원노인전문요양원<br>원장 인사말</h2>
+                <div class="greeting-body" id="intro-body">
+                  <p>저희 <strong>동수원노인전문요양원</strong>을 찾아주신 어르신과 가족 여러분께 진심 어린 감사의 말씀을 드립니다.</p>
+                  <p>우리 사회는 빠르게 고령화 되어가고 있으며, 어르신들에 대한 전문적이고 따뜻한 돌봄의 중요성은 날로 커져가고 있습니다. 저희 요양원은 2023년 10월 경기도 용인시 기흥구에 개원하여, 어르신 한 분 한 분을 가족처럼 모신다는 신념 아래 운영되고 있습니다.</p>
+                  <p>저희는 단순한 요양 서비스를 넘어, 어르신의 신체적·정신적·심리적 건강을 종합적으로 돌보는 <strong>'전인적 케어'</strong>를 지향합니다. 전문 인력이 24시간 함께하며 안전하고 품격 있는 노후 생활을 보장해 드리겠습니다.</p>
+                  <p>입소 여부를 결정하시기 전에 언제든지 방문하셔서 시설을 직접 확인하시고, 궁금하신 사항을 자유롭게 물어봐 주시기 바랍니다. 365일 24시간 상담 전화(<a href="tel:031-212-2929">031-212-2929</a>)를 통해 언제든 도움을 드리겠습니다.</p>
+                  <p>어르신의 행복하고 건강한 노후를 위해 최선을 다하겠습니다.</p>
+                </div>
+                <p class="greeting-sign">동수원노인전문요양원 원장 <strong>올림</strong></p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 비전                                 -->
+    <!-- ########################################## -->
+    <div class="page" id="page-vision">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-hall.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 동수원 소개 <span>/</span> 비전</nav>
+          <h1>비전 및 핵심가치</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div id="vision-content">
+            <div class="vision-wrap">
+              <div class="vision-main">
+                <p class="section-eyebrow">우리의 비전</p>
+                <h2 id="vision-statement">"어르신이 행복한 세상,<br>가족이 안심하는 요양원"</h2>
+              </div>
+              <div class="values-grid" id="values-grid">
+                <div class="value-card"><div class="value-num">01</div><h3>존중 (Respect)</h3><p>어르신 한 분 한 분의 개성과 역사, 의견을 소중히 여기고, 인간의 존엄성을 최우선으로 생각합니다.</p></div>
+                <div class="value-card"><div class="value-num">02</div><h3>전문성 (Expertise)</h3><p>지속적인 교육과 연구를 통해 최신 요양 서비스를 제공하며, 전문성을 바탕으로 안전한 케어를 실천합니다.</p></div>
+                <div class="value-card"><div class="value-num">03</div><h3>따뜻함 (Warmth)</h3><p>가족 같은 따뜻한 마음으로 어르신을 대하며, 정서적 안정과 심리적 웰빙을 함께 챙깁니다.</p></div>
+                <div class="value-card"><div class="value-num">04</div><h3>신뢰 (Trust)</h3><p>가족분들과의 투명한 소통으로 신뢰를 쌓고, 케어 현황을 정기적으로 공유합니다.</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 오시는 길                            -->
+    <!-- ########################################## -->
+    <div class="page" id="page-directions">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-corridor.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 동수원 소개 <span>/</span> 오시는 길</nav>
+          <h1>오시는 길</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div class="directions-layout">
+            <iframe
+              src="https://maps.google.com/maps?q=경기도+용인시+기흥구+흥덕2로87번길+17&output=embed&hl=ko&z=16"
+              width="100%" height="500"
+              style="border:0;border-radius:8px;display:block;"
+              allowfullscreen="" loading="lazy"
+              title="동수원노인전문요양원 위치"></iframe>
+            <div class="directions-info">
+              <div class="directions-card">
+                <h3>📍 주소</h3>
+                <p>경기도 용인시 기흥구 흥덕2로87번길 17<br>(영덕동, 세림프라자 601·701호)</p>
+                <a href="https://map.kakao.com/link/search/동수원노인전문요양원" target="_blank" class="btn-sm">카카오맵에서 보기</a>
+              </div>
+              <div class="directions-card">
+                <h3>🚌 대중교통</h3>
+                <p>흥덕지구 방면 버스 이용<br>수원역·기흥역 환승 후 버스 이용 가능</p>
+              </div>
+              <div class="directions-card">
+                <h3>🚗 자가용</h3>
+                <p>흥덕IC 진출 후 흥덕2로 방향<br>세림프라자 건물 지하 주차장 이용</p>
+              </div>
+              <div class="directions-card">
+                <h3>📞 전화 문의</h3>
+                <p><a href="tel:031-212-2929" class="map-tel-link" style="font-size:1.2rem;font-weight:600;">031-212-2929</a><br>365일 24시간 상담 가능</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 층별 시설 안내                       -->
+    <!-- ########################################## -->
+    <div class="page" id="page-facilities">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-corridor.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 시설 안내 <span>/</span> 층별 시설</nav>
+          <h1>층별 시설 안내</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div class="floor-tabs" role="tablist">
+            <button class="floor-tab active" data-floor="6" role="tab">6층</button>
+            <button class="floor-tab" data-floor="7" role="tab">7층</button>
+          </div>
+          <div class="floor-panel active" id="floor-6">
+            <div class="floor-header">
+              <h2>6층 — 생활 공간</h2>
+              <p>어르신들이 주로 생활하시는 층으로, 쾌적하고 안전한 환경을 갖추고 있습니다</p>
+            </div>
+            <div class="facility-rooms">
+              <div class="room-card">
+                <div class="room-img" style="background-image:url('img-lounge.jpg')"></div>
+                <div class="room-info"><h3>라운지 / 휴게실</h3><p>자연 채광이 풍부한 넓은 라운지에서 어르신들이 편안하게 쉬시고 가족과 담소를 나누실 수 있습니다</p></div>
+              </div>
+              <div class="room-card">
+                <div class="room-img" style="background-image:url('img-corridor.jpg')"></div>
+                <div class="room-info"><h3>복도 / 이동 공간</h3><p>안전 손잡이와 미끄럼 방지 바닥재가 적용된 넓은 복도로 편안하게 이동하실 수 있습니다</p></div>
+              </div>
+              <div class="room-card">
+                <div class="room-img" style="background-image:url('img-consult.jpg')"></div>
+                <div class="room-info"><h3>상담실</h3><p>가족분들과 편안하게 상담하고 소통할 수 있는 프라이빗한 공간입니다</p></div>
+              </div>
+            </div>
+          </div>
+          <div class="floor-panel" id="floor-7">
+            <div class="floor-header">
+              <h2>7층 — 활동 공간</h2>
+              <p>다양한 프로그램과 활동이 이루어지는 층으로, 어르신들의 활기찬 일상을 지원합니다</p>
+            </div>
+            <div class="facility-rooms">
+              <div class="room-card">
+                <div class="room-img" style="background-image:url('img-hall.jpg')"></div>
+                <div class="room-info"><h3>강당 / 다목적 홀</h3><p>넓은 강당에서 생신 잔치, 문화 공연, 운동 프로그램 등 다양한 행사가 진행됩니다</p></div>
+              </div>
+              <div class="room-card">
+                <div class="room-img" style="background-image:url('img-lounge.jpg')"></div>
+                <div class="room-info"><h3>프로그램실</h3><p>공예, 원예, 미술, 음악 치료 등 다양한 프로그램 활동이 이루어지는 전용 공간입니다</p></div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 시설 갤러리                          -->
+    <!-- ########################################## -->
+    <div class="page" id="page-gallery">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-hall.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 시설 안내 <span>/</span> 갤러리</nav>
+          <h1>시설 갤러리</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div class="gallery-filter">
+            <button class="gallery-filter-btn active" data-filter="all">전체</button>
+            <button class="gallery-filter-btn" data-filter="lounge">라운지</button>
+            <button class="gallery-filter-btn" data-filter="hall">강당·홀</button>
+            <button class="gallery-filter-btn" data-filter="corridor">복도·공용</button>
+            <button class="gallery-filter-btn" data-filter="consult">상담 공간</button>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item" data-category="lounge" data-img="img-lounge.jpg" data-caption="라운지 – 자연 채광이 풍부한 편안한 공간">
+              <div class="gallery-thumb" style="background-image:url('img-lounge.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div>
+            <div class="gallery-item" data-category="hall" data-img="img-hall.jpg" data-caption="강당 – 다양한 행사가 열리는 다목적 홀">
+              <div class="gallery-thumb" style="background-image:url('img-hall.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div>
+            <div class="gallery-item" data-category="corridor" data-img="img-corridor.jpg" data-caption="복도 – 안전 손잡이가 설치된 넓은 복도">
+              <div class="gallery-thumb" style="background-image:url('img-corridor.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div>
+            <div class="gallery-item" data-category="consult" data-img="img-consult.jpg" data-caption="상담실 – 가족과 편안하게 소통하는 공간">
+              <div class="gallery-thumb" style="background-image:url('img-consult.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div>
+            <div class="gallery-item" data-category="lounge" data-img="img-lounge.jpg" data-caption="휴게 공간 – 어르신들의 편안한 쉼터">
+              <div class="gallery-thumb" style="background-image:url('img-lounge.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div>
+            <div class="gallery-item" data-category="hall" data-img="img-hall.jpg" data-caption="행사장 – 생신잔치와 문화 공연이 열리는 곳">
+              <div class="gallery-thumb" style="background-image:url('img-hall.jpg')">
+                <div class="gallery-overlay"><span>+</span></div>
+              </div>
+            </div></div>
+        </div>
+      </div>
+      <!-- Lightbox -->
+      <div class="lightbox" id="lightbox">
+        <button class="lightbox-close" id="lightboxClose">✕</button>
+        <button class="lightbox-prev" id="lightboxPrev">&#8249;</button>
+        <button class="lightbox-next" id="lightboxNext">&#8250;</button>
+        <div class="lightbox-content">
+          <img src="" alt="" id="lightboxImg">
+          <p id="lightboxCaption"></p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 서비스 안내                          -->
+    <!-- ########################################## -->
+    <div class="page" id="page-services">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-lounge.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 서비스 안내</nav>
+          <h1>제공 서비스</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div id="services-detail-content">
+            <div class="services-detail-grid">
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div><div><h3>의료·건강 관리</h3><ul><li>협력 의료기관 연계 정기 건강 검진</li><li>투약 관리 및 처치 서비스</li><li>응급 상황 대처 및 이송 체계</li><li>인지 기능 검사 및 치매 관리</li></ul></div></div>
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M17 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2"/><circle cx="9" cy="7" r="4"/></svg></div><div><h3>일상생활 지원</h3><ul><li>식사 보조 및 영양 관리</li><li>개인위생 관리 (목욕, 구강, 세면)</li><li>이동 보조 및 체위 변경</li><li>의복 관리 및 세탁 서비스</li></ul></div></div>
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 14s1.5 2 4 2 4-2 4-2"/></svg></div><div><h3>심리·정서 케어</h3><ul><li>전문 사회복지사 개별 심리 상담</li><li>회상 치료 및 인지 훈련</li><li>가족 상담 및 소통 지원</li><li>정서적 지지 및 우울 예방 프로그램</li></ul></div></div>
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><circle cx="12" cy="12" r="10"/><path d="M8 12l2.5 2.5L16 9"/></svg></div><div><h3>재활·운동 치료</h3><ul><li>물리치료사의 개인별 재활 운동</li><li>보행 훈련 및 근력 강화 운동</li><li>일상생활 동작 훈련</li><li>낙상 예방 프로그램</li></ul></div></div>
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><path d="M18 8h1a4 4 0 010 8h-1"/><path d="M2 8h16v9a4 4 0 01-4 4H6a4 4 0 01-4-4V8z"/></svg></div><div><h3>영양·식사 관리</h3><ul><li>영양사 계획 균형 식단 하루 3식</li><li>질환별 치료식 제공</li><li>연하 곤란 어르신 특별 식사</li><li>간식 및 음수 관리</li></ul></div></div>
+              <div class="service-detail-card"><div class="service-detail-icon"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div><div><h3>문화·여가 프로그램</h3><ul><li>음악 치료, 미술 치료</li><li>원예 활동, 공예 프로그램</li><li>계절 행사 및 생신 잔치</li><li>외부 봉사단 문화 공연</li></ul></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- ########################################## -->
+
+    <!-- PAGE: 입소 절차                            -->
+    <!-- ########################################## -->
+    <div class="page" id="page-admission-process">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-consult.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 입소 안내 <span>/</span> 입소 절차</nav>
+          <h1>입소 절차</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div id="admission-process-content">
+            <div class="process-steps">
+              <div class="process-step"><div class="step-num">01</div><div class="step-content"><h3>상담 신청</h3><p>전화(<a href="tel:031-212-2929">031-212-2929</a>) 또는 온라인을 통해 입소 상담을 신청하세요. 365일 24시간 상담 가능합니다.</p></div></div>
+              <div class="process-arrow">↓</div>
+              <div class="process-step"><div class="step-num">02</div><div class="step-content"><h3>방문 상담 및 시설 견학</h3><p>직접 방문하셔서 시설을 둘러보시고 케어 매니저와 어르신의 상태와 필요 서비스에 대해 상세히 상담하세요.</p></div></div>
+              <div class="process-arrow">↓</div>
+              <div class="process-step"><div class="step-num">03</div><div class="step-content"><h3>장기요양인정등급 확인</h3><p>국민건강보험공단 장기요양등급(1~5등급, 인지지원등급)이 필요합니다. 미취득 시 신청 절차를 안내해 드립니다.</p></div></div>
+              <div class="process-arrow">↓</div>
+              <div class="process-step"><div class="step-num">04</div><div class="step-content"><h3>서류 제출 및 계약</h3><p>필요 서류를 준비하시고 입소 계약을 진행합니다. 서류 준비에 어려움이 있으시면 담당자가 도움을 드립니다.</p></div></div>
+              <div class="process-arrow">↓</div>
+              <div class="process-step"><div class="step-num">05</div><div class="step-content"><h3>입소 및 적응 지원</h3><p>입소 후 1~2주의 적응 기간 동안 전담 케어 매니저가 어르신의 적응을 세심하게 도와드립니다.</p></div></div>
+            </div>
+          </div>
+          <div class="process-cta">
+            <p>입소 절차에 대해 궁금한 점이 있으시면 언제든지 연락 주세요</p>
+            <div class="process-cta-btns">
+              <a href="tel:031-212-2929" class="btn-primary">전화 상담 031-212-2929</a>
+              <a href="#" class="btn-outline-dark" data-page="consult">온라인 상담 신청</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- PAGE: 준비 서류 -->
+    <div class="page" id="page-admission-docs">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-consult.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 입소 안내 <span>/</span> 준비 서류</nav>
+          <h1>준비 서류</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div id="admission-docs-content">
+            <div class="docs-section">
+              <div class="docs-card">
+                <h3>필수 서류</h3>
+                <ul class="docs-list">
+                  <li><span class="doc-icon">📄</span><div><strong>장기요양인정서</strong><p>국민건강보험공단 발급 (1~5등급, 인지지원등급)</p></div></li>
+                  <li><span class="doc-icon">📋</span><div><strong>표준장기요양이용계획서</strong><p>국민건강보험공단 발급</p></div></li>
+                  <li><span class="doc-icon">🪪</span><div><strong>신분증 사본</strong><p>어르신 및 보호자 신분증</p></div></li>
+                  <li><span class="doc-icon">💳</span><div><strong>건강보험증 사본</strong><p>건강보험증 또는 의료급여증</p></div></li>
+                  <li><span class="doc-icon">🏥</span><div><strong>진단서 또는 의사 소견서</strong><p>3개월 이내 발급</p></div></li>
+                </ul>
+              </div>
+              <div class="docs-card">
+                <h3>추가 서류 (해당자)</h3>
+                <ul class="docs-list">
+                  <li><span class="doc-icon">📑</span><div><strong>의료급여증</strong><p>의료급여 대상자에 한함</p></div></li>
+                  <li><span class="doc-icon">📑</span><div><strong>기초생활수급자 증명서</strong><p>기초생활수급자에 한함</p></div></li>
+                  <li><span class="doc-icon">📑</span><div><strong>장애인등록증</strong><p>장애인 등록자에 한함</p></div></li>
+                </ul>
+              </div>
+            </div>
+            <div class="docs-note">
+              <p>📌 서류 준비에 어려움이 있으시면 담당자가 자세히 안내해 드립니다. <a href="tel:031-212-2929">031-212-2929</a></p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 상담 신청                            -->
+    <!-- ########################################## -->
+    <div class="page" id="page-consult">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-consult.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 입소 안내 <span>/</span> 상담 신청</nav>
+          <h1>상담 신청</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div class="consult-intro">
+            <p>아래 양식을 작성해 주시면 담당자가 빠르게 연락드리겠습니다<br>전화 상담을 원하시면 <a href="tel:031-212-2929"><strong>031-212-2929</strong></a> (365일 24시간)</p>
+          </div>
+          <form class="consult-form" id="consultForm" novalidate>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="guardianName">보호자 성함 <span class="req">*</span></label>
+                <input type="text" id="guardianName" name="guardianName" placeholder="보호자 성함을 입력하세요" required>
+              </div>
+              <div class="form-group">
+                <label for="phone">연락처 <span class="req">*</span></label>
+                <input type="tel" id="phone" name="phone" placeholder="010-0000-0000" required>
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="patientName">어르신 성함 <span class="req">*</span></label>
+                <input type="text" id="patientName" name="patientName" placeholder="어르신 성함을 입력하세요" required>
+              </div>
+              <div class="form-group">
+                <label for="patientAge">연령</label>
+                <input type="number" id="patientAge" name="patientAge" placeholder="만 나이" min="60" max="120">
+              </div>
+            </div>
+            <div class="form-row">
+              <div class="form-group">
+                <label for="careGrade">장기요양등급</label>
+                <select id="careGrade" name="careGrade">
+                  <option value="">등급 선택</option>
+                  <option value="1">1등급</option>
+                  <option value="2">2등급</option>
+                  <option value="3">3등급</option>
+                  <option value="4">4등급</option>
+                  <option value="5">5등급</option>
+                  <option value="인지지원">인지지원등급</option>
+                  <option value="미취득">미취득 (신청 예정)</option>
+                </select>
+              </div>
+              <div class="form-group">
+                <label for="admissionDate">희망 입소 시기</label>
+                <select id="admissionDate" name="admissionDate">
+                  <option value="">시기 선택</option>
+                  <option value="즉시">즉시 입소 희망</option>
+                  <option value="1개월">1개월 이내</option>
+                  <option value="3개월">3개월 이내</option>
+                  <option value="미정">미정 (상담 후 결정)</option>
+                </select>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="message">문의 내용</label>
+              <textarea id="message" name="message" rows="5" placeholder="궁금하신 사항이나 어르신의 상태에 대해 자유롭게 적어주세요"></textarea>
+            </div>
+            <div class="privacy-consent-wrap">
+              <!-- 개인정보 수집·이용 동의 -->
+              <div class="privacy-box">
+                <div class="privacy-box-header">
+                  <strong>[필수] 개인정보 수집·이용 동의</strong>
+                  <button type="button" class="privacy-toggle-btn" data-target="privacy-collect">내용 보기 ▼</button>
+                </div>
+                <div class="privacy-content" id="privacy-collect" style="display:none">
+                  <table class="privacy-table">
+                    <thead><tr><th>수집 항목</th><th>수집·이용 목적</th><th>보유 기간</th></tr></thead>
+                    <tbody>
+                      <tr><td>보호자 성함, 연락처</td><td>입소 상담 연락 및 안내</td><td>상담 완료 후 1년</td></tr>
+                      <tr><td>어르신 성함, 연령</td><td>맞춤 상담 서비스 제공</td><td>상담 완료 후 1년</td></tr>
+                      <tr><td>장기요양등급, 입소 희망 시기</td><td>서비스 적합성 검토</td><td>상담 완료 후 1년</td></tr>
+                      <tr><td>문의 내용</td><td>상담 내용 확인 및 답변</td><td>상담 완료 후 1년</td></tr>
+                    </tbody>
+                  </table>
+                  <p class="privacy-notice">※ 위의 개인정보 수집·이용에 대한 동의를 거부할 권리가 있습니다. 단, 동의 거부 시 상담 서비스 이용이 제한될 수 있습니다.</p>
+                </div>
+                <label class="checkbox-label privacy-check-label">
+                  <input type="checkbox" id="privacyAgree" required>
+                  <span>개인정보 수집·이용에 동의합니다 <em>(필수)</em></span>
+                </label>
+              </div>
+
+              <!-- 개인정보 제3자 제공 동의 -->
+              <div class="privacy-box">
+                <div class="privacy-box-header">
+                  <strong>[선택] 개인정보 제3자 제공 동의</strong>
+                  <button type="button" class="privacy-toggle-btn" data-target="privacy-third">내용 보기 ▼</button>
+                </div>
+                <div class="privacy-content" id="privacy-third" style="display:none">
+                  <table class="privacy-table">
+                    <thead><tr><th>제공받는 자</th><th>제공 목적</th><th>제공 항목</th><th>보유 기간</th></tr></thead>
+                    <tbody>
+                      <tr><td>협력 의료기관</td><td>입소 전 건강 상태 확인</td><td>어르신 성명, 연령, 장기요양등급</td><td>목적 달성 후 즉시 파기</td></tr>
+                    </tbody>
+                  </table>
+                  <p class="privacy-notice">※ 위의 개인정보 제3자 제공 동의를 거부할 권리가 있습니다. 동의 거부 시에도 상담 서비스는 정상 이용 가능합니다.</p>
+                </div>
+                <label class="checkbox-label privacy-check-label">
+                  <input type="checkbox" id="privacyThirdAgree">
+                  <span>개인정보 제3자 제공에 동의합니다 <em>(선택)</em></span>
+                </label>
+              </div>
+
+              <!-- 마케팅 수신 동의 -->
+              <div class="privacy-box">
+                <div class="privacy-box-header">
+                  <strong>[선택] 홍보 및 안내 수신 동의</strong>
+                  <button type="button" class="privacy-toggle-btn" data-target="privacy-marketing">내용 보기 ▼</button>
+                </div>
+                <div class="privacy-content" id="privacy-marketing" style="display:none">
+                  <p class="privacy-desc">동수원노인전문요양원의 시설 소식, 프로그램, 행사 정보 등을 문자·전화로 수신하는 것에 동의합니다.</p>
+                  <p class="privacy-notice">※ 동의하지 않으셔도 상담 서비스 이용에는 불이익이 없습니다. 수신 동의 후에도 언제든지 철회 가능합니다.</p>
+                </div>
+                <label class="checkbox-label privacy-check-label">
+                  <input type="checkbox" id="privacyMarketingAgree">
+                  <span>홍보 및 안내 수신에 동의합니다 <em>(선택)</em></span>
+                </label>
+              </div>
+            </div>
+            <button type="submit" class="btn-submit" id="consultSubmit">
+              <span id="submitText">상담 신청하기</span>
+              <span id="submitLoading" style="display:none">처리 중...</span>
+            </button>
+            <div id="consultSuccess" class="form-success" style="display:none">
+              ✅ 상담 신청이 완료되었습니다. 담당자가 빠르게 연락드리겠습니다.
+            </div>
+            <div id="consultError" class="form-error" style="display:none">
+              ⚠️ 오류가 발생했습니다. 전화(<a href="tel:031-212-2929">031-212-2929</a>)로 문의해 주세요.
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 공지사항                             -->
+    <!-- ########################################## -->
+    <div class="page" id="page-notices">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-lounge.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 커뮤니티 <span>/</span> 공지사항</nav>
+          <h1>공지사항</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div class="board-list" id="noticesList">
+            <div class="board-loading">불러오는 중...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 시설 소식                            -->
+    <!-- ########################################## -->
+    <div class="page" id="page-news">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-hall.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 커뮤니티 <span>/</span> 시설 소식</nav>
+          <h1>시설 소식</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div class="board-list" id="newsList">
+            <div class="board-loading">불러오는 중...</div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 식단표                               -->
+    <!-- ########################################## -->
+    <div class="page" id="page-menu-table">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-lounge.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 커뮤니티 <span>/</span> 식단표</nav>
+          <h1>식단표</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container">
+          <div class="menu-intro">
+            <p>영양사가 계획한 균형 잡힌 식단을 매일 하루 3끼 제공합니다<br>어르신의 건강 상태에 따른 치료식 및 맞춤 식사도 준비됩니다</p>
+          </div>
+          <div class="menu-week" id="menuWeek">
+            <div class="menu-week-nav">
+              <button class="menu-nav-btn" id="menuPrevWeek">◀ 이전 주</button>
+              <span id="menuWeekLabel">이번 주 식단</span>
+              <button class="menu-nav-btn" id="menuNextWeek">다음 주 ▶</button>
+            </div>
+            <div id="menuTableContainer">
+              <div style="text-align:center;padding:48px;color:#888;">식단을 불러오는 중...</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ########################################## -->
+    <!-- PAGE: 개인정보처리방침                      -->
+    <!-- ########################################## -->
+    <div class="page" id="page-privacy">
+      <div class="page-hero page-hero-sm" style="background-image: linear-gradient(rgba(28,48,32,0.55),rgba(28,48,32,0.55)), url('img-lounge.jpg')">
+        <div class="container">
+          <nav class="breadcrumb"><a href="#" data-page="home">홈</a> <span>/</span> 개인정보처리방침</nav>
+          <h1>개인정보처리방침</h1>
+        </div>
+      </div>
+      <div class="page-body">
+        <div class="container container-narrow">
+          <div class="privacy-policy-wrap">
+
+            <div class="privacy-policy-notice">
+              <p>동수원노인전문요양원(이하 "본 시설")은 「개인정보 보호법」 제30조에 따라 정보주체의 개인정보를 보호하고 이와 관련한 고충을 신속하고 원활하게 처리할 수 있도록 다음과 같이 개인정보 처리방침을 수립·공개합니다.</p>
+              <p><strong>시행일: 2023년 10월 01일</strong></p>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제1조 (개인정보의 처리 목적)</h3>
+              <p>본 시설은 다음의 목적을 위하여 개인정보를 처리합니다. 처리하고 있는 개인정보는 다음의 목적 이외의 용도로는 이용되지 않으며, 이용 목적이 변경되는 경우에는 「개인정보 보호법」 제18조에 따라 별도의 동의를 받는 등 필요한 조치를 이행할 예정입니다.</p>
+              <ul>
+                <li>입소 상담 및 입소 여부 결정을 위한 상담 서비스 제공</li>
+                <li>요양 서비스 제공 및 케어 계획 수립</li>
+                <li>요양보험 급여 청구 및 정산</li>
+                <li>보호자 연락 및 케어 현황 안내</li>
+                <li>법령상 의무 이행 (노인복지법, 장기요양보험법 등)</li>
+              </ul>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제2조 (처리하는 개인정보의 항목)</h3>
+              <table class="privacy-table">
+                <thead><tr><th>구분</th><th>수집 항목</th><th>수집 방법</th></tr></thead>
+                <tbody>
+                  <tr><td>입소 상담</td><td>보호자 성명, 연락처, 어르신 성명·연령·장기요양등급, 문의 내용</td><td>홈페이지 상담 신청, 전화</td></tr>
+                  <tr><td>입소 계약</td><td>어르신 및 보호자 성명, 주민등록번호, 주소, 연락처, 건강보험 정보, 장기요양인정서</td><td>직접 제출, 서면</td></tr>
+                  <tr><td>요양 서비스</td><td>건강 상태, 투약 이력, 진단 내용, 케어 기록</td><td>의료기관 연계, 직접 기록</td></tr>
+                  <tr><td>급여 청구</td><td>장기요양인정번호, 건강보험증 번호</td><td>서면, 국민건강보험공단 연계</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제3조 (개인정보의 처리 및 보유 기간)</h3>
+              <table class="privacy-table">
+                <thead><tr><th>처리 목적</th><th>보유 기간</th><th>근거</th></tr></thead>
+                <tbody>
+                  <tr><td>입소 상담 기록</td><td>상담 완료 후 1년</td><td>이용자 동의</td></tr>
+                  <tr><td>입소 계약 및 서비스 기록</td><td>퇴소 후 5년</td><td>노인복지법, 장기요양보험법</td></tr>
+                  <tr><td>급여 청구 관련 기록</td><td>5년</td><td>국민건강보험법</td></tr>
+                  <tr><td>소비자 불만 처리 기록</td><td>3년</td><td>전자상거래 등에서의 소비자보호에 관한 법률</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제4조 (개인정보의 제3자 제공)</h3>
+              <p>본 시설은 정보주체의 개인정보를 제1조(개인정보의 처리 목적)에서 명시한 범위 내에서만 처리하며, 정보주체의 동의, 법률의 특별한 규정 등 「개인정보 보호법」 제17조에 해당하는 경우에만 개인정보를 제3자에게 제공합니다.</p>
+              <table class="privacy-table">
+                <thead><tr><th>제공받는 자</th><th>제공 목적</th><th>제공 항목</th><th>보유 기간</th></tr></thead>
+                <tbody>
+                  <tr><td>협력 의료기관</td><td>건강 관리 및 진료 연계</td><td>성명, 생년월일, 건강 상태 정보</td><td>목적 달성 후 즉시 파기</td></tr>
+                  <tr><td>국민건강보험공단</td><td>장기요양급여 청구·정산</td><td>장기요양인정번호, 급여 이용 내역</td><td>법령에 따른 보유 기간</td></tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제5조 (개인정보처리의 위탁)</h3>
+              <p>본 시설은 원활한 개인정보 업무처리를 위하여 다음과 같이 개인정보 처리업무를 위탁하고 있습니다.</p>
+              <table class="privacy-table">
+                <thead><tr><th>위탁받는 자</th><th>위탁 업무 내용</th></tr></thead>
+                <tbody>
+                  <tr><td>Google Firebase (Google LLC)</td><td>홈페이지 상담 신청 데이터 저장 및 관리</td></tr>
+                </tbody>
+              </table>
+              <p class="privacy-notice">※ 위탁 계약 시 「개인정보 보호법」 제26조에 따라 위탁업무 수행 목적 외 개인정보 처리 금지, 기술적·관리적 보호조치, 재위탁 제한 등을 규정하고 있습니다.</p>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제6조 (정보주체와 법정대리인의 권리·의무 및 행사방법)</h3>
+              <p>정보주체는 본 시설에 대해 언제든지 다음 각 호의 개인정보 보호 관련 권리를 행사할 수 있습니다.</p>
+              <ul>
+                <li>개인정보 열람 요구</li>
+                <li>오류 등이 있을 경우 정정 요구</li>
+                <li>삭제 요구</li>
+                <li>처리 정지 요구</li>
+              </ul>
+              <p>권리 행사는 서면, 전화, 전자우편 등을 통하여 하실 수 있으며, 본 시설은 이에 대해 지체없이 조치하겠습니다.</p>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제7조 (개인정보의 파기)</h3>
+              <p>본 시설은 개인정보 보유기간의 경과, 처리목적 달성 등 개인정보가 불필요하게 되었을 때에는 지체없이 해당 개인정보를 파기합니다.</p>
+              <ul>
+                <li><strong>전자적 파일:</strong> 복원이 불가능한 방법으로 영구 삭제</li>
+                <li><strong>종이 문서:</strong> 분쇄기로 분쇄하거나 소각</li>
+              </ul>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제8조 (개인정보의 안전성 확보조치)</h3>
+              <p>본 시설은 개인정보의 안전성 확보를 위해 다음과 같은 조치를 취하고 있습니다.</p>
+              <ul>
+                <li>관리적 조치: 개인정보 취급 직원 최소화, 정기 교육 실시</li>
+                <li>기술적 조치: 개인정보 처리 시스템 접근권한 관리, 보안 프로그램 설치</li>
+                <li>물리적 조치: 전산실 및 자료 보관실 접근 통제</li>
+              </ul>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제9조 (개인정보 보호책임자)</h3>
+              <div class="privacy-officer-card">
+                <div>
+                  <strong>개인정보 보호책임자</strong>
+                  <p>기관명: 동수원노인전문요양원</p>
+                  <p>주소: 경기도 용인시 기흥구 흥덕2로87번길 17 (세림프라자 601·701호)</p>
+                  <p>전화: <a href="tel:031-212-2929">031-212-2929</a></p>
+                </div>
+              </div>
+              <p>정보주체께서는 「개인정보 보호법」 제55조의 규정에 의한 권익침해 사항에 대해서는 아래의 기관에 도움을 요청하실 수 있습니다.</p>
+              <ul>
+                <li>개인정보 침해신고센터: privacy.kisa.or.kr / (국번없이) 118</li>
+                <li>개인정보 분쟁조정위원회: www.kopico.go.kr / 1833-6972</li>
+                <li>대검찰청 사이버수사과: www.spo.go.kr / (국번없이) 1301</li>
+                <li>경찰청 사이버수사국: ecrm.cyber.go.kr / (국번없이) 182</li>
+              </ul>
+            </div>
+
+            <div class="privacy-section">
+              <h3>제10조 (개인정보처리방침 변경)</h3>
+              <p>이 개인정보처리방침은 2023년 10월 01일부터 적용됩니다. 이전의 개인정보처리방침은 아래에서 확인하실 수 있습니다.</p>
+              <p class="privacy-notice">- 이전 개인정보처리방침 없음 (최초 시행)</p>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main><!-- /mainContent -->
+
+  <!-- ===== FOOTER ===== -->
+  <footer class="site-footer">
+    <div class="footer-top">
+      <div class="container">
+        <div class="footer-layout">
+          <div class="footer-brand">
+            <div class="footer-logo">
+              <div class="logo-emblem logo-emblem-sm">동</div>
+              <div>
+                <span class="footer-logo-main">동수원노인전문요양원</span>
+              </div>
+            </div>
+            <p class="footer-tagline">품격 있는 노후, 따뜻한 돌봄<br>어르신의 행복한 일상을 함께합니다</p>
+            <a href="https://blog.naver.com/dsw23" target="_blank" class="footer-blog-link">
+              <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M16.273 12.845L7.376 0H0v24h7.727V11.155L16.624 24H24V0h-7.727z"/></svg>
+              네이버 블로그
+            </a>
+          </div>
+          <div class="footer-info">
+            <h4>기관 정보</h4>
+            <ul>
+              <li><span>주소</span> 경기도 용인시 기흥구 흥덕2로87번길 17 (영덕동, 세림프라자 601·701호)</li>
+              <li><span>전화</span> <a href="tel:031-212-2929">031-212-2929</a></li>
+              <li><span>설립일</span> 2023년 10월 01일</li>
+              <li><span>정원</span> 80명 (현원 75명)</li>
+            </ul>
+          </div>
+          <div class="footer-quick">
+            <h4>빠른 메뉴</h4>
+            <ul>
+              <li><a href="#" data-page="intro">인사말</a></li>
+              <li><a href="#" data-page="facilities">시설 안내</a></li>
+              <li><a href="#" data-page="services">서비스 안내</a></li>
+              <li><a href="#" data-page="admission-process">입소 절차</a></li>
+              <li><a href="#" data-page="consult">상담 신청</a></li>
+              <li><a href="#" data-page="directions">오시는 길</a></li>
+            </ul>
+          </div>
+          <div class="footer-contact">
+            <h4>상담 문의</h4>
+            <a href="tel:031-212-2929" class="footer-tel">031-212-2929</a>
+            <p class="footer-hours">365일 · 24시간 상담 가능<br>주말·공휴일 포함</p>
+            <a href="#" class="footer-consult-btn" data-page="consult">온라인 상담 신청</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <div class="container">
+        <p>© 2023 동수원노인전문요양원. All rights reserved.</p>
+        <p class="footer-policy">
+          <a href="#" data-page="privacy">개인정보처리방침</a>
+          <span style="color:rgba(255,255,255,0.2);margin:0 8px;">|</span>
+          <a href="#" data-page="consult">상담 신청</a>
+        </p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===== FLOATING BUTTONS ===== -->
+  <div class="floating-wrap" id="floatingWrap">
+    <!-- 전화 상담 - 즉시 통화 -->
+    <a href="tel:031-212-2929" class="float-btn float-phone" title="전화 상담 031-212-2929" aria-label="전화 상담">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81 19.79 19.79 0 01.01 1.18 2 2 0 012 0h3a2 2 0 012 1.72 12.84 12.84 0 00.7 2.81 2 2 0 01-.45 2.11L6.09 7.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45 12.84 12.84 0 002.81.7A2 2 0 0122 14v2.92z"/></svg>
+      <span>전화 상담</span>
+    </a>
+    <!-- 카카오 채널 상담 -->
+    <a href="https://pf.kakao.com/_dongsuwon" target="_blank" class="float-btn float-kakao" title="카카오 채널 상담" aria-label="카카오 채널 상담">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="currentColor"><path d="M12 3C6.48 3 2 6.92 2 11.76c0 3.09 1.75 5.81 4.4 7.41L5.3 22.3c-.1.3.2.57.47.43l4.17-2.77c.67.1 1.36.14 2.06.14 5.52 0 10-3.92 10-8.76S17.52 3 12 3z"/></svg>
+      <span>카카오 상담</span>
+    </a>
+    <!-- 온라인 상담 신청 -->
+    <a href="#" class="float-btn float-consult" data-page="consult" title="온라인 상담" aria-label="온라인 상담 신청">
+      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15a2 2 0 01-2 2H7l-4 4V5a2 2 0 012-2h14a2 2 0 012 2z"/></svg>
+      <span>온라인 상담</span>
+    </a>
+    <!-- 맨 위로 -->
+    <button class="float-btn float-top" id="backToTop" title="맨 위로" aria-label="맨 위로 이동" style="display:none">
+      <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><polyline points="18 15 12 9 6 15"/></svg>
+    </button>
+  </div>
+
+  <!-- Scripts -->
+  <script src="firebase-config.js"></script>
+  <script src="firebase-cms.js"></script>
+  <script src="firebase-consult.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
