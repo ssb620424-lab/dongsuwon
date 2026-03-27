@@ -1993,23 +1993,11 @@ ul { list-style: none; }
 .float-kakao  { background: #FEE500; color: #3A1D1D; }
 .float-consult{ background: var(--bark-mid); color: var(--sand); }
 .float-top    { background: rgba(42,26,10,0.8); color: rgba(232,220,200,0.8); }
-.float-fontsize{ background: var(--ww) !important; color: var(--bark) !important; border: 1px solid var(--border) !important; }
 
 .float-phone:hover   { background: var(--bark-mid); }
 .float-consult:hover { background: var(--bark); }
-.float-fontsize:hover{ background: var(--cream) !important; }
 .float-top:hover     { background: var(--bark); color: var(--sand); }
 
-/* font-large mode */
-body.font-large { font-size: 19px; }
-body.font-large p, body.font-large li, body.font-large td, body.font-large th,
-body.font-large label { font-size: 17px !important; line-height: 2 !important; }
-body.font-large h1 { font-size: clamp(32px, 5vw, 52px) !important; }
-body.font-large h2 { font-size: clamp(26px, 4vw, 42px) !important; }
-body.font-large h3 { font-size: 22px !important; }
-body.font-large .btn-primary, body.font-large .btn-outline-dark,
-body.font-large .btn-submit, body.font-large .cta-btn-phone { font-size: 15px !important; }
-body.font-large .float-fontsize { background: var(--bark) !important; color: var(--sand) !important; }
 
 /* =====================================================
    MOBILE MENU
