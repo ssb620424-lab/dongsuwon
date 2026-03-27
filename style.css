@@ -2371,3 +2371,297 @@ input, select, textarea { font-family: inherit; }
   .welcome-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .newphoto-grid { grid-template-columns: repeat(2, 1fr); }
 }
+/* ══════════════════════════════════════════════════
+   1. slide-eyebrow 글자 간격 수정
+   (슬라이더 배지 텍스트 "동 수 원 노 인..." 간격 문제)
+══════════════════════════════════════════════════ */
+
+.slide-eyebrow {
+  letter-spacing: 0.05em !important;
+}
+
+
+/* ══════════════════════════════════════════════════
+   2. FAQ 섹션 스타일
+══════════════════════════════════════════════════ */
+
+.faq-intro {
+  text-align: center;
+  margin-bottom: 44px;
+  font-size: 16px;
+  color: #555;
+  line-height: 1.85;
+}
+
+.faq-intro a {
+  color: var(--forest);
+  font-weight: 700;
+}
+
+/* 카테고리 탭 */
+.faq-tabs {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 36px;
+  justify-content: center;
+}
+
+.faq-tab {
+  padding: 9px 22px;
+  border: 1.5px solid rgba(28,48,32,0.2);
+  background: transparent;
+  border-radius: 100px;
+  font-size: 14px;
+  font-weight: 500;
+  color: #666;
+  cursor: pointer;
+  transition: all 0.2s;
+  font-family: 'Noto Sans KR', sans-serif;
+}
+
+.faq-tab:hover {
+  border-color: var(--forest);
+  color: var(--forest);
+}
+
+.faq-tab.active {
+  background: var(--forest);
+  border-color: var(--forest);
+  color: #fff;
+}
+
+/* FAQ 리스트 */
+.faq-list {
+  display: flex;
+  flex-direction: column;
+  border-top: 2px solid var(--forest);
+}
+
+.faq-item {
+  border-bottom: 1px solid rgba(28,48,32,0.12);
+  transition: opacity 0.2s;
+}
+
+.faq-item.hidden {
+  display: none;
+}
+
+/* 질문 버튼 */
+.faq-q {
+  width: 100%;
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 22px 4px;
+  background: none;
+  border: none;
+  cursor: pointer;
+  text-align: left;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--forest);
+  line-height: 1.55;
+  transition: color 0.2s;
+}
+
+.faq-q:hover { color: var(--gold); }
+.faq-q[aria-expanded="true"] { color: var(--gold); }
+
+.faq-arrow {
+  font-size: 18px;
+  flex-shrink: 0;
+  transition: transform 0.3s ease;
+  color: var(--gold);
+  line-height: 1.3;
+  margin-top: 1px;
+}
+
+.faq-q[aria-expanded="true"] .faq-arrow {
+  transform: rotate(180deg);
+}
+
+/* 답변 영역 */
+.faq-a {
+  display: none;
+  padding: 0 4px 28px 4px;
+  font-size: 15px;
+  color: #444;
+  line-height: 1.9;
+}
+
+.faq-a.open { display: block; }
+
+.faq-a ul {
+  margin: 10px 0 12px 20px;
+}
+
+.faq-a ul li {
+  margin-bottom: 6px;
+  list-style: disc;
+}
+
+.faq-a a {
+  color: var(--gold);
+  text-decoration: underline;
+  font-weight: 600;
+}
+
+.faq-a p + p { margin-top: 12px; }
+
+/* 하단 CTA */
+.faq-bottom-cta {
+  text-align: center;
+  margin-top: 60px;
+  padding: 52px 24px;
+  background: #ece6d8;
+  border-radius: 12px;
+}
+
+.faq-bottom-cta p {
+  font-size: 18px;
+  color: var(--forest);
+  font-weight: 700;
+  margin-bottom: 28px;
+  font-family: 'Gowun Batang', serif;
+}
+
+.faq-cta-btns {
+  display: flex;
+  gap: 14px;
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+
+/* ══════════════════════════════════════════════════
+   3. 글자 크기 확대 버튼 & 모드
+══════════════════════════════════════════════════ */
+
+.float-fontsize {
+  background: #fff !important;
+  color: var(--forest) !important;
+  border: 2px solid rgba(28,48,32,0.3) !important;
+  flex-direction: column;
+}
+
+.float-fontsize svg {
+  flex-shrink: 0;
+}
+
+.float-fontsize:hover {
+  background: var(--forest) !important;
+  color: #fff !important;
+  border-color: var(--forest) !important;
+}
+
+/* 글자 크기 확대 모드 적용 */
+body.font-large {
+  font-size: 20px;
+}
+
+body.font-large p,
+body.font-large li,
+body.font-large td,
+body.font-large th,
+body.font-large span:not(.logo-emblem):not(.badge-year):not(.news-tag):not(.space-floor-badge):not(.value-num),
+body.font-large label,
+body.font-large .about-desc,
+body.font-large .section-desc {
+  font-size: 18px !important;
+  line-height: 2 !important;
+}
+
+body.font-large h1 { font-size: clamp(28px, 5vw, 48px) !important; }
+body.font-large h2 { font-size: clamp(24px, 4vw, 38px) !important; }
+body.font-large h3 { font-size: clamp(20px, 3vw, 28px) !important; }
+body.font-large h4 { font-size: 20px !important; }
+
+body.font-large .btn-primary,
+body.font-large .btn-outline-dark,
+body.font-large .btn-hero-primary,
+body.font-large .btn-hero-outline,
+body.font-large .btn-submit,
+body.font-large .cta-btn-phone,
+body.font-large .cta-btn-online {
+  font-size: 17px !important;
+  padding: 16px 32px !important;
+}
+
+body.font-large .quick-item span {
+  font-size: 15px !important;
+}
+
+body.font-large .faq-q {
+  font-size: 18px !important;
+}
+
+body.font-large .faq-a {
+  font-size: 17px !important;
+}
+
+/* 확대 모드일 때 버튼 활성 표시 */
+body.font-large .float-fontsize {
+  background: var(--forest) !important;
+  color: #fff !important;
+  border-color: var(--forest) !important;
+}
+
+
+/* ══════════════════════════════════════════════════
+   4. 모바일 테이블 overflow 수정
+   (식단표, 개인정보 테이블, 서류 테이블 등)
+══════════════════════════════════════════════════ */
+
+/* 모든 테이블을 감싸는 공통 처리 */
+.page-body .container table,
+.page-body .container-narrow table {
+  display: block;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  max-width: 100%;
+}
+
+/* 개인정보 테이블 */
+.privacy-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 480px;
+}
+
+.privacy-table th,
+.privacy-table td {
+  padding: 10px 14px;
+  border: 1px solid rgba(28,48,32,0.12);
+  font-size: 14px;
+  line-height: 1.6;
+  vertical-align: top;
+  white-space: normal;
+}
+
+.privacy-table thead {
+  background: var(--forest);
+  color: #fff;
+}
+
+/* 식단표 테이블 */
+#menuTableContainer table {
+  min-width: 560px;
+}
+
+/* docs-list는 정상 표시 */
+.docs-list {
+  white-space: normal;
+}
+
+@media (max-width: 768px) {
+  /* FAQ 탭 모바일 */
+  .faq-tabs { gap: 6px; }
+  .faq-tab { padding: 8px 14px; font-size: 13px; }
+  .faq-q { font-size: 15px; padding: 18px 4px; }
+  .faq-bottom-cta { padding: 36px 16px; }
+  .faq-cta-btns { flex-direction: column; align-items: stretch; }
+  .faq-cta-btns a { text-align: center; }
+}
