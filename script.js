@@ -803,3 +803,94 @@ document.addEventListener('DOMContentLoaded', () => {
   showPage('home');
 
 }); // end DOMContentLoaded
+
+
+/* ══════════════════════════════════════════════════
+   글자 크기 확대 토글
+   - 클릭 시 body에 .font-large 클래스 토글
+   - localStorage로 설정 유지 (다음 접속에도 기억)
+══════════════════════════════════════════════════ */
+
+(function initFontSizeToggle() {
+  const btn = document.getElementById('fontSizeToggle');
+  if (!btn) return;
+
+  // 이전 설정 불러오기
+  try {
+    if (localStorage.getItem('fontLarge') === 'true') {
+      document.body.classList.add('font-large');
+    }
+  } catch(e) {}
+
+  btn.addEventListener('click', function () {
+    const isLarge = document.body.classList.toggle('font-large');
+    try {
+      localStorage.setItem('fontLarge', isLarge ? 'true' : 'false');
+    } catch(e) {}
+  });
+})();
+
+
+/* ══════════════════════════════════════════════════
+   FAQ 아코디언 + 카테고리 필터
+══════════════════════════════════════════════════ */
+
+(function initFaq() {
+
+  /* ── 아코디언 ── */
+  document.querySelectorAll('.faq-q').forEach(function (btn) {
+    btn.addEventListener('click', function () {
+      var item   = this.closest('.faq-item');
+      var answer = item.querySelector('.faq-a');
+      var isOpen = this.getAttribute('aria-expanded') === 'true';
+
+      // 같은 리스트 내 열린 항목 모두 닫기
+      var list = item.closest('.faq-list');
+      list.querySelectorAll('.faq-q[aria-expanded="true"]').forEach(function (openBtn) {
+        if (openBtn !== btn) {
+          openBtn.setAttribute('aria-expanded', 'false');
+          openBtn.closest('.faq-item').querySelector('.faq-a').classList.remove('open');
+        }
+      });
+
+      // 현재 항목 토글
+      this.setAttribute('aria-expanded', String(!isOpen));
+      answer.classList.toggle('open', !isOpen);
+
+      // 열릴 때 부드럽게 스크롤
+      if (!isOpen) {
+        setTimeout(function () {
+          item.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }, 100);
+      }
+    });
+  });
+
+  /* ── 카테고리 필터 ── */
+  document.querySelectorAll('.faq-tab').forEach(function (tab) {
+    tab.addEventListener('click', function () {
+      var cat = this.getAttribute('data-faq-cat');
+
+      // 탭 활성화
+      document.querySelectorAll('.faq-tab').forEach(function (t) {
+        t.classList.remove('active');
+      });
+      this.classList.add('active');
+
+      // FAQ 항목 필터링
+      document.querySelectorAll('.faq-item').forEach(function (item) {
+        var match = (cat === 'all') || (item.getAttribute('data-faq-cat') === cat);
+        item.classList.toggle('hidden', !match);
+
+        // 숨겨질 때 열린 답변 닫기
+        if (!match) {
+          var q = item.querySelector('.faq-q');
+          var a = item.querySelector('.faq-a');
+          q.setAttribute('aria-expanded', 'false');
+          a.classList.remove('open');
+        }
+      });
+    });
+  });
+
+})();
