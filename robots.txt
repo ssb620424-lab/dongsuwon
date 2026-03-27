@@ -1,0 +1,20 @@
+# 동수원노인전문요양원 robots.txt
+# https://dongsuwon.co.kr
+
+User-agent: *
+Allow: /
+
+# 관리자 페이지 크롤링 차단
+Disallow: /admin.html
+Disallow: /admin/
+
+# Firebase 관련 파일 차단
+Disallow: /firebase-config.js
+Disallow: /firebase-cms.js
+Disallow: /firebase-consult.js
+
+# 사이트맵 위치
+Sitemap: https://dongsuwon.co.kr/sitemap.xml
+
+# 크롤링 속도 제한 (초당 요청 수)
+Crawl-delay: 1

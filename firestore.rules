@@ -1,0 +1,99 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ─────────────────────────────────────────────
+    // 헬퍼 함수
+    // ─────────────────────────────────────────────
+
+    // 관리자 여부 확인 (ssb620424@gmail.com 만 허용)
+    function isAdmin() {
+      return request.auth != null
+          && request.auth.token.email == 'ssb620424@gmail.com'
+          && request.auth.token.email_verified == true;
+    }
+
+    // 로그인 사용자 여부 (필요 시 확장용)
+    function isSignedIn() {
+      return request.auth != null;
+    }
+
+    // ─────────────────────────────────────────────
+    // 공지사항 (notices)
+    //   - 누구나 읽기 가능
+    //   - 관리자만 쓰기 (생성/수정/삭제)
+    // ─────────────────────────────────────────────
+    match /notices/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 시설 소식 (news)
+    //   - 누구나 읽기 가능
+    //   - 관리자만 쓰기
+    // ─────────────────────────────────────────────
+    match /news/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 갤러리 (gallery)
+    //   - 누구나 읽기 가능
+    //   - 관리자만 쓰기
+    // ─────────────────────────────────────────────
+    match /gallery/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 식단표 (menu)
+    //   - 누구나 읽기 가능
+    //   - 관리자만 쓰기
+    // ─────────────────────────────────────────────
+    match /menu/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 상담 신청 (consults)
+    //   - 누구나 쓰기 가능 (상담 신청 폼)
+    //   - 관리자만 읽기 / 삭제 가능
+    //   ※ 신청 데이터에는 개인정보 포함 → 일반 읽기 차단
+    // ─────────────────────────────────────────────
+    match /consults/{docId} {
+      allow create: if true;                   // 방문자 상담 신청
+      allow read, update, delete: if isAdmin(); // 관리자만 조회·처리
+    }
+
+    // ─────────────────────────────────────────────
+    // 페이지 콘텐츠 (pages)
+    //   - 누구나 읽기 가능 (인사말, 비전, 서비스 등)
+    //   - 관리자만 쓰기
+    // ─────────────────────────────────────────────
+    match /pages/{docId} {
+      allow read: if true;
+      allow write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 프로그램 게시판 (program-posts) — 현재 삭제됨
+    //   - 완전 차단 (혹시 남아있는 문서 보호)
+    // ─────────────────────────────────────────────
+    match /program-posts/{docId} {
+      allow read, write: if isAdmin();
+    }
+
+    // ─────────────────────────────────────────────
+    // 그 외 모든 컬렉션 — 기본 차단
+    // ─────────────────────────────────────────────
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+  }
+}
