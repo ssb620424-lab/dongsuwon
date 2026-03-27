@@ -3,7 +3,7 @@
    Warm · Woody · Refined
    ===================================================== */
 
-@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;1,300;1,400;1,500&family=Noto+Sans+KR:wght@300;400;500;600&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;1,300;1,400&family=Nanum+Myeongjo:wght@400;700&family=Noto+Sans+KR:wght@300;400;500;600&display=swap');
 
 /* ─── Design Tokens ─── */
 :root {
@@ -34,7 +34,8 @@ body {
   background: var(--ww);
   color: var(--bark);
   font-weight: 300;
-  line-height: 1.85;
+  font-size: 17px;
+  line-height: 1.9;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -44,7 +45,8 @@ button { cursor: pointer; font-family: inherit; }
 ul { list-style: none; }
 
 /* ─── Typography ─── */
-.serif { font-family: 'Cormorant', serif; }
+.serif { font-family: 'Nanum Myeongjo', 'Cormorant', serif; }
+.serif-en { font-family: 'Nanum Myeongjo', 'Cormorant', serif; }
 
 /* ─── Container ─── */
 .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
@@ -140,8 +142,8 @@ ul { list-style: none; }
 .logo-emblem { display: none; }
 .logo-text { display: flex; flex-direction: column; }
 .logo-main {
-  font-family: 'Cormorant', serif;
-  font-size: 19px;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 20px;
   font-weight: 500;
   color: var(--bark);
   letter-spacing: 0.04em;
@@ -164,7 +166,7 @@ ul { list-style: none; }
   padding: 0 20px;
   height: 72px;
   line-height: 72px;
-  font-size: 11px;
+  font-size: 12px;
   color: var(--bark-mid);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -274,8 +276,8 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 .slide-title {
-  font-family: 'Cormorant', serif;
-  font-size: 62px;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 52px;
   font-weight: 300;
   color: #fff;
   line-height: 1.08;
@@ -288,7 +290,7 @@ ul { list-style: none; }
   display: block;
 }
 .slide-desc {
-  font-size: 14px;
+  font-size: 15px;
   color: rgba(255,255,255,0.55);
   font-weight: 300;
   line-height: 2;
@@ -427,7 +429,7 @@ ul { list-style: none; }
 }
 .quick-icon-wrap svg { color: var(--bark-lt); }
 .quick-item span {
-  font-size: 11px;
+  font-size: 12px;
   font-weight: 500;
   color: var(--bark);
   letter-spacing: 0.04em;
@@ -468,7 +470,7 @@ ul { list-style: none; }
   border-left: 3px solid var(--bark);
 }
 .badge-year {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 30px;
   font-weight: 400;
   color: var(--bark);
@@ -504,8 +506,8 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 .section-title {
-  font-family: 'Cormorant', serif;
-  font-size: 38px;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 34px;
   font-weight: 300;
   color: var(--bark);
   line-height: 1.25;
@@ -513,7 +515,7 @@ ul { list-style: none; }
   margin-bottom: 24px;
 }
 .about-desc {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 2.1;
   font-weight: 300;
@@ -628,7 +630,7 @@ ul { list-style: none; }
   display: block;
 }
 .space-panel-info h3 {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 26px;
   font-weight: 400;
   color: var(--bark);
@@ -692,7 +694,7 @@ ul { list-style: none; }
 .service-card:hover .service-icon { background: var(--sand); }
 .service-icon svg { color: var(--bark-lt); }
 .service-card h3 {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 20px;
   font-weight: 400;
   color: var(--bark);
@@ -700,7 +702,7 @@ ul { list-style: none; }
   letter-spacing: 0.01em;
 }
 .service-card p {
-  font-size: 13px;
+  font-size: 14px;
   color: var(--bark-mid);
   line-height: 1.85;
   font-weight: 300;
@@ -779,8 +781,8 @@ ul { list-style: none; }
 .news-tag-event  { background: rgba(90,96,72,0.1); color: #5A6048; }
 .news-date { font-size: 11px; color: rgba(42,26,10,0.35); letter-spacing: 0.04em; }
 .news-card h4 {
-  font-family: 'Cormorant', serif;
-  font-size: 17px;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 18px;
   font-weight: 400;
   color: var(--bark);
   margin-bottom: 6px;
@@ -789,7 +791,7 @@ ul { list-style: none; }
 .news-card h4 a { transition: color 0.15s; }
 .news-card h4 a:hover { color: var(--bark-lt); }
 .news-card p {
-  font-size: 12.5px;
+  font-size: 14px;
   color: var(--bark-mid);
   line-height: 1.8;
   font-weight: 300;
@@ -831,8 +833,8 @@ ul { list-style: none; }
   text-transform: uppercase;
 }
 .cta-inner h2 {
-  font-family: 'Cormorant', serif;
-  font-size: 46px;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 40px;
   font-weight: 300;
   color: #fff;
   line-height: 1.18;
@@ -840,7 +842,7 @@ ul { list-style: none; }
   letter-spacing: -0.01em;
 }
 .cta-inner > p {
-  font-size: 13.5px;
+  font-size: 15px;
   color: rgba(255,255,255,0.45);
   line-height: 2;
   font-weight: 300;
@@ -1001,7 +1003,7 @@ ul { list-style: none; }
 .home-newpost .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
 .newpost-header { margin-bottom: 32px; }
 .newpost-title {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 32px;
   font-weight: 300;
   color: var(--bark);
@@ -1055,7 +1057,7 @@ ul { list-style: none; }
   gap: 12px;
 }
 .consult-box-inner h3 {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 24px;
   font-weight: 400;
   color: var(--sand);
@@ -1102,7 +1104,7 @@ ul { list-style: none; }
 .home-welcome .container { max-width: 1200px; margin: 0 auto; padding: 0 48px; }
 .welcome-header { margin-bottom: 32px; }
 .welcome-title {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 32px;
   font-weight: 300;
   color: var(--bark);
@@ -1219,7 +1221,7 @@ ul { list-style: none; }
 }
 .blog-feed-info { padding: 18px; }
 .blog-feed-date { font-size: 9.5px; color: var(--bark-lt); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-.blog-feed-info h4 { font-family: 'Cormorant', serif; font-size: 16px; font-weight: 400; color: var(--bark); margin-bottom: 6px; line-height: 1.4; }
+.blog-feed-info h4 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 16px; font-weight: 400; color: var(--bark); margin-bottom: 6px; line-height: 1.4; }
 .blog-feed-info p { font-size: 12px; color: var(--bark-mid); line-height: 1.7; font-weight: 300; }
 .blog-feed-more { text-align: center; }
 .btn-blog-more {
@@ -1269,7 +1271,7 @@ ul { list-style: none; }
   line-height: 1.9;
   font-weight: 300;
   font-style: italic;
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   flex: 1;
 }
 .review-author { padding-top: 12px; border-top: 1px solid var(--border-lt); }
@@ -1307,7 +1309,7 @@ ul { list-style: none; }
 .breadcrumb a:hover { color: var(--sand); }
 .breadcrumb span { opacity: 0.4; }
 .page-hero h1 {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 44px;
   font-weight: 300;
   color: #fff;
@@ -1327,11 +1329,11 @@ ul { list-style: none; }
    ===================================================== */
 .greeting-layout {}
 .greeting-text {}
-.greeting-open { font-family: 'Cormorant', serif; font-size: 18px; color: var(--bark-pale); margin-bottom: 12px; font-style: italic; }
-.greeting-text h2 { font-family: 'Cormorant', serif; font-size: 34px; font-weight: 400; color: var(--bark); margin-bottom: 28px; line-height: 1.3; }
+.greeting-open { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; color: var(--bark-pale); margin-bottom: 12px; font-style: italic; }
+.greeting-text h2 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 34px; font-weight: 400; color: var(--bark); margin-bottom: 28px; line-height: 1.3; }
 .greeting-body p { font-size: 14.5px; color: var(--bark-mid); line-height: 2.1; font-weight: 300; margin-bottom: 18px; }
 .greeting-body a { color: var(--bark-lt); font-weight: 500; }
-.greeting-sign { font-family: 'Cormorant', serif; font-size: 17px; color: var(--bark-pale); margin-top: 28px; font-style: italic; }
+.greeting-sign { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 17px; color: var(--bark-pale); margin-top: 28px; font-style: italic; }
 
 /* =====================================================
    VISION PAGE
@@ -1341,7 +1343,7 @@ ul { list-style: none; }
 .vision-main .section-eyebrow { justify-content: center; }
 .vision-main .section-eyebrow::before, .vision-main .section-eyebrow::after { display: none; }
 #vision-statement {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 36px;
   font-weight: 300;
   color: var(--bark);
@@ -1358,14 +1360,14 @@ ul { list-style: none; }
   padding: 36px 32px;
 }
 .value-num {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 32px;
   font-weight: 300;
   color: rgba(122,90,58,0.25);
   margin-bottom: 16px;
   line-height: 1;
 }
-.value-card h3 { font-family: 'Cormorant', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 10px; }
+.value-card h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 10px; }
 .value-card p { font-size: 13px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; }
 
 /* =====================================================
@@ -1374,7 +1376,7 @@ ul { list-style: none; }
 .directions-layout { display: flex; flex-direction: column; gap: 3px; }
 .directions-info { display: grid; grid-template-columns: repeat(4, 1fr); gap: 3px; }
 .directions-card { background: var(--cream); padding: 28px; }
-.directions-card h3 { font-family: 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 10px; }
+.directions-card h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 10px; }
 .directions-card p { font-size: 13px; color: var(--bark-mid); line-height: 1.85; font-weight: 300; }
 .btn-sm {
   display: inline-block;
@@ -1419,13 +1421,13 @@ ul { list-style: none; }
 .floor-panel { display: none; }
 .floor-panel.active { display: block; }
 .floor-header { margin-bottom: 28px; }
-.floor-header h2 { font-family: 'Cormorant', serif; font-size: 28px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
+.floor-header h2 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 28px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
 .floor-header p { font-size: 13px; color: var(--bark-mid); font-weight: 300; }
 .facility-rooms { display: grid; grid-template-columns: repeat(3, 1fr); gap: 3px; }
 .room-card { background: var(--cream); }
 .room-img { height: 180px; background-size: cover; background-position: center; }
 .room-info { padding: 22px; }
-.room-info h3 { font-family: 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
+.room-info h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
 .room-info p { font-size: 12.5px; color: var(--bark-mid); line-height: 1.8; font-weight: 300; }
 
 /* =====================================================
@@ -1550,14 +1552,14 @@ ul { list-style: none; }
 .service-detail-card:hover .service-detail-icon { background: var(--sand); }
 .service-detail-icon svg { color: var(--bark-lt); }
 .service-detail-card > div:last-child { padding: 28px 28px; }
-.service-detail-card h3 { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 12px; }
+.service-detail-card h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 12px; }
 .service-detail-card ul { padding-left: 16px; }
 .service-detail-card ul li { font-size: 12.5px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; list-style: disc; }
 
 /* Program Gallery in Services */
 .program-gallery-section { margin-top: 72px; padding-top: 60px; border-top: 1px solid var(--border); }
 .program-gallery-header { margin-bottom: 36px; }
-.program-gallery-header h3 { font-family: 'Cormorant', serif; font-size: 28px; font-weight: 400; color: var(--bark); margin: 10px 0 10px; }
+.program-gallery-header h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 28px; font-weight: 400; color: var(--bark); margin: 10px 0 10px; }
 .program-gallery-header p { font-size: 13px; color: var(--bark-mid); font-weight: 300; }
 .program-gallery-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-bottom: 36px; }
 .program-card { text-decoration: none; color: inherit; display: flex; flex-direction: column; background: var(--cream); transition: background 0.2s; }
@@ -1565,11 +1567,11 @@ ul { list-style: none; }
 .program-card-img { height: 200px; background-size: cover; background-position: center; position: relative; }
 .program-card-tag { position: absolute; top: 12px; left: 12px; background: var(--bark); color: var(--sand); font-size: 9px; font-weight: 700; padding: 4px 10px; letter-spacing: 0.1em; text-transform: uppercase; }
 .program-card-info { padding: 22px; }
-.program-card-info h4 { font-family: 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
+.program-card-info h4 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; font-weight: 400; color: var(--bark); margin-bottom: 8px; }
 .program-card-info p { font-size: 12.5px; color: var(--bark-mid); line-height: 1.75; font-weight: 300; }
 .program-blog-link { font-size: 11px; color: var(--bark-lt); margin-top: 8px; display: block; }
 .program-gallery-cta { text-align: center; padding: 40px 24px; background: var(--cream); }
-.program-gallery-cta p { font-family: 'Cormorant', serif; font-size: 20px; color: var(--bark); font-weight: 400; margin-bottom: 18px; }
+.program-gallery-cta p { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; color: var(--bark); font-weight: 400; margin-bottom: 18px; }
 
 /* =====================================================
    ADMISSION PROCESS PAGE
@@ -1587,7 +1589,7 @@ ul { list-style: none; }
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 18px;
   font-weight: 400;
   color: var(--sand);
@@ -1595,12 +1597,12 @@ ul { list-style: none; }
   min-height: 80px;
 }
 .step-content { padding: 22px 24px; }
-.step-content h3 { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 6px; }
+.step-content h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 6px; }
 .step-content p { font-size: 13px; color: var(--bark-mid); line-height: 1.85; font-weight: 300; }
 .step-content a { color: var(--bark-lt); font-weight: 500; }
 .process-arrow { text-align: left; padding: 0 0 0 28px; font-size: 18px; color: rgba(122,90,58,0.3); line-height: 1; margin: -1px 0; }
 .process-cta { margin-top: 48px; padding: 36px; background: var(--cream); text-align: center; }
-.process-cta p { font-family: 'Cormorant', serif; font-size: 18px; color: var(--bark); margin-bottom: 20px; }
+.process-cta p { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; color: var(--bark); margin-bottom: 20px; }
 .process-cta-btns { display: flex; gap: 12px; justify-content: center; }
 
 /* =====================================================
@@ -1608,7 +1610,7 @@ ul { list-style: none; }
    ===================================================== */
 .docs-section { display: grid; grid-template-columns: repeat(2, 1fr); gap: 3px; margin-bottom: 24px; }
 .docs-card { background: var(--cream); padding: 32px; }
-.docs-card h3 { font-family: 'Cormorant', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
+.docs-card h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 22px; font-weight: 400; color: var(--bark); margin-bottom: 20px; padding-bottom: 14px; border-bottom: 1px solid var(--border); }
 .docs-list { display: flex; flex-direction: column; gap: 16px; }
 .docs-list li { display: flex; gap: 14px; align-items: flex-start; }
 .doc-icon { font-size: 18px; flex-shrink: 0; margin-top: 2px; }
@@ -1727,7 +1729,7 @@ ul { list-style: none; }
 .board-tag { font-size: 9.5px; color: var(--bark-lt); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
 .board-title { font-size: 14px; color: var(--bark); font-weight: 400; line-height: 1.5; }
 .board-date { font-size: 11px; color: rgba(42,26,10,0.35); text-align: right; }
-.board-empty { padding: 56px; text-align: center; color: var(--bark-pale); font-size: 14px; font-family: 'Cormorant', serif; }
+.board-empty { padding: 56px; text-align: center; color: var(--bark-pale); font-size: 14px; font-family: 'Nanum Myeongjo', 'Cormorant', serif; }
 
 /* =====================================================
    MENU TABLE 식단표
@@ -1754,7 +1756,7 @@ ul { list-style: none; }
   transition: all 0.15s;
 }
 .menu-nav-btn:hover { background: var(--bark); color: var(--sand); border-color: var(--bark); }
-#menuWeekLabel { font-family: 'Cormorant', serif; font-size: 18px; color: var(--bark); font-weight: 400; }
+#menuWeekLabel { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; color: var(--bark); font-weight: 400; }
 #menuTableContainer { overflow-x: auto; }
 #menuTableContainer table { width: 100%; border-collapse: collapse; min-width: 600px; }
 #menuTableContainer th {
@@ -1830,7 +1832,7 @@ ul { list-style: none; }
 .faq-a a { color: var(--bark-lt); text-decoration: underline; font-weight: 500; }
 .faq-a p + p { margin-top: 10px; }
 .faq-bottom-cta { text-align: center; margin-top: 48px; padding: 44px 24px; background: var(--cream); }
-.faq-bottom-cta p { font-family: 'Cormorant', serif; font-size: 20px; color: var(--bark); font-weight: 400; margin-bottom: 22px; }
+.faq-bottom-cta p { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; color: var(--bark); font-weight: 400; margin-bottom: 22px; }
 .faq-cta-btns { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; }
 
 /* =====================================================
@@ -1841,7 +1843,7 @@ ul { list-style: none; }
 .privacy-policy-notice p { font-size: 13.5px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; }
 .privacy-policy-notice p + p { margin-top: 8px; }
 .privacy-section {}
-.privacy-section h3 { font-family: 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+.privacy-section h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 14px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
 .privacy-section p { font-size: 13.5px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; }
 .privacy-section ul { padding-left: 20px; margin-top: 10px; }
 .privacy-section ul li { font-size: 13px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; list-style: disc; }
@@ -1868,7 +1870,7 @@ ul { list-style: none; }
 .footer-logo { display: flex; flex-direction: column; gap: 2px; margin-bottom: 14px; }
 .logo-emblem-sm { display: none; }
 .footer-logo-main {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 18px;
   font-weight: 400;
   color: rgba(232,220,200,0.85);
@@ -1926,7 +1928,7 @@ ul { list-style: none; }
 .footer-quick a:hover { color: var(--sand); }
 
 .footer-tel {
-  font-family: 'Cormorant', serif;
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 26px;
   color: rgba(232,220,200,0.75);
   display: block;
@@ -2022,10 +2024,10 @@ ul { list-style: none; }
   padding: 20px 24px;
   border-bottom: 1px solid var(--border);
 }
-.mobile-logo { font-family: 'Cormorant', serif; font-size: 16px; color: var(--bark); font-weight: 400; }
+.mobile-logo { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 16px; color: var(--bark); font-weight: 400; }
 .mobile-close { background: none; border: none; font-size: 20px; color: var(--bark-pale); cursor: pointer; }
 .mobile-menu-tel { padding: 16px 24px; border-bottom: 1px solid var(--border); }
-.mobile-menu-tel a { font-family: 'Cormorant', serif; font-size: 22px; color: var(--bark); display: block; margin-bottom: 3px; }
+.mobile-menu-tel a { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 22px; color: var(--bark); display: block; margin-bottom: 3px; }
 .mobile-menu-tel span { font-size: 11px; color: var(--bark-pale); letter-spacing: 0.06em; }
 .mobile-nav-list { padding: 8px 0; flex: 1; }
 .mobile-nav-item { border-bottom: 1px solid var(--border-lt); }
@@ -2131,7 +2133,7 @@ ul { list-style: none; }
   .hero-slider { height: 420px; }
   .slide-content { padding: 0 28px; max-width: 100%; }
   .slide-eyebrow { font-size: 8.5px; }
-  .slide-title { font-size: clamp(30px, 5vw, 38px); }
+  .slide-title { font-size: clamp(32px, 5vw, 42px); }
   .slide-desc { font-size: 13px; }
   .slider-dots-wrap { left: 28px; }
   .slider-arrow { display: none; }
