@@ -33,9 +33,9 @@ body {
   font-family: 'Noto Sans KR', sans-serif;
   background: var(--ww);
   color: var(--bark);
-  font-weight: 300;
-  font-size: 17px;
-  line-height: 1.9;
+  font-weight: 400;
+  font-size: 19px;
+  line-height: 2.0;
   -webkit-font-smoothing: antialiased;
 }
 
@@ -73,9 +73,9 @@ ul { list-style: none; }
 }
 .notice-banner-icon { display: none; }
 .notice-banner-text {
-  font-size: 11.5px;
+  font-size: 14px;
   color: var(--bark);
-  font-weight: 500;
+  font-weight: 700;
   letter-spacing: 0.04em;
   flex: 1;
 }
@@ -143,8 +143,8 @@ ul { list-style: none; }
 .logo-text { display: flex; flex-direction: column; }
 .logo-main {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 20px;
-  font-weight: 500;
+  font-size: 22px;
+  font-weight: 700;
   color: var(--bark);
   letter-spacing: 0.04em;
   line-height: 1.2;
@@ -166,11 +166,11 @@ ul { list-style: none; }
   padding: 0 20px;
   height: 72px;
   line-height: 72px;
-  font-size: 12px;
+  font-size: 13px;
   color: var(--bark-mid);
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 400;
+  font-weight: 600;
   transition: color 0.2s;
 }
 .nav-link:hover { color: var(--bark); }
@@ -200,11 +200,11 @@ ul { list-style: none; }
 .sub-menu li a {
   display: block;
   padding: 9px 20px;
-  font-size: 11.5px;
+  font-size: 13px;
   color: var(--bark-mid);
   letter-spacing: 0.04em;
   transition: background 0.15s, color 0.15s;
-  font-weight: 300;
+  font-weight: 500;
 }
 .sub-menu li a:hover {
   background: var(--cream);
@@ -277,8 +277,8 @@ ul { list-style: none; }
 }
 .slide-title {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 52px;
-  font-weight: 300;
+  font-size: 58px;
+  font-weight: 500;
   color: #fff;
   line-height: 1.08;
   letter-spacing: -0.02em;
@@ -290,9 +290,9 @@ ul { list-style: none; }
   display: block;
 }
 .slide-desc {
-  font-size: 15px;
-  color: rgba(255,255,255,0.55);
-  font-weight: 300;
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
+  font-weight: 400;
   line-height: 2;
   margin-bottom: 44px;
   letter-spacing: 0.04em;
@@ -301,11 +301,11 @@ ul { list-style: none; }
 .btn-hero-primary {
   background: var(--sand);
   color: var(--bark);
-  padding: 13px 30px;
-  font-size: 11px;
-  letter-spacing: 0.14em;
+  padding: 14px 32px;
+  font-size: 14px;
+  letter-spacing: 0.1em;
   text-transform: uppercase;
-  font-weight: 600;
+  font-weight: 700;
   border: none;
   font-family: 'Noto Sans KR', sans-serif;
   display: inline-block;
@@ -313,7 +313,7 @@ ul { list-style: none; }
 }
 .btn-hero-primary:hover { background: var(--sand-dk); }
 .btn-hero-outline {
-  font-size: 11px;
+  font-size: 13px;
   color: rgba(232,220,200,0.8);
   letter-spacing: 0.14em;
   text-transform: uppercase;
@@ -428,9 +428,10 @@ ul { list-style: none; }
   flex-shrink: 0;
 }
 .quick-icon-wrap svg { color: var(--bark-lt); }
+.qi-desc { font-size: 12px; color: var(--bark-lt); font-weight: 400; line-height: 1.5; }
 .quick-item span {
-  font-size: 12px;
-  font-weight: 500;
+  font-size: 14px;
+  font-weight: 700;
   color: var(--bark);
   letter-spacing: 0.04em;
   line-height: 1.3;
@@ -507,23 +508,23 @@ ul { list-style: none; }
 }
 .section-title {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 34px;
-  font-weight: 300;
+  font-size: 38px;
+  font-weight: 500;
   color: var(--bark);
   line-height: 1.25;
   letter-spacing: -0.01em;
   margin-bottom: 24px;
 }
 .about-desc {
-  font-size: 15px;
+  font-size: 16px;
   color: var(--bark-mid);
   line-height: 2.1;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 32px;
 }
 .btn-primary {
   display: inline-block;
-  font-size: 11px;
+  font-size: 13px;
   color: var(--bark);
   letter-spacing: 0.16em;
   text-transform: uppercase;
@@ -631,17 +632,17 @@ ul { list-style: none; }
 }
 .space-panel-info h3 {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 400;
   color: var(--bark);
   margin-bottom: 14px;
   line-height: 1.3;
 }
 .space-panel-info p {
-  font-size: 13px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 2;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 24px;
 }
 .btn-text {
@@ -695,17 +696,17 @@ ul { list-style: none; }
 .service-icon svg { color: var(--bark-lt); }
 .service-card h3 {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 20px;
-  font-weight: 400;
+  font-size: 22px;
+  font-weight: 600;
   color: var(--bark);
   line-height: 1.3;
   letter-spacing: 0.01em;
 }
 .service-card p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 1.85;
-  font-weight: 300;
+  font-weight: 400;
 }
 .services-cta {
   text-align: center;
@@ -769,7 +770,7 @@ ul { list-style: none; }
   margin-bottom: 8px;
 }
 .news-tag {
-  font-size: 9.5px;
+  font-size: 11px;
   color: var(--bark-lt);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -779,11 +780,11 @@ ul { list-style: none; }
 }
 .news-tag-notice { background: rgba(122,90,58,0.1); color: var(--bark-lt); }
 .news-tag-event  { background: rgba(90,96,72,0.1); color: #5A6048; }
-.news-date { font-size: 11px; color: rgba(42,26,10,0.35); letter-spacing: 0.04em; }
+.news-date { font-size: 13px; color: rgba(42,26,10,0.5); letter-spacing: 0.04em; font-weight: 500; }
 .news-card h4 {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: 20px;
+  font-weight: 700;
   color: var(--bark);
   margin-bottom: 6px;
   line-height: 1.4;
@@ -791,17 +792,17 @@ ul { list-style: none; }
 .news-card h4 a { transition: color 0.15s; }
 .news-card h4 a:hover { color: var(--bark-lt); }
 .news-card p {
-  font-size: 14px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 1.8;
-  font-weight: 300;
+  font-weight: 400;
 }
 .news-more-wrap { text-align: center; margin-top: 32px; }
 .btn-outline-dark {
   display: inline-block;
-  padding: 12px 28px;
+  padding: 13px 30px;
   border: 1px solid var(--border);
-  font-size: 11px;
+  font-size: 13px;
   color: var(--bark);
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -834,18 +835,18 @@ ul { list-style: none; }
 }
 .cta-inner h2 {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 40px;
-  font-weight: 300;
+  font-size: 44px;
+  font-weight: 500;
   color: #fff;
   line-height: 1.18;
   margin-bottom: 16px;
   letter-spacing: -0.01em;
 }
 .cta-inner > p {
-  font-size: 15px;
-  color: rgba(255,255,255,0.45);
+  font-size: 16px;
+  color: rgba(255,255,255,0.75);
   line-height: 2;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 48px;
 }
 .cta-blog-msg {
@@ -888,9 +889,9 @@ ul { list-style: none; }
   gap: 10px;
   background: var(--sand);
   color: var(--bark);
-  padding: 15px 32px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 16px 34px;
+  font-size: 16px;
+  font-weight: 700;
   letter-spacing: 0.08em;
   border: none;
   font-family: 'Noto Sans KR', sans-serif;
@@ -900,9 +901,9 @@ ul { list-style: none; }
 .cta-btn-phone:hover { background: var(--sand-dk); }
 .cta-btn-online {
   display: inline-block;
-  padding: 15px 28px;
+  padding: 16px 30px;
   border: 1px solid rgba(255,255,255,0.18);
-  font-size: 11.5px;
+  font-size: 13px;
   color: rgba(255,255,255,0.65);
   letter-spacing: 0.1em;
   text-transform: uppercase;
@@ -965,10 +966,10 @@ ul { list-style: none; }
   margin-bottom: 4px;
 }
 .map-info-item p {
-  font-size: 12.5px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 1.75;
-  font-weight: 300;
+  font-weight: 400;
 }
 .map-tel-link {
   color: var(--bark);
@@ -1220,9 +1221,9 @@ ul { list-style: none; }
   padding: 4px 10px;
 }
 .blog-feed-info { padding: 18px; }
-.blog-feed-date { font-size: 9.5px; color: var(--bark-lt); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
-.blog-feed-info h4 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 16px; font-weight: 400; color: var(--bark); margin-bottom: 6px; line-height: 1.4; }
-.blog-feed-info p { font-size: 12px; color: var(--bark-mid); line-height: 1.7; font-weight: 300; }
+.blog-feed-date { font-size: 12px; color: var(--bark-lt); font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase; margin-bottom: 6px; }
+.blog-feed-info h4 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; font-weight: 600; color: var(--bark); margin-bottom: 6px; line-height: 1.4; }
+.blog-feed-info p { font-size: 14px; color: var(--bark-mid); line-height: 1.7; font-weight: 400; }
 .blog-feed-more { text-align: center; }
 .btn-blog-more {
   display: inline-flex;
@@ -1266,16 +1267,16 @@ ul { list-style: none; }
 }
 .review-stars { color: var(--bark-lt); font-size: 14px; letter-spacing: 3px; }
 .review-text {
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--bark-mid);
   line-height: 1.9;
-  font-weight: 300;
+  font-weight: 400;
   font-style: italic;
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   flex: 1;
 }
 .review-author { padding-top: 12px; border-top: 1px solid var(--border-lt); }
-.review-name { font-size: 12px; font-weight: 600; color: var(--bark); display: block; }
+.review-name { font-size: 15px; font-weight: 700; color: var(--bark); display: block; }
 .review-rel { font-size: 11px; color: var(--bark-pale); font-weight: 300; }
 .review-notice { font-size: 11px; color: rgba(42,26,10,0.3); text-align: center; }
 
@@ -1311,7 +1312,7 @@ ul { list-style: none; }
 .page-hero h1 {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
   font-size: 44px;
-  font-weight: 300;
+  font-weight: 500;
   color: #fff;
   letter-spacing: -0.01em;
   line-height: 1.2;
@@ -1331,9 +1332,9 @@ ul { list-style: none; }
 .greeting-text {}
 .greeting-open { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; color: var(--bark-pale); margin-bottom: 12px; font-style: italic; }
 .greeting-text h2 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 34px; font-weight: 400; color: var(--bark); margin-bottom: 28px; line-height: 1.3; }
-.greeting-body p { font-size: 14.5px; color: var(--bark-mid); line-height: 2.1; font-weight: 300; margin-bottom: 18px; }
+.greeting-body p { font-size: 16px; color: var(--bark-mid); line-height: 2.1; font-weight: 400; margin-bottom: 18px; }
 .greeting-body a { color: var(--bark-lt); font-weight: 500; }
-.greeting-sign { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 17px; color: var(--bark-pale); margin-top: 28px; font-style: italic; }
+.greeting-sign { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 18px; color: var(--bark-pale); margin-top: 28px; font-style: italic; }
 
 /* =====================================================
    VISION PAGE
@@ -1598,7 +1599,7 @@ ul { list-style: none; }
 }
 .step-content { padding: 22px 24px; }
 .step-content h3 { font-family: 'Nanum Myeongjo', 'Cormorant', serif; font-size: 20px; font-weight: 400; color: var(--bark); margin-bottom: 6px; }
-.step-content p { font-size: 13px; color: var(--bark-mid); line-height: 1.85; font-weight: 300; }
+.step-content p { font-size: 15px; color: var(--bark-mid); line-height: 1.85; font-weight: 400; }
 .step-content a { color: var(--bark-lt); font-weight: 500; }
 .process-arrow { text-align: left; padding: 0 0 0 28px; font-size: 18px; color: rgba(122,90,58,0.3); line-height: 1; margin: -1px 0; }
 .process-cta { margin-top: 48px; padding: 36px; background: var(--cream); text-align: center; }
@@ -1635,7 +1636,7 @@ ul { list-style: none; }
 .consult-form { display: flex; flex-direction: column; gap: 18px; }
 .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
 .form-group { display: flex; flex-direction: column; gap: 7px; }
-.form-group label { font-size: 12px; color: var(--bark-mid); font-weight: 500; letter-spacing: 0.04em; }
+.form-group label { font-size: 14px; color: var(--bark-mid); font-weight: 600; letter-spacing: 0.04em; }
 .req { color: var(--bark-lt); }
 .form-group input,
 .form-group select,
@@ -1644,10 +1645,10 @@ ul { list-style: none; }
   padding: 12px 16px;
   border: 1px solid var(--border);
   background: var(--cream);
-  font-size: 13.5px;
+  font-size: 15px;
   color: var(--bark);
   font-family: 'Noto Sans KR', sans-serif;
-  font-weight: 300;
+  font-weight: 400;
   line-height: 1.5;
   outline: none;
   transition: border-color 0.15s, background 0.15s;
@@ -1695,8 +1696,8 @@ ul { list-style: none; }
 .btn-submit {
   background: var(--bark);
   color: var(--sand);
-  padding: 16px 32px;
-  font-size: 13px;
+  padding: 17px 32px;
+  font-size: 15px;
   font-family: 'Noto Sans KR', sans-serif;
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -1726,8 +1727,8 @@ ul { list-style: none; }
 }
 .board-item:first-child { border-top: 1px solid var(--border); }
 .board-item:hover .board-title { color: var(--bark-lt); }
-.board-tag { font-size: 9.5px; color: var(--bark-lt); letter-spacing: 0.1em; text-transform: uppercase; font-weight: 500; }
-.board-title { font-size: 14px; color: var(--bark); font-weight: 400; line-height: 1.5; }
+.board-tag { font-size: 11px; color: var(--bark-lt); letter-spacing: 0.08em; text-transform: uppercase; font-weight: 600; }
+.board-title { font-size: 16px; color: var(--bark); font-weight: 600; line-height: 1.5; }
 .board-date { font-size: 11px; color: rgba(42,26,10,0.35); text-align: right; }
 .board-empty { padding: 56px; text-align: center; color: var(--bark-pale); font-size: 14px; font-family: 'Nanum Myeongjo', 'Cormorant', serif; }
 
@@ -1815,8 +1816,8 @@ ul { list-style: none; }
   cursor: pointer;
   text-align: left;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 15px;
-  font-weight: 500;
+  font-size: 17px;
+  font-weight: 700;
   color: var(--bark);
   line-height: 1.55;
   transition: color 0.15s;
@@ -1825,7 +1826,7 @@ ul { list-style: none; }
 .faq-q[aria-expanded="true"] { color: var(--bark-lt); }
 .faq-arrow { font-size: 16px; flex-shrink: 0; transition: transform 0.3s; color: var(--bark-lt); line-height: 1.3; margin-top: 2px; }
 .faq-q[aria-expanded="true"] .faq-arrow { transform: rotate(180deg); }
-.faq-a { display: none; padding: 0 4px 24px; font-size: 14px; color: var(--bark-mid); line-height: 1.9; font-weight: 300; }
+.faq-a { display: none; padding: 0 4px 24px; font-size: 16px; font-weight: 400; color: var(--bark-mid); line-height: 1.9; font-weight: 300; }
 .faq-a.open { display: block; }
 .faq-a ul { margin: 10px 0 12px 20px; }
 .faq-a ul li { margin-bottom: 5px; list-style: disc; }
@@ -1871,16 +1872,16 @@ ul { list-style: none; }
 .logo-emblem-sm { display: none; }
 .footer-logo-main {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 18px;
+  font-size: 20px;
   font-weight: 400;
   color: rgba(232,220,200,0.85);
   display: block;
 }
 .footer-tagline {
-  font-size: 12px;
-  color: rgba(255,255,255,0.28);
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
   line-height: 1.9;
-  font-weight: 300;
+  font-weight: 400;
   margin-bottom: 16px;
 }
 .footer-blog-link {
@@ -1911,16 +1912,16 @@ ul { list-style: none; }
   margin-bottom: 14px;
 }
 .footer-info ul { display: flex; flex-direction: column; gap: 5px; }
-.footer-info li { font-size: 12px; color: rgba(255,255,255,0.3); font-weight: 300; line-height: 1.7; }
+.footer-info li { font-size: 14px; color: rgba(255,255,255,0.5); font-weight: 400; line-height: 1.7; }
 .footer-info li span { color: rgba(122,90,58,0.6); font-size: 9px; letter-spacing: 0.1em; text-transform: uppercase; font-weight: 600; margin-right: 6px; }
 .footer-info a { color: rgba(232,220,200,0.5); transition: color 0.15s; }
 .footer-info a:hover { color: var(--sand); }
 
 .footer-quick ul { display: flex; flex-direction: column; gap: 8px; }
 .footer-quick a {
-  font-size: 12px;
-  color: rgba(255,255,255,0.32);
-  font-weight: 300;
+  font-size: 14px;
+  color: rgba(255,255,255,0.5);
+  font-weight: 400;
   transition: color 0.15s;
   text-decoration: none;
   display: block;
@@ -1929,7 +1930,7 @@ ul { list-style: none; }
 
 .footer-tel {
   font-family: 'Nanum Myeongjo', 'Cormorant', serif;
-  font-size: 26px;
+  font-size: 28px;
   color: rgba(232,220,200,0.75);
   display: block;
   margin-bottom: 4px;
@@ -1983,8 +1984,8 @@ ul { list-style: none; }
   border: none;
   cursor: pointer;
   font-family: 'Noto Sans KR', sans-serif;
-  font-size: 10px;
-  font-weight: 500;
+  font-size: 11px;
+  font-weight: 700;
   letter-spacing: 0.04em;
   text-decoration: none;
   transition: all 0.2s;
@@ -2035,9 +2036,9 @@ ul { list-style: none; }
   width: 100%;
   background: none;
   border: none;
-  padding: 14px 24px;
+  padding: 16px 24px;
   text-align: left;
-  font-size: 13px;
+  font-size: 16px;
   font-weight: 500;
   color: var(--bark);
   cursor: pointer;
@@ -2050,8 +2051,8 @@ ul { list-style: none; }
 .mobile-sub.open { display: block; }
 .mobile-sub li a {
   display: block;
-  padding: 10px 24px 10px 36px;
-  font-size: 12.5px;
+  padding: 12px 24px 12px 36px;
+  font-size: 14px;
   color: var(--bark-mid);
   font-weight: 300;
   letter-spacing: 0.03em;
@@ -2235,3 +2236,201 @@ ul { list-style: none; }
 
 /* 선택 영역 */
 ::selection { background: var(--sand); color: var(--bark); }
+
+/* =====================================================
+   PROGRAM PAGE — 프로그램 안내
+   ===================================================== */
+
+.prog-intro {
+  text-align: center;
+  padding: 64px 0 48px;
+  border-bottom: 1px solid var(--border);
+  margin-bottom: 48px;
+}
+.prog-intro .section-eyebrow {
+  justify-content: center;
+  margin-bottom: 16px;
+}
+.prog-intro .section-eyebrow::before { display: none; }
+.prog-intro-title {
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 36px;
+  font-weight: 400;
+  color: var(--bark);
+  margin-bottom: 16px;
+  line-height: 1.3;
+}
+.prog-intro-desc {
+  font-size: 15px;
+  color: var(--bark-mid);
+  line-height: 2;
+  font-weight: 300;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* 카테고리 탭 */
+.prog-tabs {
+  display: flex;
+  justify-content: center;
+  gap: 0;
+  margin-bottom: 40px;
+  border-bottom: 1px solid var(--border);
+}
+.prog-tab {
+  padding: 12px 28px;
+  background: none;
+  border: none;
+  border-bottom: 2px solid transparent;
+  margin-bottom: -1px;
+  font-size: 13px;
+  color: var(--bark-pale);
+  letter-spacing: 0.08em;
+  cursor: pointer;
+  font-family: 'Noto Sans KR', sans-serif;
+  font-weight: 400;
+  transition: all 0.15s;
+}
+.prog-tab.active,
+.prog-tab:hover {
+  color: var(--bark);
+  border-bottom-color: var(--bark-lt);
+  font-weight: 500;
+}
+
+/* 갤러리 레이아웃 */
+.prog-gallery {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  margin-bottom: 56px;
+}
+
+/* 와이드 (1열 전체) */
+.prog-wide {
+  width: 100%;
+}
+.prog-wide .prog-img {
+  height: 420px;
+}
+
+/* 2열 */
+.prog-row-2 {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4px;
+}
+.prog-row-2 .prog-img {
+  height: 300px;
+}
+
+/* 3열 */
+.prog-row-3 {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 4px;
+}
+.prog-row-3 .prog-img {
+  height: 240px;
+}
+
+/* 공통 사진 카드 */
+.prog-item { overflow: hidden; }
+.prog-item.hidden { display: none; }
+
+.prog-img {
+  width: 100%;
+  background-size: cover;
+  background-position: center;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform 0.4s ease;
+}
+.prog-item:hover .prog-img { transform: scale(1.03); }
+
+/* 오버레이 */
+.prog-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(20,10,4,0.82) 0%,
+    rgba(20,10,4,0.3) 45%,
+    rgba(20,10,4,0) 100%
+  );
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 24px;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+.prog-item:hover .prog-overlay { opacity: 1; }
+
+/* 와이드는 항상 오버레이 살짝 보임 */
+.prog-wide .prog-overlay {
+  opacity: 1;
+  background: linear-gradient(
+    to top,
+    rgba(20,10,4,0.75) 0%,
+    rgba(20,10,4,0.1) 60%,
+    rgba(20,10,4,0) 100%
+  );
+}
+
+.prog-tag {
+  display: inline-block;
+  background: var(--sand);
+  color: var(--bark);
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  padding: 4px 11px;
+  margin-bottom: 10px;
+  align-self: flex-start;
+}
+
+.prog-caption h3 {
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 18px;
+  font-weight: 400;
+  color: #fff;
+  margin-bottom: 6px;
+  line-height: 1.3;
+}
+.prog-wide .prog-caption h3 { font-size: 22px; }
+.prog-caption p {
+  font-size: 13px;
+  color: rgba(255,255,255,0.72);
+  line-height: 1.7;
+  font-weight: 300;
+}
+
+/* 하단 CTA */
+.prog-cta {
+  text-align: center;
+  padding: 52px 0 24px;
+  border-top: 1px solid var(--border);
+}
+.prog-cta p {
+  font-family: 'Nanum Myeongjo', 'Cormorant', serif;
+  font-size: 20px;
+  color: var(--bark);
+  font-weight: 400;
+  margin-bottom: 20px;
+}
+
+/* 반응형 */
+@media (max-width: 768px) {
+  .prog-wide .prog-img { height: 260px; }
+  .prog-row-2 { grid-template-columns: 1fr; }
+  .prog-row-2 .prog-img { height: 240px; }
+  .prog-row-3 { grid-template-columns: 1fr 1fr; }
+  .prog-row-3 .prog-img { height: 180px; }
+  .prog-tabs { flex-wrap: wrap; }
+  .prog-tab { padding: 9px 16px; font-size: 12px; }
+  .prog-intro-title { font-size: 28px; }
+  .prog-overlay { opacity: 1; }
+}
